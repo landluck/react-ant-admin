@@ -1,10 +1,14 @@
 import React from 'react';
-import { Layout, Button } from 'antd'
+import { Provider } from 'react-redux'
+import store from './store'
+import Layout from './layout'
+import './styles/index.less'
+
 
 function App () {
-  return (<Layout>
-    <Button>按钮</Button>
-  </Layout>)
+  return (<Provider store={store}>
+            <Layout></Layout>
+          </Provider>)
 }
 
 export default App;
