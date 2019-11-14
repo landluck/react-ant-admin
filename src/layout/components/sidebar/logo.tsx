@@ -9,8 +9,8 @@ interface LogoProps {
 }
 
 const config = {
-  title: 'Iny mini manage',
-  logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+  title: 'Ant design Pro',
+  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg'
 }
 
 function Logo(props: LogoProps) {

@@ -1,6 +1,6 @@
 @import '../styles/var.less';
 
-.app-wrapper {
+.app-wrap {
   position: relative;
   height: 100%;
   width: 100%;
@@ -20,9 +20,18 @@
   transition: width 0.28s;
 }
 
-.hide-side-bar .fixed-header {
-  width: calc(100% - 54px)
+.hide-side-bar  {
+
+  .sidebar-container {
+    width: 80px !important;
+  }
+
+  .fixed-header {
+    width: calc(100% - 80px)
+  }
 }
+
+.hide-side-bar
 
 .mobile .fixed-header {
   width: 100%;

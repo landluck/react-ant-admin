@@ -5,10 +5,16 @@ import { updateSideBar, AppState } from '../store/module/app'
 import { BrowserRouter as Router } from 'react-router-dom'
 import classnames from 'classnames'
 import './index.less'
-import Sidebar from '../components/sidebar/index'
+import Sidebar from './components/sidebar/index'
+import NavBar from './components/navbar/index'
 
 
 interface LayoutProps extends AppState {
+
+  tagsView: boolean
+
+  fixedHeader: boolean
+
   updateSideBar: (sidebar: AppState['sidebar']) => void
 }
 
@@ -21,6 +27,10 @@ function Layout(props: LayoutProps) {
     'open-side-bar': props.sidebar.opened,
     'with-out-animation': props.sidebar.withoutAnimation,
     'mobile': props.device === 'mobile'
+  })
+
+  const mainClass = classnames('main-container', {
+    'tag-view': props.tagsView
   })
 
   const closeSideBar = () => {
@@ -36,14 +46,20 @@ function Layout(props: LayoutProps) {
         props.device === 'mobile' && props.sidebar.opened ? (<div className="drawer-bg" onClick={closeSideBar} />) : null
       }
       <Router>
-        <Sidebar className="sidebar-container"></Sidebar>
+        <Sidebar />
+        <div className={mainClass}>
+          <div className={ props.fixedHeader ? 'fixed-header' : ''}>
+            <NavBar />
+            {/* <tags-view v-if="needTagsView" /> */}
+          </div>
+        </div>
       </Router>
     </div>
   )
 }
 
 
-const mapStateToProps = (state: IStoreState) => (state.app)
+const mapStateToProps = ({ app, settings: { tagsView, fixedHeader }}: IStoreState) => ({...app, tagsView, fixedHeader})
 
 
 const mapDispatchToProps = {

@@ -19,26 +19,77 @@ const menus: IMenu[] = [
   { 
     path: '1',
     meta: {
-      title: '首页',
-      icon: 'shopping'
+      title: 'Dashborad',
+      icon: 'medium'
     },
     children: [
       {
         path: '2',
         meta: {
-          title: '首页',
-          icon: 'shopping'
+          title: '分析页',
+          icon: 'google'
+        },
+      },
+      {
+        path: '3',
+        meta: {
+          title: '分析页',
+          icon: 'codepen'
+        },
+      },
+      {
+        path: '4',
+        meta: {
+          title: '监控页',
+          icon: 'aliyun'
+        },
+      },
+      {
+        path: '5',
+        meta: {
+          title: '工作台',
+          icon: 'windows'
         },
       }
     ]
   },
-  {
-    path: '5',
+  { 
+    path: '8',
     meta: {
-      title: 'item 1',
-      icon: 'shopping'
-    }
-  }
+      title: 'Dashborad',
+      icon: 'medium'
+    },
+    children: [
+      {
+        path: '9',
+        meta: {
+          title: '分析页',
+          icon: 'google'
+        },
+      },
+      {
+        path: '13',
+        meta: {
+          title: '分析页',
+          icon: 'codepen'
+        },
+      },
+      {
+        path: '14',
+        meta: {
+          title: '监控页',
+          icon: 'aliyun'
+        },
+      },
+      {
+        path: '15',
+        meta: {
+          title: '工作台',
+          icon: 'windows'
+        },
+      }
+    ]
+  },
 ]
 
 export default menus

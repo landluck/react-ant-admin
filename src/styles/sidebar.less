@@ -1,95 +1,98 @@
 #root {
-  // .main-container {
-  //   min-height: 100%;
-  //   transition: margin-left .28s;
-  //   margin-left: @sideBarWidth;
-  //   position: relative;
-  // }
+  .main-container {
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: @sideBarWidth;
+    position: relative;
+  }
 
-  // .sidebar-container {
-  //   transition: width 0.28s;
-  //   width: @sideBarWidth !important;
-  //   background-color: @menuBg;
-  //   height: 100%;
-  //   position: fixed;
-  //   font-size: 0px;
-  //   top: 0;
-  //   bottom: 0;
-  //   left: 0;
-  //   z-index: 1001;
-  //   overflow: hidden;
+  .sidebar-container {
+    transition: width 0.28s;
+    width: @sideBarWidth;
+    height: 100%;
+    position: fixed;
+    font-size: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
 
-  //   &.has-logo {
-  //     .el-scrollbar {
-  //       height: calc(100% - 50px);
-  //     }
-  //   }
+    &.dark {
+      background: @menuDarkColor;
+    }
 
-  //   .is-horizontal {
-  //     display: none;
-  //   }
+    &.has-logo {
+      .el-scrollbar {
+        height: calc(100% - 50px);
+      }
+    }
 
-  //   a {
-  //     display: inline-block;
-  //     width: 100%;
-  //     overflow: hidden;
-  //   }
+    .is-horizontal {
+      display: none;
+    }
 
-  //   .svg-icon {
-  //     margin-right: 16px;
-  //   }
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
 
-  // }
+    .svg-icon {
+      margin-right: 16px;
+    }
 
-  // .hideSidebar {
-  //   .sidebar-container {
-  //     width: 54px !important;
-  //   }
+  }
 
-  //   .main-container {
-  //     margin-left: 54px;
-  //   }
+  .hideSidebar {
+    .sidebar-container {
+      width: 54px !important;
+    }
 
-  //   .submenu-title-noDropdown {
-  //     padding: 0 !important;
-  //     position: relative;
+    .main-container {
+      margin-left: 54px;
+    }
 
-  //     .el-tooltip {
-  //       padding: 0 !important;
+    .submenu-title-noDropdown {
+      padding: 0 !important;
+      position: relative;
 
-  //       .svg-icon {
-  //         margin-left: 20px;
-  //       }
-  //     }
-  //   }
+      .el-tooltip {
+        padding: 0 !important;
 
-  // }
+        .svg-icon {
+          margin-left: 20px;
+        }
+      }
+    }
 
-  // // mobile responsive
-  // .mobile {
-  //   .main-container {
-  //     margin-left: 0px;
-  //   }
+  }
 
-  //   .sidebar-container {
-  //     transition: transform .28s;
-  //     width: @sideBarWidth !important;
-  //   }
+  // mobile responsive
+  .mobile {
+    .main-container {
+      margin-left: 0px;
+    }
 
-  //   &.hide-side-bar {
-  //     .sidebar-container {
-  //       pointer-events: none;
-  //       transition-duration: 0.3s;
-  //       transform: translate3d(-@sideBarWidth, 0, 0);
-  //     }
-  //   }
-  // }
+    .sidebar-container {
+      transition: transform .28s;
+      width: @sideBarWidth !important;
+    }
 
-  // .with-out-animation {
+    &.hide-side-bar {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(-@sideBarWidth, 0, 0);
+      }
+    }
+  }
 
-  //   .main-container,
-  //   .sidebar-container {
-  //     transition: none;
-  //   }
-  // }
+  .with-out-animation {
+
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
 }
