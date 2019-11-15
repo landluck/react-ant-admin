@@ -1,6 +1,6 @@
 
 
-const menus = [
+const routes = [
   // 菜单相关路由
   { 
     path: '1',
@@ -30,7 +30,7 @@ const menus = [
 const result = []
 
 
-menus.forEach(item => {
+routes.forEach(item => {
   console.log(item)
   result.push( SideMenuItem(item))
 })

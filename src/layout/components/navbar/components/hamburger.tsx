@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Icon } from 'antd'
 import './hamburger.less'
 
@@ -8,6 +8,7 @@ interface HamburgerProps {
 }
 
 function Hamburger ({ isActive, onTrigger }: HamburgerProps) {
+
   return (
     <div className='hamburger-container' onClick={onTrigger}>
       <Icon type={ isActive ? 'menu-fold' : 'menu-unfold'} />
@@ -15,4 +16,4 @@ function Hamburger ({ isActive, onTrigger }: HamburgerProps) {
   )
 }
 
-export default Hamburger
+export default memo(Hamburger)

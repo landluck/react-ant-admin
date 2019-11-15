@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { memo } from 'react'
 import './breadcrumb.less'
+import { withRouter } from 'react-router-dom'
 
 
-function Hamburger () {
+function Hamburger (props: any) {
+  
+  console.log(props)
+
+  // console.log(match)
   return (
     <div className='breadcrumb-container' >
    
@@ -10,4 +15,4 @@ function Hamburger () {
   )
 }
 
-export default Hamburger
+export default withRouter(memo(Hamburger))

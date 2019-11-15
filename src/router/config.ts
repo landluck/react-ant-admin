@@ -1,95 +1,137 @@
-export interface IMenuBase {
+import React from 'react'
+import Layout from '../layout/index'
+import UserLayout from '../layout/userLayout'
+
+export interface IRouteBase {
   path: string
-  component?: string
-  meta: IMenuMeta
+  component?: any
+  meta: IRouteMeta
 }
 
-export interface IMenuMeta {
+export interface IRouteMeta {
   title: string
   icon?: string
 }
 
-export interface IMenu extends IMenuBase {
-  children?: IMenu[];
+export interface IRoute extends IRouteBase {
+  children?: IRoute[];
 }
 
-
-const menus: IMenu[] = [
-  // 菜单相关路由
-  { 
-    path: '1',
+const routes: IRoute[] = [
+  {
+    path: '/system-user',
+    component: UserLayout,
     meta: {
-      title: 'Dashborad',
-      icon: 'medium'
+      title: '系统路由'
     },
     children: [
       {
-        path: '2',
+        path: '/system-user/login',
+        component: React.lazy(() => import('../views/user/login')),
         meta: {
-          title: '分析页',
-          icon: 'google'
-        },
+          title: '登录'
+        }
       },
       {
-        path: '3',
+        path: '/system-user/register',
+        component: React.lazy(() => import('../views/user/register')),
         meta: {
-          title: '分析页',
-          icon: 'codepen'
-        },
+          title: '注册'
+        }
       },
       {
-        path: '4',
+        path: '/system-user/register-result',
+        component: React.lazy(() => import('../views/user/register-result')),
         meta: {
-          title: '监控页',
-          icon: 'aliyun'
-        },
-      },
-      {
-        path: '5',
-        meta: {
-          title: '工作台',
-          icon: 'windows'
-        },
+          title: '注册结果'
+        }
       }
     ]
   },
-  { 
-    path: '8',
+  {
+    path: '/',
+    component: Layout,
     meta: {
-      title: 'Dashborad',
-      icon: 'medium'
+      title: '业务路由'
     },
     children: [
-      {
-        path: '9',
+      { 
+        path: '/dashborad',
         meta: {
-          title: '分析页',
-          icon: 'google'
+          title: 'Dashborad',
+          icon: 'medium'
         },
+        children: [
+          {
+            path: '/dashborad/google',
+            meta: {
+              title: '分析页',
+              icon: 'google'
+            },
+          },
+          {
+            path: '/dashborad/codepen',
+            meta: {
+              title: '分析页',
+              icon: 'codepen'
+            },
+          },
+          {
+            path: '/dashborad/aliyun',
+            meta: {
+              title: '监控页',
+              icon: 'aliyun'
+            },
+          },
+          {
+            path: '/dashborad/windows',
+            meta: {
+              title: '工作台',
+              icon: 'windows'
+            },
+          }
+        ]
       },
-      {
-        path: '13',
+      { 
+        path: 'app/index',
         meta: {
-          title: '分析页',
-          icon: 'codepen'
+          title: 'medium',
+          icon: 'medium'
         },
+        children: [
+          {
+            path: 'app/index/google',
+            meta: {
+              title: '分析页',
+              icon: 'google'
+            },
+          },
+          {
+            path: 'app/index/codepen',
+            meta: {
+              title: '分析页',
+              icon: 'codepen'
+            },
+          },
+          {
+            path: 'app/index/aliyun',
+            meta: {
+              title: '监控页',
+              icon: 'aliyun'
+            },
+          },
+          {
+            path: 'app/index/windows',
+            meta: {
+              title: '工作台',
+              icon: 'windows'
+            },
+          }
+        ]
       },
-      {
-        path: '14',
-        meta: {
-          title: '监控页',
-          icon: 'aliyun'
-        },
-      },
-      {
-        path: '15',
-        meta: {
-          title: '工作台',
-          icon: 'windows'
-        },
-      }
     ]
-  },
+  }
 ]
 
-export default menus
+
+export default routes

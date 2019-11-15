@@ -4,16 +4,16 @@ import classnames from 'classnames'
 import Logo from './logo'
 import { IStoreState } from '../../../store/types'
 import { AppState } from '../../../store/module/app'
-import menus, { IMenu } from '../../../router/config'
+import { IRoute } from '../../../router/config'
 import { Menu } from 'antd'
-import renderMenu from './side-menu'
+import renderMenu from './sideMenu'
 
 
 interface BarProps extends AppState {
   sidebarLogo: boolean
 }
 
-function Bar({ sidebarLogo, sidebar }: BarProps) {
+function Bar({ sidebarLogo, sidebar, routes }: BarProps) {
 
   const wrap = classnames('sidebar-container', sidebar.theme, {
     'has-logo': sidebarLogo
@@ -31,7 +31,7 @@ function Bar({ sidebarLogo, sidebar }: BarProps) {
       >
 
         {
-          menus.map((menu: IMenu) => (
+          routes.map((menu: IRoute) => (
             renderMenu(menu)
           ))
         }

@@ -1,14 +1,22 @@
 import React from 'react';
-import { Provider } from 'react-redux'
-import store from './store'
-import Layout from './layout'
+import routes, { IRoute } from './router/config'
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './styles/index.less'
 
 
 function App () {
-  return (<Provider store={store}>
-            <Layout></Layout>
-          </Provider>)
+  return (
+    <Router>
+      <Switch>
+        {
+          routes.map((route: IRoute) => (
+            <Route key={route.path} exact={route.path === '/'} path={route.path} component={route.component}></Route>
+          ))
+        }
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;

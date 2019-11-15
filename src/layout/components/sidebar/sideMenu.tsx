@@ -1,10 +1,10 @@
 import React from "react";
 import { Menu, Icon } from "antd";
-import { IMenu, IMenuMeta } from "../../../router/config";
+import { IRoute, IRouteMeta } from "../../../router/config";
 import { Link } from "react-router-dom";
-import './side-menu.less'
+import './sideMenu.less'
 
-function renderTitle(meta: IMenuMeta) {
+function renderTitle(meta: IRouteMeta) {
   return (
     <span className="menu-item-inner">
       {meta.icon && <Icon type={meta.icon} className='menu-icon' />}
@@ -13,7 +13,7 @@ function renderTitle(meta: IMenuMeta) {
   );
 }
 
-function renderMenuRoute(menu: IMenu) {
+function renderMenuRoute(menu: IRoute) {
   return (
     <Menu.Item key={menu.path}>
       <Link to={menu.path}>{renderTitle(menu.meta)}</Link>
@@ -21,11 +21,11 @@ function renderMenuRoute(menu: IMenu) {
   );
 }
 
-function renderSubMenu(menu: IMenu) {
+function renderSubMenu(menu: IRoute) {
   return (
     <Menu.SubMenu title={renderTitle(menu.meta)} key={menu.path}>
       {
-        menu.children!.map((item: IMenu) => (
+        menu.children!.map((item: IRoute) => (
           item.children ? renderSubMenu(item) : renderMenuRoute(item)
         ))
       }
@@ -33,7 +33,7 @@ function renderSubMenu(menu: IMenu) {
   );
 }
 
-function renderMenu(menu: IMenu) {
+function renderMenu(menu: IRoute) {
   if (menu.children) {
     return renderSubMenu(menu)
   }

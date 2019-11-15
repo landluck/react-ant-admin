@@ -1,5 +1,7 @@
 import { IAction } from "../types"
 import { Reducer } from "redux"
+import { IRoute } from "../../router/config"
+import { routes } from '../../router/sidebar'
 
 type MenuMode = 'vertical' | 'horizontal' | 'inline'
 type MenuTheme = 'dark' | 'light'
@@ -15,6 +17,8 @@ export interface AppState {
   device: string
 
   size: string
+
+  routes: IRoute[]
 }
 
 const defaultApp: AppState = {
@@ -27,7 +31,8 @@ const defaultApp: AppState = {
 
   device: 'desktop',
 
-  size: 'small'
+  size: 'small',
+  routes: routes
 }
 
 
