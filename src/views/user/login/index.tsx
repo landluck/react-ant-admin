@@ -1,17 +1,21 @@
 import React from 'react'
 import { Tabs, Checkbox, Button, Icon, Form, message } from 'antd'
 import './index.less'
-import { Link } from 'react-router-dom'
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
 import { FormComponentProps } from 'antd/es/form';
 import renderAccount from './componets/account'
 import renderMobile from './componets/mobile'
 import VerifyUtils from '../../../utils/verifty';
+import { apiUserLogin } from './service'
+import { connect } from 'react-redux'
+import { setUserInfo, UserState } from '../../../store/module/user'
 
 const COUNT_STATIC = 60
 
 
-interface LoginProps extends FormComponentProps {
+interface LoginProps extends FormComponentProps, RouteComponentProps {
 
+  setUserInfo: (userInfo: UserState) => void
 }
 
 interface LoginState {
@@ -20,12 +24,19 @@ interface LoginState {
   mobile: string
 }
 
-interface LoginVar {
-  timer: any
+interface FormProp {
+
+  account?: string
+  mobile?: string
+  password?: string
+  code?: number
 }
 
 
 class Login extends React.Component<LoginProps, LoginState> {
+
+
+  // static contextType = 
 
   timer: NodeJS.Timeout | null = null
 
@@ -108,9 +119,31 @@ class Login extends React.Component<LoginProps, LoginState> {
 
     e.preventDefault();
     
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields((err, values: FormProp) => {
+
       if (!err) {
-        console.log('Received values of form: ', values);
+
+        if (values.account && values.password) {
+
+           apiUserLogin(
+             { 
+               account: values.account,
+               password: values.password
+              }
+            ).then(({ data }) => {
+
+              this.props.setUserInfo(data)
+              
+              this.props.history.push('/')
+
+            }).catch(() => {})
+
+          return
+        }
+
+        if (values.mobile && values.code) {
+
+        }
       }
     });
   }
@@ -171,4 +204,9 @@ class Login extends React.Component<LoginProps, LoginState> {
   }
 }
 
-export default Form.create({ name: 'login'})(Login)
+export default connect(
+  () => ({}), 
+  {
+    setUserInfo
+  }
+)(Form.create({ name: 'login'})(withRouter(Login)))

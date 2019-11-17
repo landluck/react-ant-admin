@@ -1,0 +1,61 @@
+@import '../../styles/var.less';
+
+.layout {
+
+  &__side-bar {
+    flex: 0 0 @sideBarWidth;
+
+    position: relative;
+    z-index: 10;
+    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    transition: all 0.2s;
+
+    &--dark {
+      background: @menuDarkColor;
+
+      .layout__side-bar-title {
+        color: #fff;
+      }
+    }
+
+    &--light {
+      background-color: #fff;
+      box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+    }
+
+    &--close {
+      flex: 0 0 @sideBarCloseWidth;
+      width: @sideBarCloseWidth;
+    }
+
+    &--side {
+      min-height: 100vh;
+    }
+
+    &--top {
+      display: flex;
+      align-items: center;
+      box-shadow: none;
+
+      .ant-menu, .ant-menu-submenu {
+        height: @headerHeight;
+        line-height: @headerHeight - 1;
+      }
+    }
+
+    .ant-menu, .ant-menu-submenu {
+      border: none;
+    }
+
+    &__menu {
+      overflow: hidden;
+    }
+
+    &__logo {
+
+      &--top {
+        width: 200px;
+      }
+    }
+  }
+}

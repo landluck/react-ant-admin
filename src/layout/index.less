@@ -1,38 +1,19 @@
 @import '../styles/var.less';
 
-.app-wrap {
-  position: relative;
-  height: 100%;
-  width: 100%;
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
-  &.mobile.open-side-bar {
-    position: fixed;
-    top: 0;
-  }
-}
-
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - @sideBarWidth);
-  transition: width 0.28s;
-}
-
-.hide-side-bar  {
-
-  .sidebar-container {
-    width: 80px !important;
+  &--side-bar {
+    flex-direction: row;
   }
 
-  .fixed-header {
-    width: calc(100% - 80px)
+
+  &__main {
+    position: relative;
+    flex: 1;
+    min-height: 100vh;
   }
-}
-
-.hide-side-bar
-
-.mobile .fixed-header {
-  width: 100%;
+    
 }

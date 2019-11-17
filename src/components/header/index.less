@@ -1,0 +1,71 @@
+@import '../../styles/var.less';
+
+.layout {
+
+  &__header {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: @headerHeight;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+    &--fix {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 9;
+      transition: width .2s;
+    }
+
+    &--close {
+      width: calc(100% - @sideBarCloseWidth);
+    }
+
+    &--top {
+    
+      .layout__header__inner {
+        padding: 0;
+        margin: 0 auto;
+        display: flex;
+      }
+
+      &-side-bar {
+        flex: 1 1 0%;
+        max-width: 1000px;
+      }
+
+      &.layout__header--dark {
+
+        .layout__navbar {
+          color: #fff;
+        }
+      }
+    }
+
+    &--side {
+
+      .layout__navbar {
+        background: #fff;
+      }
+    }
+
+    &--light {
+      background: #fff;
+    }
+
+    &--dark {
+      background: @menuDarkColor;
+    }
+
+    &__inner {
+      padding: 0 20px;
+      height: 100%;
+
+      &--fixed {
+
+        max-width: 1200px;
+      }
+    }
+  }
+}

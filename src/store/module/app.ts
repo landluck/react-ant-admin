@@ -3,14 +3,9 @@ import { Reducer } from "redux"
 import { IRoute } from "../../router/config"
 import { routes } from '../../router/sidebar'
 
-type MenuMode = 'vertical' | 'horizontal' | 'inline'
-type MenuTheme = 'dark' | 'light'
-
 export interface AppState {
   sidebar: {
     opened: boolean
-    mode: MenuMode
-    theme: MenuTheme
     withoutAnimation: boolean
   }
 
@@ -24,8 +19,6 @@ export interface AppState {
 const defaultApp: AppState = {
   sidebar: {
     opened: true,
-    mode: 'inline',
-    theme: 'dark',
     withoutAnimation: false
   },
 

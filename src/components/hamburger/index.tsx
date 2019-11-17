@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { Icon } from 'antd'
-import './hamburger.less'
+import './index.less'
 
 interface HamburgerProps {
   isActive: boolean

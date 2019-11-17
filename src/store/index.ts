@@ -5,6 +5,7 @@ import { IStoreState, IAction } from './types'
 import userReducer from './module/user'
 import appReducer from './module/app'
 import settingsReducer from './module/settings'
+import tagReducer from './module/tags'
 
 
 
@@ -13,7 +14,8 @@ import settingsReducer from './module/settings'
 const reducers: Reducer<IStoreState, IAction<any>> = combineReducers<IStoreState> ({
   user: userReducer,
   app: appReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
+  tags: tagReducer
 })
 
 

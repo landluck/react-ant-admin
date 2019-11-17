@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/aliyun-theme": "0.0.4",
     "antd": "^3.25.1",
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.4",
@@ -90,6 +91,7 @@
       "react-app"
     ]
   },
+  "proxy": "http://192.168.0.101:3300",
   "devDependencies": {
     "@babel/core": "7.6.0",
     "@svgr/webpack": "4.3.2",

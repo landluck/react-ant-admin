@@ -1,8 +1,8 @@
 import React from "react";
 import { Menu, Icon } from "antd";
-import { IRoute, IRouteMeta } from "../../../router/config";
+import { IRoute, IRouteMeta } from "../../router/config";
 import { Link } from "react-router-dom";
-import './sideMenu.less'
+import './index.less'
 
 function renderTitle(meta: IRouteMeta) {
   return (

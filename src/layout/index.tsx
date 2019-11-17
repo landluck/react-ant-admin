@@ -1,70 +1,51 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { IStoreState } from '../store/types'
-import { updateSideBar, AppState } from '../store/module/app'
-import { BrowserRouter as Router } from 'react-router-dom'
 import classnames from 'classnames'
 import './index.less'
-import Sidebar from './components/sidebar/index'
-import NavBar from './components/navbar/index'
+import Sidebar from '../components/sidebar/index'
+import { Settings } from '../store/module/settings'
+import Header from '../components/header'
 
+interface LayoutProps {
 
-interface LayoutProps extends AppState {
-
-  tagsView: boolean
-
-  fixedHeader: boolean
-
-  updateSideBar: (sidebar: AppState['sidebar']) => void
+  layout: Settings['layout']
 }
 
 
 
 function Layout(props: LayoutProps) {
-  const wrapClass = classnames({
-    'app-wrap': true,
-    'hide-side-bar': !props.sidebar.opened,
-    'open-side-bar': props.sidebar.opened,
-    'with-out-animation': props.sidebar.withoutAnimation,
-    'mobile': props.device === 'mobile'
-  })
 
-  const mainClass = classnames('main-container', {
-    'tag-view': props.tagsView
-  })
 
-  const closeSideBar = () => {
-    props.updateSideBar({
-      ...props.sidebar,
-      opened: false
-    })
-  }
+  // const closeSideBar = () => {
+  //   props.updateSideBar({
+  //     ...props.sidebar,
+  //     opened: false
+  //   })
+  // }
 
   return (
-    <div className={wrapClass}>
-      {
+    <section className={
+      classnames({
+        'layout': true,
+        'layout--side-bar': props.layout === 'side'
+      })
+    }>
+      {/* {
         props.device === 'mobile' && props.sidebar.opened ? (<div className="drawer-bg" onClick={closeSideBar} />) : null
+      } */}
+
+      { 
+        props.layout === 'side' && <Sidebar />
       }
-      <Router>
-        <Sidebar />
-        <div className={mainClass}>
-          <div className={ props.fixedHeader ? 'fixed-header' : ''}>
-            <NavBar />
-            {/* <tags-view v-if="needTagsView" /> */}
-          </div>
-        </div>
-      </Router>
-    </div>
+      <section className={
+        classnames('layout__main') 
+      }>
+        <Header />
+      </section>
+    </section>
   )
 }
 
 
-const mapStateToProps = ({ app, settings: { tagsView, fixedHeader }}: IStoreState) => ({...app, tagsView, fixedHeader})
-
-
-const mapDispatchToProps = {
-  updateSideBar
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Layout)
+export default connect(({ settings: { layout } }: IStoreState) => ({ layout }))(Layout)
