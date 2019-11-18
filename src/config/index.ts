@@ -13,7 +13,7 @@ export interface Config {
 
   fixedHeader: boolean
 
-  contentWidth: 'Fluid' | 'Fixed'
+  contentWidth: 'fluid' | 'fixed'
 }
 
 
@@ -32,13 +32,13 @@ const AdminConfig: Config = {
   layout: 'top',
 
   // 默认主题颜色
-  theme: 'dark',
+  theme: 'light',
 
   // 是否固定头部
-  fixedHeader: true,
+  fixedHeader: false,
 
   // 固定宽度或者流式宽度
-  contentWidth: 'Fixed'
+  contentWidth: 'fluid'
 }
 
 

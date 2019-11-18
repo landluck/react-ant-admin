@@ -10,7 +10,7 @@ interface HamburgerProps {
 function Hamburger ({ isActive, onTrigger }: HamburgerProps) {
 
   return (
-    <div className='hamburger-container' onClick={onTrigger}>
+    <div className='layout__nav-bar__hamburger' onClick={onTrigger}>
       <Icon type={ isActive ? 'menu-fold' : 'menu-unfold'} />
     </div>
   )

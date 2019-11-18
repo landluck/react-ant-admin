@@ -8,9 +8,6 @@ import settingsReducer from './module/settings'
 import tagReducer from './module/tags'
 
 
-
-
-
 const reducers: Reducer<IStoreState, IAction<any>> = combineReducers<IStoreState> ({
   user: userReducer,
   app: appReducer,

@@ -13,12 +13,25 @@
 
 
     &__nav, &__menu {
+      height: 100%;
       display: flex;
       align-items: center;
     }
 
     &__menu {
-      
+      justify-content: flex-end;
+
+      &-item {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        height: 100%;
+        transition: background 0.2s;
+
+        &:hover {
+          background: #f5f5f5;
+        }
+      }
     }
   }
 }

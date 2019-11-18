@@ -1,11 +1,21 @@
-.hamburger-container {
-  padding: 0 15px;
-  cursor: pointer;
-  transition: background .3s;
-  font-size: 20px;
-  line-height: 0;
+@import '../../styles/var.less';
 
-  &:hover {
-    background: rgba(0, 0, 0, .025)
+.layout {
+
+  &__nav-bar {
+
+    &__hamburger {
+
+      padding: 0 15px;
+      height: @headerHeight;
+      line-height: @headerHeight;
+      cursor: pointer;
+      transition: background .3s;
+      font-size: 20px;
+
+      &:hover {
+        background: rgba(0, 0, 0, .025)
+      }
+    }
   }
 }

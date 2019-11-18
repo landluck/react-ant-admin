@@ -32,7 +32,7 @@ function Header (props: HeaderProps) {
     }>
       <div className={
         classnames('layout__header__inner', {
-          'layout__header__inner--fixed': props.contentWidth === 'Fixed'
+          [`layout__header__inner--${props.contentWidth }`]: props.layout === 'top'
         })
       }>
         {

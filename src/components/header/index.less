@@ -22,12 +22,20 @@
       width: calc(100% - @sideBarCloseWidth);
     }
 
+    &--fix&--side {
+      width: calc(100% - @sideBarWidth);
+    }
+
+    &--fix&--side&--close {
+      width: calc(100% - @sideBarCloseWidth);
+    }
+
     &--top {
     
       .layout__header__inner {
-        padding: 0;
         margin: 0 auto;
         display: flex;
+        justify-content: space-between;
       }
 
       &-side-bar {
@@ -35,17 +43,11 @@
         max-width: 1000px;
       }
 
-      &.layout__header--dark {
-
-        .layout__navbar {
-          color: #fff;
-        }
-      }
     }
 
     &--side {
 
-      .layout__navbar {
+      .layout__header__inner {
         background: #fff;
       }
     }
@@ -58,13 +60,23 @@
       background: @menuDarkColor;
     }
 
+    &--dark&--top {
+
+      .layout__header__inner {
+        color: #fff;
+      }
+    }
+
     &__inner {
-      padding: 0 20px;
       height: 100%;
 
       &--fixed {
 
         max-width: 1200px;
+      }
+
+      &--fluid {
+        padding: 0 20px;
       }
     }
   }

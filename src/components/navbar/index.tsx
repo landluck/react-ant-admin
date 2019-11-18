@@ -6,6 +6,7 @@ import { Settings } from '../../store/module/settings'
 import './index.less'
 import Hamburger from '../hamburger'
 import Breadcrumb from '../breadcrumb'
+import Help from './help'
 
 interface NavBarProps extends AppState {
   avatar: string | undefined
@@ -39,6 +40,8 @@ function NavBar({ sidebar, updateSideBar, layout }: NavBarProps) {
         
         {/* 搜索暂时不做 */}
         {/* <Search></Search> */}
+        <Help className='layout__navbar__menu-item' href="/"></Help>
+
       </div>
 
     </div>

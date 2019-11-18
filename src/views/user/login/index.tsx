@@ -130,7 +130,7 @@ class Login extends React.Component<LoginProps, LoginState> {
                account: values.account,
                password: values.password
               }
-            ).then(({ data }) => {
+            ).then(({ data }: { data: UserState }) => {
 
               this.props.setUserInfo(data)
               
