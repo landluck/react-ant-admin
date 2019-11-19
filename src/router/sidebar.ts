@@ -1,265 +1,302 @@
-import { IRoute } from './config'
+import { IRoute } from './config';
 
 // 此配置文件是用来渲染左边菜单栏的
 export const routes: IRoute[] = [
-  { 
+  {
     path: '/dashborad',
     meta: {
-      title: 'Dashborad',
-      icon: 'aliyun'
+      title: '首页',
+      icon: 'dashboard',
     },
     children: [
       {
         path: '/dashborad/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: '/dashborad/codepen',
         meta: {
-          title: '分析页',
-          icon: 'codepen'
+          title: '监控页',
+          icon: 'codepen',
         },
       },
       {
         path: '/dashborad/aliyun',
         meta: {
-          title: '监控页',
-          icon: 'aliyun'
+          title: '控制台',
+          icon: 'aliyun',
         },
       },
       {
         path: '/dashborad/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-  { 
+  {
     path: 'app/index',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '表单页',
+      icon: 'form',
     },
     children: [
       {
         path: 'app/index/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: 'app/index/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
         path: 'app/index/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
         path: 'app/index/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-  { 
+  {
     path: 'app/home',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '列表页',
+      icon: 'table',
     },
     children: [
       {
         path: 'app/home/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: 'app/home/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
         path: 'app/home/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
         path: 'app/home/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
 
-  { 
+  {
     path: 'app/test',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '详情页',
+      icon: 'profile',
     },
     children: [
       {
         path: 'app/test/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: 'app/test/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
         path: 'app/test/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
         path: 'app/test/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-  { 
+  {
     path: 'app/ccc',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '结果页',
+      icon: 'check-circle-o',
     },
     children: [
       {
         path: 'app/ccc/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: 'app/ccc/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
         path: 'app/ccc/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
         path: 'app/ccc/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-  { 
+  {
     path: 'app/fff',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '异常页',
+      icon: 'warning',
     },
     children: [
       {
         path: 'app/fff/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
         path: 'app/fff/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
         path: 'app/fff/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
         path: 'app/fff/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-  { 
-    path: 'app/bbb',
+  {
+    path: 'app/lll',
     meta: {
-      title: 'medium',
-      icon: 'aliyun'
+      title: '个人页',
+      icon: 'user',
     },
     children: [
       {
-        path: 'app/bbb/google',
+        path: 'app/lll/google',
         meta: {
           title: '分析页',
-          icon: 'google'
+          icon: 'google',
         },
       },
       {
-        path: 'app/bbb/codepen',
+        path: 'app/lll/codepen',
         meta: {
           title: '分析页',
-          icon: 'codepen'
+          icon: 'codepen',
         },
       },
       {
-        path: 'app/bbb/aliyun',
+        path: 'app/lll/aliyun',
         meta: {
           title: '监控页',
-          icon: 'aliyun'
+          icon: 'aliyun',
         },
       },
       {
-        path: 'app/bbb/windows',
+        path: 'app/lll/windows',
         meta: {
           title: '工作台',
-          icon: 'windows'
+          icon: 'windows',
         },
-      }
-    ]
+      },
+    ],
   },
-]
+  {
+    path: 'app/kkk',
+    meta: {
+      title: '系统管理',
+      icon: 'highlight',
+    },
+    children: [
+      {
+        path: 'app/kkk/google',
+        meta: {
+          title: '分析页',
+          icon: 'google',
+        },
+      },
+      {
+        path: 'app/bkkkbb/codepen',
+        meta: {
+          title: '分析页',
+          icon: 'codepen',
+        },
+      },
+      {
+        path: 'app/kkk/aliyun',
+        meta: {
+          title: '监控页',
+          icon: 'aliyun',
+        },
+      },
+      {
+        path: 'app/kkk/windows',
+        meta: {
+          title: '工作台',
+          icon: 'windows',
+        },
+      },
+    ],
+  },
+];

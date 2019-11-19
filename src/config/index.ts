@@ -1,24 +1,20 @@
-
 export interface Config {
+  SUCCESS_CODE: number;
 
-  SUCCESS_CODE: number
+  LOGIN_EXPIRE: number;
 
-  LOGIN_EXPIRE: number
+  API_URL: string;
 
-  API_URL: string
+  layout: 'side' | 'top';
 
-  layout: 'side' | 'top'
+  theme: 'dark' | 'light';
 
-  theme: 'dark' | 'light'
+  fixedHeader: boolean;
 
-  fixedHeader: boolean
-
-  contentWidth: 'fluid' | 'fixed'
+  contentWidth: 'fluid' | 'fixed';
 }
 
-
 const AdminConfig: Config = {
-
   // 请求成功状态码
   SUCCESS_CODE: 200,
 
@@ -32,14 +28,13 @@ const AdminConfig: Config = {
   layout: 'top',
 
   // 默认主题颜色
-  theme: 'light',
+  theme: 'dark',
 
   // 是否固定头部
   fixedHeader: false,
 
   // 固定宽度或者流式宽度
-  contentWidth: 'fluid'
-}
+  contentWidth: 'fixed',
+};
 
-
-export default AdminConfig
+export default AdminConfig;

@@ -1,19 +1,18 @@
-import React, { memo } from 'react'
-import { Icon } from 'antd'
-import './index.less'
+import React, { memo } from 'react';
+import { Icon } from 'antd';
+import './index.less';
 
 interface HamburgerProps {
-  isActive: boolean
-  onTrigger: () => void
+  isActive: boolean;
+  onTrigger: () => void;
 }
 
-function Hamburger ({ isActive, onTrigger }: HamburgerProps) {
-
+function Hamburger({ isActive, onTrigger }: HamburgerProps) {
   return (
-    <div className='layout__nav-bar__hamburger' onClick={onTrigger}>
-      <Icon type={ isActive ? 'menu-fold' : 'menu-unfold'} />
+    <div className="layout__nav-bar__hamburger" onClick={onTrigger}>
+      <Icon type={isActive ? 'menu-fold' : 'menu-unfold'} />
     </div>
-  )
+  );
 }
 
-export default memo(Hamburger)
+export default memo(Hamburger);

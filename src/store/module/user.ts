@@ -1,46 +1,45 @@
-import { Reducer } from "redux"
-import { IAction } from "../types"
+import { Reducer } from 'redux';
+import { IAction } from '../types';
 
 export interface UserState {
-  token: string
-  avatar: string | undefined
-  account: string
-  mobile: string
-  role: number
-  id: number
+  token: string;
+  avatar: string | undefined;
+  account: string;
+  mobile: string;
+  role: number;
+  id: number;
 }
 
 const defaultUser: UserState = {
   token: '',
   avatar: undefined,
-  account: '',
+  account: '刘海红',
   mobile: '',
   role: 0,
-  id: 0
-}
+  id: 0,
+};
 
-const SET_USER_INFO = 'SET_USER_INFO'
+const SET_USER_INFO = 'SET_USER_INFO';
 
-export const setUserInfo: (user: UserState) => IAction<UserState> = (user: UserState) => {
-  return {
-    type: SET_USER_INFO,
-    payload: user
-  }
-}
+export const setUserInfo: (user: UserState) => IAction<UserState> = (user: UserState) => ({
+  type: SET_USER_INFO,
+  payload: user,
+});
 
-
-const userReducer: Reducer<UserState, IAction<any>>= (state = defaultUser, action: IAction<any>) => {
-
-  const { type, payload } = action
+const userReducer: Reducer<UserState, IAction<any>> = (
+  state = defaultUser,
+  action: IAction<any>,
+) => {
+  const { type, payload } = action;
 
   switch (type) {
     case SET_USER_INFO:
-      
       return {
-        ...payload
-      }
+        ...payload,
+      };
+    default:
+      return state;
   }
-  return state
-}
+};
 
-export default userReducer
+export default userReducer;

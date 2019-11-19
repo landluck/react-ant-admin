@@ -1,58 +1,55 @@
-import { IAction } from "../types"
-import { Reducer } from "redux"
-import { IRoute } from "../../router/config"
-import { routes } from '../../router/sidebar'
+import { Reducer } from 'redux';
+import { IAction } from '../types';
+import { IRoute } from '../../router/config';
+import { routes } from '../../router/sidebar';
 
 export interface AppState {
   sidebar: {
-    opened: boolean
-    withoutAnimation: boolean
-  }
+    opened: boolean;
+    withoutAnimation: boolean;
+  };
 
-  device: string
+  device: string;
 
-  size: string
+  size: string;
 
-  routes: IRoute[]
+  routes: IRoute[];
 }
 
 const defaultApp: AppState = {
   sidebar: {
     opened: true,
-    withoutAnimation: false
+    withoutAnimation: false,
   },
 
   device: 'desktop',
 
   size: 'small',
-  routes: routes
-}
+  routes,
+};
 
-
-const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED'
+const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED';
 
 export const updateSideBar = (sidebar: AppState['sidebar']) => ({
   type: SET_SIDE_BAR_OPENED,
-  payload: sidebar
-})
-
+  payload: sidebar,
+});
 
 const appReducer: Reducer<AppState, IAction<any>> = (state = defaultApp, action: IAction<any>) => {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case SET_SIDE_BAR_OPENED:
-      
       return {
         ...state,
-        sidebar: payload
-      }
-  
+        sidebar: payload,
+      };
+
     default:
       return {
-        ...state
-      }
+        ...state,
+      };
   }
-}
+};
 
-export default appReducer
+export default appReducer;

@@ -1,24 +1,22 @@
-import { IAction } from "../types"
-import { Reducer } from "redux"
-import AdminConfig, { Config } from "../../config"
+import { Reducer } from 'redux';
+import { IAction } from '../types';
+import AdminConfig, { Config } from '../../config';
 
 export interface Settings {
+  fixedHeader: boolean;
 
-  fixedHeader: boolean
+  tagsView: boolean;
 
-  tagsView: boolean
+  layout: Config['layout'];
 
-  layout: Config['layout']
+  theme: MenuTheme;
 
-  theme: MenuTheme
-
-  contentWidth: Config['contentWidth']
+  contentWidth: Config['contentWidth'];
 }
 
-type MenuTheme = 'dark' | 'light'
+type MenuTheme = 'dark' | 'light';
 
 const defaults: Settings = {
-
   fixedHeader: AdminConfig.fixedHeader,
 
   tagsView: true,
@@ -27,23 +25,23 @@ const defaults: Settings = {
 
   theme: AdminConfig.theme,
 
-  contentWidth: AdminConfig.contentWidth
-}
-
+  contentWidth: AdminConfig.contentWidth,
+};
 
 // const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED'
 
-
-const settingsReducer: Reducer<Settings, IAction<any>> = (state = defaults, action: IAction<any>) => {
-  const { type, payload } = action
+const settingsReducer: Reducer<Settings, IAction<any>> = (
+  state = defaults,
+  action: IAction<any>,
+) => {
+  const { type } = action;
 
   switch (type) {
-  
     default:
       return {
-        ...state
-      }
+        ...state,
+      };
   }
-}
+};
 
-export default settingsReducer
+export default settingsReducer;

@@ -21,10 +21,32 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx --ignore-path .eslintignore .",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style --ignore-path .eslintignore .",
+    "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src --ignore-path .eslintignore .",
+    "lint:prettier": "check-prettier lint --ignore-path .eslintignore .",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*\""
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.less": "stylelint --syntax less",
+    "**/*.{js,jsx,tsx,ts,less,md,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "**/*.{jsx}": "npm run lint-staged:js",
+    "**/*.{ts,tsx}": "npm run lint-staged:js"
   },
   "browserslist": {
     "production": [
@@ -100,12 +122,13 @@
     "@types/node": "12.12.7",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.4",
+    "@types/react-helmet": "^5.0.14",
     "@types/react-redux": "^7.1.5",
     "@types/react-router-dom": "^5.1.2",
     "@types/redux-logger": "^3.0.7",
-    "@types/react-helmet": "^5.0.14",
     "@typescript-eslint/eslint-plugin": "^2.2.0",
     "@typescript-eslint/parser": "^2.2.0",
+    "@umijs/fabric": "^1.2.1",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "8.0.6",
@@ -114,10 +137,11 @@
     "babel-preset-react-app": "^9.0.2",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "check-prettier": "^1.0.3",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^6.1.0",
+    "eslint": "^6.6.0",
     "eslint-config-react-app": "^5.0.2",
     "eslint-loader": "3.0.2",
     "eslint-plugin-flowtype": "3.13.0",
@@ -128,7 +152,9 @@
     "file-loader": "3.0.1",
     "fs-extra": "7.0.1",
     "html-webpack-plugin": "4.0.0-beta.5",
+    "husky": "^3.1.0",
     "identity-obj-proxy": "3.0.0",
+    "install": "^0.13.0",
     "is-wsl": "^1.1.0",
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "0.1.0",
@@ -136,7 +162,9 @@
     "jest-watch-typeahead": "0.4.0",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "lint-staged": "^9.4.3",
     "mini-css-extract-plugin": "0.8.0",
+    "npm": "^6.13.1",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -144,11 +172,13 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
+    "prettier": "^1.19.1",
     "resolve": "1.12.0",
     "resolve-url-loader": "3.1.0",
     "sass-loader": "^8.0.0",
     "semver": "6.3.0",
     "style-loader": "1.0.0",
+    "stylelint": "^12.0.0",
     "terser-webpack-plugin": "1.4.1",
     "ts-pnp": "1.1.4",
     "typescript": "3.7.2",

@@ -1,13 +1,11 @@
 @import '../../styles/var.less';
 
 .layout {
-
   &__side-bar {
-    flex: 0 0 @sideBarWidth;
-
     position: relative;
     z-index: 10;
-    box-shadow: 2px 0 6px rgba(0,21,41,.35);
+    flex: 0 0 @sideBarWidth;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
     transition: all 0.2s;
 
     &--dark {
@@ -20,7 +18,7 @@
 
     &--light {
       background-color: #fff;
-      box-shadow: 2px 0 8px 0 rgba(29,35,41,.05);
+      box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
     }
 
     &--close {
@@ -37,13 +35,15 @@
       align-items: center;
       box-shadow: none;
 
-      .ant-menu, .ant-menu-submenu {
+      .ant-menu,
+      .ant-menu-submenu {
         height: @headerHeight;
         line-height: @headerHeight - 1;
       }
     }
 
-    .ant-menu, .ant-menu-submenu {
+    .ant-menu,
+    .ant-menu-submenu {
       border: none;
     }
 
@@ -52,7 +52,6 @@
     }
 
     &__logo {
-
       &--top {
         width: 200px;
       }

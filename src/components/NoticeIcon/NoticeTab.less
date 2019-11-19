@@ -1,0 +1,47 @@
+.notice {
+  &__list {
+    max-height: 400px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__item {
+    padding-right: 24px;
+    padding-left: 24px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &-title {
+      margin-bottom: 8px;
+      font-weight: normal;
+    }
+
+    &-extra {
+      float: right;
+      margin-top: -1.5px;
+      margin-right: 0;
+      color: @text-color-secondary;
+      font-weight: normal;
+    }
+
+    &-message {
+      font-size: 12px;
+    }
+
+    &-time {
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    &--read {
+      opacity: 0.6;
+    }
+  }
+
+  &__meta {
+    width: 100%;
+  }
+}

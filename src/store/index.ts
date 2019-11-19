@@ -1,36 +1,39 @@
-import { createStore, combineReducers, applyMiddleware, compose, Middleware, Reducer } from 'redux'
-import  reduxThunk from 'redux-thunk'
-import reduxLogger from 'redux-logger'
-import { IStoreState, IAction } from './types'
-import userReducer from './module/user'
-import appReducer from './module/app'
-import settingsReducer from './module/settings'
-import tagReducer from './module/tags'
+import { createStore, combineReducers, applyMiddleware, compose, Middleware, Reducer } from 'redux';
+import reduxThunk from 'redux-thunk';
+import reduxLogger from 'redux-logger';
+import { IStoreState, IAction } from './types';
+import userReducer from './module/user';
+import appReducer from './module/app';
+import settingsReducer from './module/settings';
+import tagReducer from './module/tags';
+import noticeReducer from './module/notice';
 
-
-const reducers: Reducer<IStoreState, IAction<any>> = combineReducers<IStoreState> ({
+const reducers: Reducer<IStoreState, IAction<any>> = combineReducers<IStoreState>({
   user: userReducer,
   app: appReducer,
   settings: settingsReducer,
-  tags: tagReducer
-})
+  tags: tagReducer,
+  notices: noticeReducer,
+});
 
-
-const middleware: Middleware[] = [reduxThunk]
+const middleware: Middleware[] = [reduxThunk];
 
 if (process.env.REACT_APP_RUN_MODE !== 'production') {
-  middleware.push(reduxLogger)
+  middleware.push(reduxLogger);
 }
 
-function createMyStore () {
-  
-  const store = window.__REDUX_DEVTOOLS_EXTENSION__ ? 
-  createStore(reducers, compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__({})))
-  : createStore(reducers, applyMiddleware(...middleware))
+function createMyStore() {
+  /* eslint-disable no-underscore-dangle */
+  const store = window.__REDUX_DEVTOOLS_EXTENSION__
+    ? createStore(
+        reducers,
+        compose(applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__({})),
+      )
+    : createStore(reducers, applyMiddleware(...middleware));
 
-  return store
+  return store;
 }
 
-const store = createMyStore()
+const store = createMyStore();
 
-export default store
+export default store;

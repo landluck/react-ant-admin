@@ -1,11 +1,9 @@
-function verifyMobile (mobile: string): boolean {
-  return /\d{11}/.test(mobile.trim())
+function verifyMobile(mobile: string): boolean {
+  return /\d{11}/.test(mobile.trim());
 }
-
 
 const VerifyUtils = {
-  verifyMobile
-}
+  verifyMobile,
+};
 
-
-export default VerifyUtils
+export default VerifyUtils;

@@ -1,0 +1,41 @@
+.navbar {
+  &__notice {
+    width: 336px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    .ant-tabs-tab {
+      width: 112px;
+      margin: 0;
+      text-align: center;
+    }
+    .ant-tabs-bar {
+      margin: 0;
+    }
+
+    .ant-empty {
+      padding-bottom: 20px;
+    }
+
+    &__footer {
+      display: flex;
+      height: 46px;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 14px;
+      line-height: 46px;
+      border-top: 1px solid #e8e8e8;
+      border-radius: 0 0 4px 4px;
+
+      &-title {
+        flex: 1;
+        text-align: center;
+        cursor: pointer;
+
+        &:first-child {
+          border-right: 1px solid #e8e8e8;
+        }
+      }
+    }
+  }
+}

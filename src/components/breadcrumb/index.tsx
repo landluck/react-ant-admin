@@ -1,31 +1,27 @@
-import React, { memo } from 'react'
-import './index.less'
-import { connect } from 'react-redux'
-import { IStoreState } from '../../store/types'
-import { TagState } from '../../store/module/tags'
-import { Breadcrumb } from 'antd'
-import { IRoute } from '../../router/config'
+import React, { memo } from 'react';
+import { connect } from 'react-redux';
+import { Breadcrumb } from 'antd';
+import { IStoreState } from '../../store/types';
+import { TagState } from '../../store/module/tags';
+import { IRoute } from '../../router/config';
+import './index.less';
 
 interface BreadcrumbProps {
-  breadcrumbs: TagState['breadcrumbs']
+  breadcrumbs: TagState['breadcrumbs'];
 }
 
-
-function Breadcrumbs ({ breadcrumbs }: BreadcrumbProps) {
-  
+function Breadcrumbs({ breadcrumbs }: BreadcrumbProps) {
   return (
-    <div className='breadcrumb-container' >
+    <div className="breadcrumb-container">
       <Breadcrumb>
-        {
-          breadcrumbs.map((route: IRoute) => (
-            <Breadcrumb.Item key={route.path}>
-              { route.meta.title }
-            </Breadcrumb.Item>
-          ))
-        }
+        {breadcrumbs.map((route: IRoute) => (
+          <Breadcrumb.Item key={route.path}>{route.meta.title}</Breadcrumb.Item>
+        ))}
       </Breadcrumb>
     </div>
-  )
+  );
 }
 
-export default connect(( { tags: { breadcrumbs } }: IStoreState) => ( { breadcrumbs }))(memo(Breadcrumbs))
+export default connect(({ tags: { breadcrumbs } }: IStoreState) => ({ breadcrumbs }))(
+  memo(Breadcrumbs),
+);

@@ -2,20 +2,20 @@
 
 .layout {
   &__navbar {
-    overflow: hidden;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: 100%;
+    overflow: hidden;
     // background: #fff;
     // box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
-
-    &__nav, &__menu {
-      height: 100%;
+    &__nav,
+    &__menu {
       display: flex;
       align-items: center;
+      height: 100%;
     }
 
     &__menu {
@@ -24,14 +24,32 @@
       &-item {
         display: flex;
         align-items: center;
-        padding: 0 20px;
         height: 100%;
+        padding: 0 15px;
+        font-size: 16px;
         transition: background 0.2s;
 
-        &:hover {
-          background: #f5f5f5;
+        &--light {
+          color: #333;
+
+          &:hover {
+            color: #333;
+            background: #f5f5f5;
+          }
+        }
+
+        &--dark {
+          &:hover {
+            color: #fff;
+            background: @primary-color;
+          }
         }
       }
+    }
+
+    &__account {
+      margin-left: 10px;
+      font-size: 12px;
     }
   }
 }

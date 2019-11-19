@@ -1,6 +1,6 @@
-/// <reference types="node" />
-/// <reference types="react" />
-/// <reference types="react-dom" />
+// / <reference types="node" />
+// / <reference types="react" />
+// / <reference types="react-dom" />
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -35,8 +35,8 @@ declare module '*.png' {
 }
 
 declare module '*.webp' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
