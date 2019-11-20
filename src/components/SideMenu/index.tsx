@@ -5,6 +5,7 @@ import { IRoute, IRouteMeta } from '../../router/config';
 import './index.less';
 
 function renderTitle(meta: IRouteMeta) {
+  /* eslint-disable no-confusing-arrow */
   return (
     <span className="menu-item-inner">
       {meta.icon && <Icon type={meta.icon} className="menu-icon" />}

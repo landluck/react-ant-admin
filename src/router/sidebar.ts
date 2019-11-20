@@ -6,296 +6,98 @@ export const routes: IRoute[] = [
     path: '/dashborad',
     meta: {
       title: '首页',
-      icon: 'dashboard',
+      icon: 'table',
     },
     children: [
       {
         path: '/dashborad/google',
         meta: {
-          title: '分析页',
+          title: '谷歌',
           icon: 'google',
         },
       },
       {
-        path: '/dashborad/codepen',
+        path: '/dashborad/alibaba',
         meta: {
-          title: '监控页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: '/dashborad/aliyun',
-        meta: {
-          title: '控制台',
+          title: '阿里巴巴',
           icon: 'aliyun',
         },
       },
       {
-        path: '/dashborad/windows',
+        path: '/dashborad/dd',
         meta: {
-          title: '工作台',
-          icon: 'windows',
+          title: '字节跳动',
+          icon: 'aliyun',
         },
       },
     ],
   },
   {
-    path: 'app/index',
+    path: '/list',
     meta: {
-      title: '表单页',
-      icon: 'form',
-    },
-    children: [
-      {
-        path: 'app/index/google',
-        meta: {
-          title: '分析页',
-          icon: 'google',
-        },
-      },
-      {
-        path: 'app/index/codepen',
-        meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/index/aliyun',
-        meta: {
-          title: '监控页',
-          icon: 'aliyun',
-        },
-      },
-      {
-        path: 'app/index/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
-      },
-    ],
-  },
-  {
-    path: 'app/home',
-    meta: {
-      title: '列表页',
+      title: '列表测试',
       icon: 'table',
     },
     children: [
       {
-        path: 'app/home/google',
+        path: '/list/list1',
         meta: {
-          title: '分析页',
+          title: '谷歌',
           icon: 'google',
         },
       },
       {
-        path: 'app/home/codepen',
+        path: '/list/list2',
         meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/home/aliyun',
-        meta: {
-          title: '监控页',
+          title: '阿里巴巴',
           icon: 'aliyun',
-        },
-      },
-      {
-        path: 'app/home/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
-      },
-    ],
-  },
-
-  {
-    path: 'app/test',
-    meta: {
-      title: '详情页',
-      icon: 'profile',
-    },
-    children: [
-      {
-        path: 'app/test/google',
-        meta: {
-          title: '分析页',
-          icon: 'google',
-        },
-      },
-      {
-        path: 'app/test/codepen',
-        meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/test/aliyun',
-        meta: {
-          title: '监控页',
-          icon: 'aliyun',
-        },
-      },
-      {
-        path: 'app/test/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
         },
       },
     ],
   },
   {
-    path: 'app/ccc',
+    path: '/goods',
     meta: {
-      title: '结果页',
-      icon: 'check-circle-o',
+      title: '商品管理',
+      icon: 'table',
     },
     children: [
       {
-        path: 'app/ccc/google',
+        path: '/goods/list1',
         meta: {
-          title: '分析页',
+          title: '谷歌',
           icon: 'google',
         },
       },
       {
-        path: 'app/ccc/codepen',
+        path: '/goods/list2',
         meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/ccc/aliyun',
-        meta: {
-          title: '监控页',
+          title: '阿里巴巴',
           icon: 'aliyun',
         },
       },
       {
-        path: 'app/ccc/windows',
+        path: '/goods/list3',
         meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
-      },
-    ],
-  },
-  {
-    path: 'app/fff',
-    meta: {
-      title: '异常页',
-      icon: 'warning',
-    },
-    children: [
-      {
-        path: 'app/fff/google',
-        meta: {
-          title: '分析页',
-          icon: 'google',
-        },
-      },
-      {
-        path: 'app/fff/codepen',
-        meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/fff/aliyun',
-        meta: {
-          title: '监控页',
+          title: '阿里巴巴',
           icon: 'aliyun',
         },
-      },
-      {
-        path: 'app/fff/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
-      },
-    ],
-  },
-  {
-    path: 'app/lll',
-    meta: {
-      title: '个人页',
-      icon: 'user',
-    },
-    children: [
-      {
-        path: 'app/lll/google',
-        meta: {
-          title: '分析页',
-          icon: 'google',
-        },
-      },
-      {
-        path: 'app/lll/codepen',
-        meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/lll/aliyun',
-        meta: {
-          title: '监控页',
-          icon: 'aliyun',
-        },
-      },
-      {
-        path: 'app/lll/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
-      },
-    ],
-  },
-  {
-    path: 'app/kkk',
-    meta: {
-      title: '系统管理',
-      icon: 'highlight',
-    },
-    children: [
-      {
-        path: 'app/kkk/google',
-        meta: {
-          title: '分析页',
-          icon: 'google',
-        },
-      },
-      {
-        path: 'app/bkkkbb/codepen',
-        meta: {
-          title: '分析页',
-          icon: 'codepen',
-        },
-      },
-      {
-        path: 'app/kkk/aliyun',
-        meta: {
-          title: '监控页',
-          icon: 'aliyun',
-        },
-      },
-      {
-        path: 'app/kkk/windows',
-        meta: {
-          title: '工作台',
-          icon: 'windows',
-        },
+        children: [
+          {
+            path: '/goods/list3/list',
+            meta: {
+              title: '阿里巴巴',
+              icon: 'aliyun',
+            },
+          },
+          {
+            path: '/goods/list3/list2',
+            meta: {
+              title: '阿里巴巴',
+              icon: 'aliyun',
+            },
+          },
+        ],
       },
     ],
   },

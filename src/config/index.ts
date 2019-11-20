@@ -12,6 +12,8 @@ export interface Config {
   fixedHeader: boolean;
 
   contentWidth: 'fluid' | 'fixed';
+
+  colorWeak: boolean;
 }
 
 const AdminConfig: Config = {
@@ -25,7 +27,7 @@ const AdminConfig: Config = {
   API_URL: '',
 
   // 默认菜单栏位置
-  layout: 'top',
+  layout: 'side',
 
   // 默认主题颜色
   theme: 'dark',
@@ -35,6 +37,9 @@ const AdminConfig: Config = {
 
   // 固定宽度或者流式宽度
   contentWidth: 'fixed',
+
+  // 是否开启色弱模式
+  colorWeak: false,
 };
 
 export default AdminConfig;

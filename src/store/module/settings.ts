@@ -12,6 +12,8 @@ export interface Settings {
   theme: MenuTheme;
 
   contentWidth: Config['contentWidth'];
+
+  colorWeak: boolean;
 }
 
 type MenuTheme = 'dark' | 'light';
@@ -26,17 +28,30 @@ const defaults: Settings = {
   theme: AdminConfig.theme,
 
   contentWidth: AdminConfig.contentWidth,
+
+  colorWeak: AdminConfig.colorWeak,
 };
 
-// const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED'
+const UPDATE_SETTINSG = 'UPDATE_SETTINSG';
+
+export const updateLayoutSettings: (settings: Settings) => IAction<Settings> = (
+  settings: Settings,
+) => ({
+  type: UPDATE_SETTINSG,
+  payload: settings,
+});
 
 const settingsReducer: Reducer<Settings, IAction<any>> = (
   state = defaults,
   action: IAction<any>,
 ) => {
-  const { type } = action;
+  const { type, payload } = action;
 
   switch (type) {
+    case UPDATE_SETTINSG:
+      return {
+        ...payload,
+      };
     default:
       return {
         ...state,

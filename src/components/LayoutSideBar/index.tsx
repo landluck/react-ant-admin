@@ -39,7 +39,16 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
         <Logo opened={!sidebar.opened} />
       </div>
       <div className="layout__side-bar__menu">
-        <Menu mode={layout === 'side' ? 'inline' : 'horizontal'} theme={theme} {...inlineCollapsed}>
+        <Menu
+          defaultSelectedKeys={[window.location.pathname]}
+          defaultOpenKeys={window.location.pathname
+            .split('/')
+            .filter(Boolean)
+            .map((value, index, array) => '/'.concat(array.slice(0, index + 1).join('/')))}
+          mode={layout === 'side' ? 'inline' : 'horizontal'}
+          theme={theme}
+          {...inlineCollapsed}
+        >
           {routes.map((menu: IRoute) => renderMenu(menu))}
         </Menu>
       </div>

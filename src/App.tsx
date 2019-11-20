@@ -9,12 +9,7 @@ function App() {
     <Router>
       <Switch>
         {routes.map((route: IRoute) => (
-          <Route
-            key={route.path}
-            exact={route.path === '/'}
-            path={route.path}
-            component={route.component}
-          ></Route>
+          <Route key={route.path} path={route.path} component={route.component}></Route>
         ))}
       </Switch>
     </Router>

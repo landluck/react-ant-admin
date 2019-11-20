@@ -1,0 +1,62 @@
+.layout {
+  &__settings {
+    position: absolute;
+    top: 240px;
+    right: 300px;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    text-align: center;
+    background: #1890ff;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+    pointer-events: auto;
+
+    &__title {
+      margin-bottom: 12px;
+      color: rgba(0, 0, 0, 0.85);
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    &__checkbox {
+      display: flex;
+
+      &-item {
+        position: relative;
+        margin-right: 16px;
+        // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+        border-radius: @border-radius-base;
+        cursor: pointer;
+        img {
+          width: 48px;
+        }
+      }
+
+      &--check {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        padding-top: 15px;
+        padding-left: 24px;
+        color: @primary-color;
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .ant-drawer-content {
+    overflow: visible;
+  }
+
+  .ant-list-item {
+    justify-content: space-between;
+  }
+}
