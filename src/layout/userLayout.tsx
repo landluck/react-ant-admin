@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch, Link } from 'react-router-dom';
 import { Spin, Result, Button, Layout, Typography } from 'antd';
-import { getPageTitle } from '../router/utils';
-import routes, { IRoute } from '../router/config';
-import './userLayout.less';
+import { getPageTitle, systemRouteList } from '../router/utils';
+import { IRoute } from '../router/config';
+import './UserLayout.less';
 
 import logo from '../assets/logo.svg';
 
@@ -40,9 +40,7 @@ class UserLayout extends React.PureComponent<any, UserLayoutState> {
       );
     }
 
-    const title = getPageTitle();
-
-    const route: IRoute | undefined = routes.find(routeItem => routeItem.path === '/system-user');
+    const title = getPageTitle(systemRouteList);
 
     return (
       <>
@@ -65,11 +63,9 @@ class UserLayout extends React.PureComponent<any, UserLayoutState> {
             </div>
             <Suspense fallback={<Spin />}>
               <Switch>
-                {route &&
-                  route.children &&
-                  route.children.map((menu: IRoute) => (
-                    <Route key={menu.path} path={menu.path} component={menu.component}></Route>
-                  ))}
+                {systemRouteList.map((menu: IRoute) => (
+                  <Route key={menu.path} path={menu.path} component={menu.component}></Route>
+                ))}
               </Switch>
             </Suspense>
           </div>

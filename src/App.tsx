@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import routes, { IRoute } from './router/config';
+import { IRoute } from './router/config';
+import { layoutRouteList } from './router/utils';
 
 import './styles/index.less';
 
@@ -8,7 +9,7 @@ function App() {
   return (
     <Router>
       <Switch>
-        {routes.map((route: IRoute) => (
+        {layoutRouteList.map((route: IRoute) => (
           <Route key={route.path} path={route.path} component={route.component}></Route>
         ))}
       </Switch>

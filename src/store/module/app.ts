@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 import { IAction } from '../types';
 import { IRoute } from '../../router/config';
 import { routes } from '../../router/sidebar';
+import { flattenRoute } from '../../router/utils';
 
 export interface AppState {
   sidebar: {
@@ -14,6 +15,8 @@ export interface AppState {
   size: string;
 
   routes: IRoute[];
+
+  flattenRoutes: IRoute[];
 }
 
 const defaultApp: AppState = {
@@ -26,6 +29,7 @@ const defaultApp: AppState = {
 
   size: 'small',
   routes,
+  flattenRoutes: flattenRoute(routes, true),
 };
 
 const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED';

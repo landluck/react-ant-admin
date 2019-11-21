@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../layout/index';
-import UserLayout from '../layout/userLayout';
+import UserLayout from '../layout/UserLayout';
 
 export interface IRouteBase {
   path: string;
@@ -25,7 +25,7 @@ export interface IRoute extends IRouteBase {
 
 const routes: IRoute[] = [
   {
-    path: '/system-user',
+    path: '/system',
     component: UserLayout,
     meta: {
       title: '系统路由',
@@ -196,6 +196,13 @@ const routes: IRoute[] = [
             },
           },
         ],
+      },
+      {
+        path: '/*',
+        meta: {
+          title: '错误页面',
+        },
+        redirect: '/error/404',
       },
     ],
   },
