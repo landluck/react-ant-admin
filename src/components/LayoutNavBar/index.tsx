@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { IStoreState } from '../../store/types';
@@ -73,4 +73,4 @@ export default connect(
   {
     ActionUpdateSideBar: updateSideBar,
   },
-)(LayoutNavBar);
+)(memo(LayoutNavBar));

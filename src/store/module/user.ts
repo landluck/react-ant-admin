@@ -1,5 +1,6 @@
 import { Reducer } from 'redux';
 import { IAction } from '../types';
+import { getToken, setToken } from '../../utils/auth';
 
 export interface UserState {
   token: string;
@@ -11,7 +12,7 @@ export interface UserState {
 }
 
 const defaultUser: UserState = {
-  token: '',
+  token: getToken(),
   avatar: undefined,
   account: '刘海红',
   mobile: '',
@@ -34,6 +35,8 @@ const userReducer: Reducer<UserState, IAction<any>> = (
 
   switch (type) {
     case SET_USER_INFO:
+      setToken(payload.token);
+
       return {
         ...payload,
       };

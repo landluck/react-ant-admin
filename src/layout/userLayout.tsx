@@ -4,7 +4,7 @@ import { Route, Switch, Link } from 'react-router-dom';
 import { Spin, Result, Button, Layout, Typography } from 'antd';
 import { getPageTitle } from '../router/utils';
 import routes, { IRoute } from '../router/config';
-import './UserLayout.less';
+import './userLayout.less';
 
 import logo from '../assets/logo.svg';
 

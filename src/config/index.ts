@@ -5,6 +5,8 @@ export interface Config {
 
   API_URL: string;
 
+  TOKEN_KEY: string;
+
   layout: 'side' | 'top';
 
   theme: 'dark' | 'light';
@@ -25,6 +27,9 @@ const AdminConfig: Config = {
 
   // 统一请求地址
   API_URL: '',
+
+  // 本地存储token 的key
+  TOKEN_KEY: 'Admin_Token_key',
 
   // 默认菜单栏位置
   layout: 'side',

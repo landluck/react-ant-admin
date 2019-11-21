@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../layout/index';
-import UserLayout from '../layout/UserLayout';
+import UserLayout from '../layout/userLayout';
 
 export interface IRouteBase {
   path: string;
@@ -59,14 +59,14 @@ const routes: IRoute[] = [
     path: '/',
     component: Layout,
     meta: {
-      title: '业务路由',
+      title: '首页',
     },
     redirect: '/dashborad/google',
     children: [
       {
         path: '/dashborad',
         meta: {
-          title: '首页',
+          title: '数据台',
           icon: 'dashborad',
         },
         redirect: '/dashborad/google',
@@ -172,6 +172,28 @@ const routes: IRoute[] = [
                 },
               },
             ],
+          },
+        ],
+      },
+      {
+        path: '/error',
+        meta: {
+          title: '错误页面',
+        },
+        children: [
+          {
+            path: '/error/404',
+            component: React.lazy(() => import('../views/error/404')),
+            meta: {
+              title: '页面不存在',
+            },
+          },
+          {
+            path: '/error/403',
+            component: React.lazy(() => import('../views/error/403')),
+            meta: {
+              title: '暂无权限',
+            },
           },
         ],
       },

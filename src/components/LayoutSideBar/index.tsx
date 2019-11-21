@@ -9,6 +9,7 @@ import { IRoute } from '../../router/config';
 import renderMenu from '../SideMenu';
 import './index.less';
 import { Settings } from '../../store/module/settings';
+import { getPagePathList } from '../../router/utils';
 
 interface LayoutSideBarProps extends Settings {
   sidebar: AppState['sidebar'];
@@ -41,10 +42,7 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
       <div className="layout__side-bar__menu">
         <Menu
           defaultSelectedKeys={[window.location.pathname]}
-          defaultOpenKeys={window.location.pathname
-            .split('/')
-            .filter(Boolean)
-            .map((value, index, array) => '/'.concat(array.slice(0, index + 1).join('/')))}
+          defaultOpenKeys={layout === 'top' ? [] : getPagePathList()}
           mode={layout === 'side' ? 'inline' : 'horizontal'}
           theme={theme}
           {...inlineCollapsed}

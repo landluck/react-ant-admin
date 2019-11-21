@@ -90,13 +90,6 @@ export const routes: IRoute[] = [
               icon: 'aliyun',
             },
           },
-          {
-            path: '/goods/list3/list2',
-            meta: {
-              title: '阿里巴巴',
-              icon: 'aliyun',
-            },
-          },
         ],
       },
     ],
