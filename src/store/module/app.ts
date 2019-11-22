@@ -29,7 +29,7 @@ const defaultApp: AppState = {
 
   size: 'small',
   routes,
-  flattenRoutes: flattenRoute(routes, true),
+  flattenRoutes: flattenRoute(routes, true, false),
 };
 
 const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED';

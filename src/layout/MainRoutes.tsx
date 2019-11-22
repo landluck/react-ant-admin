@@ -17,7 +17,7 @@ function checkAuth(location: RouteComponentProps['location']): boolean {
     return true;
   }
 
-  if (route.path.indexOf('error') !== -1) {
+  if (route.auth === false) {
     return true;
   }
 
@@ -42,7 +42,7 @@ function renderRoute(route: IRoute) {
         if (!getToken()) {
           return (
             <Redirect
-              to={`/system-user/login?redirect=${encodeURIComponent(
+              to={`/system/login?redirect=${encodeURIComponent(
                 location.pathname + location.search,
               )}`}
             />
@@ -50,7 +50,6 @@ function renderRoute(route: IRoute) {
         }
 
         // 检查授权
-
         if (!checkAuth(location)) {
           return <Redirect to="/error/403" push />;
         }

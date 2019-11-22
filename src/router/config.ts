@@ -3,10 +3,16 @@ import Layout from '../layout/index';
 import UserLayout from '../layout/UserLayout';
 
 export interface IRouteBase {
+  // 路由路径
   path: string;
+  // 路由组件
   component?: any;
+  // 302 跳转
   redirect?: string;
+  // 路由信息
   meta: IRouteMeta;
+  // 是否校验权限, false 为不校验, 不存在该属性或者为true 为校验, 子路由会继承父路由的 auth 属性
+  auth?: boolean;
 }
 
 export interface IRouteMeta {
@@ -30,24 +36,25 @@ const routes: IRoute[] = [
     meta: {
       title: '系统路由',
     },
-    redirect: '/system-user/login',
+    redirect: '/system/login',
     children: [
       {
-        path: '/system-user/login',
+        path: '/system/login',
         component: React.lazy(() => import('../views/system-user/login')),
         meta: {
           title: '登录',
         },
       },
       {
-        path: '/system-user/register',
+        path: '/system/register',
         component: React.lazy(() => import('../views/system-user/register')),
         meta: {
           title: '注册',
         },
       },
       {
-        path: '/system-user/register-result',
+        path: '/system/register-result',
+        auth: false,
         component: React.lazy(() => import('../views/system-user/register-result')),
         meta: {
           title: '注册结果',
@@ -175,14 +182,18 @@ const routes: IRoute[] = [
           },
         ],
       },
+
+      // 以下的路由改动请小心，涉及权限校验模块
       {
         path: '/error',
         meta: {
           title: '错误页面',
         },
+        redirect: '/error/404',
         children: [
           {
             path: '/error/404',
+            auth: false,
             component: React.lazy(() => import('../views/error/404')),
             meta: {
               title: '页面不存在',
@@ -190,6 +201,7 @@ const routes: IRoute[] = [
           },
           {
             path: '/error/403',
+            auth: false,
             component: React.lazy(() => import('../views/error/403')),
             meta: {
               title: '暂无权限',

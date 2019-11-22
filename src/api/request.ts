@@ -23,6 +23,7 @@ axios.interceptors.request.use(
     const token = getToken();
 
     // 获取用户token，用于校验
+    /* eslint-disable  no-param-reassign */
     if (token) {
       config.headers.token = token;
     }
