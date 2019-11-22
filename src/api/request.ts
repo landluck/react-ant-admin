@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { message, Modal } from 'antd';
-import store from '../store/index';
 import AdminConfig from '../config';
+import { getToken } from '../utils/auth';
 
 interface ResponseData<T> {
   code: number;
@@ -20,12 +20,11 @@ axios.defaults.headers = {
 // 添加请求拦截器
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const state = store.getState();
+    const token = getToken();
 
     // 获取用户token，用于校验
-    /* eslint-disable no-param-reassign */
-    if (state.user.token) {
-      config.headers.token = state.user.token;
+    if (token) {
+      config.headers.token = token;
     }
 
     return config;

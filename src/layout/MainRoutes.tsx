@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
 import { IRoute } from '../router/config';
-// import { getToken } from '../utils/auth';
+import { getToken } from '../utils/auth';
 import store from '../store/index';
 import { businessRouteList, getPageTitle } from '../router/utils';
 
@@ -39,15 +39,15 @@ function renderRoute(route: IRoute) {
       path={route.path}
       render={({ location }) => {
         // 未登录
-        // if (!getToken()) {
-        //   return (
-        //     <Redirect
-        //       to={`/system-user/login?redirect=${encodeURIComponent(
-        //         location.pathname + location.search,
-        //       )}`}
-        //     />
-        //   );
-        // }
+        if (!getToken()) {
+          return (
+            <Redirect
+              to={`/system-user/login?redirect=${encodeURIComponent(
+                location.pathname + location.search,
+              )}`}
+            />
+          );
+        }
 
         // 检查授权
 
