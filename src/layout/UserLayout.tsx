@@ -64,7 +64,7 @@ class UserLayout extends React.PureComponent<any, UserLayoutState> {
             <Suspense fallback={<Spin />}>
               <Switch>
                 {systemRouteList.map((menu: IRoute) => (
-                  <Route key={menu.path} path={menu.path} component={menu.component}></Route>
+                  <Route exact key={menu.path} path={menu.path} component={menu.component}></Route>
                 ))}
               </Switch>
             </Suspense>

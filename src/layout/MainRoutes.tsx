@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Helmet from 'react-helmet';
 import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { IRoute } from '../router/config';
-// import { getToken } from '../utils/auth';
+import { getToken } from '../utils/auth';
 import store from '../store/index';
 import { businessRouteList, getPageTitle } from '../router/utils';
 import TransitionMain from '../components/TransitionMain';
@@ -46,15 +46,15 @@ function renderRoute(route: IRoute) {
       path={route.path}
       render={props => {
         // 未登录
-        // if (!getToken()) {
-        //   return (
-        //     <Redirect
-        //       to={`/system/login?redirect=${encodeURIComponent(
-        //         props.location.pathname + props.location.search,
-        //       )}`}
-        //     />
-        //   );
-        // }
+        if (!getToken()) {
+          return (
+            <Redirect
+              to={`/system/login?redirect=${encodeURIComponent(
+                props.location.pathname + props.location.search,
+              )}`}
+            />
+          );
+        }
 
         // 检查授权
         if (!checkAuth(props.location)) {
