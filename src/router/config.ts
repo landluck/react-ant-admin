@@ -40,14 +40,14 @@ const routes: IRoute[] = [
     children: [
       {
         path: '/system/login',
-        component: React.lazy(() => import('../views/system-user/login')),
+        component: React.lazy(() => import('../views/system/login')),
         meta: {
           title: '登录',
         },
       },
       {
         path: '/system/register',
-        component: React.lazy(() => import('../views/system-user/register')),
+        component: React.lazy(() => import('../views/system/register')),
         meta: {
           title: '注册',
         },
@@ -55,7 +55,7 @@ const routes: IRoute[] = [
       {
         path: '/system/register-result',
         auth: false,
-        component: React.lazy(() => import('../views/system-user/register-result')),
+        component: React.lazy(() => import('../views/system/register-result')),
         meta: {
           title: '注册结果',
         },
