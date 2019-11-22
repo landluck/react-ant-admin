@@ -1,0 +1,18 @@
+@import '../../styles/var.less';
+
+.layout {
+  &__nav-bar {
+    &__hamburger {
+      height: @headerHeight;
+      padding: 0 15px;
+      font-size: 20px;
+      line-height: @headerHeight;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.025);
+      }
+    }
+  }
+}
