@@ -4,11 +4,12 @@ import './index.less';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'react-redux';
-import renderAccount from './componets/account';
-import renderMobile from './componets/mobile';
+import renderAccount from '../component/account';
+import renderMobile from '../component/mobile';
 import VerifyUtils from '../../../utils/verifty';
 import { apiUserLogin } from './service';
 import { setUserInfo, UserState } from '../../../store/module/user';
+import FormWrap from '../component/FormWrap';
 
 const COUNT_STATIC = 60;
 
@@ -128,7 +129,7 @@ class Login extends React.Component<LoginProps, LoginState> {
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <div className="login-wrap">
+      <FormWrap className="page-login">
         <Tabs defaultActiveKey={activeTab} onChange={this.setActiveTab}>
           <Tabs.TabPane tab="账号密码登录" key="account"></Tabs.TabPane>
           <Tabs.TabPane tab="手机号登录" key="mobile"></Tabs.TabPane>
@@ -140,11 +141,11 @@ class Login extends React.Component<LoginProps, LoginState> {
             : renderMobile(getFieldDecorator, count, this.onTimeClick)}
 
           <Form.Item>
-            <div className="more-opt">
+            <div className="align--between">
               <Checkbox checked onChange={this.onChange}>
                 自动登录
               </Checkbox>
-              <Link to="/system-user/recovery-pwd">忘记密码</Link>
+              <Link to="/system/recovery-pwd">忘记密码</Link>
             </div>
           </Form.Item>
 
@@ -155,17 +156,17 @@ class Login extends React.Component<LoginProps, LoginState> {
           </Form.Item>
 
           <Form.Item>
-            <div className="more-opt">
-              <div className="other-login">
+            <div className="align--between">
+              <div className="page-login__others">
                 其他登录方式
-                <Icon className="login-icon" type="github"></Icon>
-                <Icon className="login-icon" type="zhihu"></Icon>
+                <Icon className="page-login__icon" type="github"></Icon>
+                <Icon className="page-login__icon" type="zhihu"></Icon>
               </div>
-              <Link to="/system-user/register">注册账号</Link>
+              <Link to="/system/register">注册账号</Link>
             </div>
           </Form.Item>
         </Form>
-      </div>
+      </FormWrap>
     );
   }
 }

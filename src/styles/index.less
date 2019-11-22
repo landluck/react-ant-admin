@@ -1,1 +1,47 @@
 @import './var.less';
+
+.layout {
+  &__loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+}
+
+.align {
+  &--between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &--left {
+    display: flex;
+  }
+
+  &--right {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &--around {
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+.vertical {
+  &--top {
+    display: flex;
+  }
+
+  &-middle {
+    display: flex;
+    align-items: center;
+  }
+
+  &-bottom {
+    display: flex;
+    align-items: flex-end;
+  }
+}

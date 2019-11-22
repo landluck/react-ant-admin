@@ -1,6 +1,4 @@
 import React from 'react';
-import Layout from '../layout/index';
-import UserLayout from '../layout/UserLayout';
 
 export interface IRouteBase {
   // 路由路径
@@ -32,7 +30,7 @@ export interface IRoute extends IRouteBase {
 const routes: IRoute[] = [
   {
     path: '/system',
-    component: UserLayout,
+    component: React.lazy(() => import('../layout/UserLayout')),
     meta: {
       title: '系统路由',
     },
@@ -64,7 +62,7 @@ const routes: IRoute[] = [
   },
   {
     path: '/',
-    component: Layout,
+    component: React.lazy(() => import('../layout/index')),
     meta: {
       title: '首页',
     },
