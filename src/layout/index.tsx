@@ -29,7 +29,7 @@ function Layout(props: LayoutProps) {
         {props.layout === 'side' && <Sidebar />}
         <section className={classnames('layout__main')}>
           <Header />
-          <Suspense fallback={<Spin />}>
+          <Suspense fallback={<Spin size="large" className="layout__loading" />}>
             <MainRoutes />
           </Suspense>
         </section>

@@ -18,4 +18,45 @@
   &--weak {
     filter: invert(80%);
   }
+
+  &__loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  &__route {
+    position: relative;
+
+    &-enter {
+      position: absolute;
+      top: 0;
+      left: 40px;
+      opacity: 0;
+    }
+
+    &-enter-active {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      transition: all 300ms;
+    }
+
+    &-exit {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
+    }
+
+    &-exit-active {
+      position: absolute;
+      top: 0;
+      left: -40px;
+      opacity: 0;
+      transition: all 300ms;
+    }
+  }
 }

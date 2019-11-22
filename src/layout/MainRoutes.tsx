@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Helmet from 'react-helmet';
-import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import { IRoute } from '../router/config';
-import { getToken } from '../utils/auth';
+// import { getToken } from '../utils/auth';
 import store from '../store/index';
 import { businessRouteList, getPageTitle } from '../router/utils';
+import TransitionMain from '../components/TransitionMain';
 
 function checkAuth(location: RouteComponentProps['location']): boolean {
   // redux 中的 routes 同时负责渲染 sidebar
@@ -14,6 +15,10 @@ function checkAuth(location: RouteComponentProps['location']): boolean {
   const route = businessRouteList.find(child => child.path === location.pathname);
 
   if (!route) {
+    return true;
+  }
+
+  if (route.redirect) {
     return true;
   }
 
@@ -32,25 +37,27 @@ function checkAuth(location: RouteComponentProps['location']): boolean {
 function renderRoute(route: IRoute) {
   const title = getPageTitle(businessRouteList);
 
+  const { component: Component } = route;
+
   return (
     <Route
       key={route.path}
       exact={route.path !== '*'}
       path={route.path}
-      render={({ location }) => {
+      render={props => {
         // 未登录
-        if (!getToken()) {
-          return (
-            <Redirect
-              to={`/system/login?redirect=${encodeURIComponent(
-                location.pathname + location.search,
-              )}`}
-            />
-          );
-        }
+        // if (!getToken()) {
+        //   return (
+        //     <Redirect
+        //       to={`/system/login?redirect=${encodeURIComponent(
+        //         props.location.pathname + props.location.search,
+        //       )}`}
+        //     />
+        //   );
+        // }
 
         // 检查授权
-        if (!checkAuth(location)) {
+        if (!checkAuth(props.location)) {
           return <Redirect to="/error/403" push />;
         }
 
@@ -62,7 +69,7 @@ function renderRoute(route: IRoute) {
               <title>{title}</title>
               <meta name="description" content={title} />
             </Helmet>
-            <route.component />
+            <Component {...props} />
           </>
         );
       }}
@@ -70,7 +77,7 @@ function renderRoute(route: IRoute) {
   );
 }
 
-function renderRouteList(): React.ReactNode {
+function renderRouteList(): React.ReactNode[] {
   const result: React.ReactNode[] = [];
 
   businessRouteList.forEach((child: IRoute) => {
@@ -81,7 +88,9 @@ function renderRouteList(): React.ReactNode {
 }
 
 function MainRoutes() {
-  return <Switch>{renderRouteList()}</Switch>;
+  const routeList = useMemo(() => renderRouteList(), []);
+
+  return <TransitionMain>{routeList}</TransitionMain>;
 }
 
 export default MainRoutes;

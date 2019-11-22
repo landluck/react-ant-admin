@@ -14,13 +14,13 @@ export function flattenRoute(routeList: IRoute[], deep: boolean, auth: boolean):
   for (let i = 0; i < routeList.length; i += 1) {
     const route = routeList[i];
 
+    result.push({
+      ...route,
+      auth: typeof route.auth !== 'undefined' ? route.auth : auth,
+    });
+
     if (route.children && deep) {
       result.push(...flattenRoute(route.children, deep, auth));
-    } else {
-      result.push({
-        ...route,
-        auth: typeof route.auth !== 'undefined' ? route.auth : auth,
-      });
     }
   }
 
