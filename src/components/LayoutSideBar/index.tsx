@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Menu } from 'antd';
@@ -25,6 +25,8 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
     inlineCollapsed.inlineCollapsed = !sidebar.opened;
   }
 
+  const pathname = useMemo(() => window.location.pathname, [window.location.pathname]);
+
   return (
     <aside
       className={classnames(
@@ -41,8 +43,8 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
       </div>
       <div className="layout__side-bar__menu">
         <Menu
-          defaultSelectedKeys={[window.location.pathname]}
-          defaultOpenKeys={layout === 'top' ? [] : getPagePathList()}
+          defaultSelectedKeys={[pathname]}
+          defaultOpenKeys={layout === 'top' ? [] : getPagePathList(pathname)}
           mode={layout === 'side' ? 'inline' : 'horizontal'}
           theme={theme}
           {...inlineCollapsed}

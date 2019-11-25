@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Tabs, Checkbox, Button, Icon, Form, message } from 'antd';
 import './index.less';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'react-redux';
 import renderAccount from '../component/account';
 import renderMobile from '../component/mobile';
 import VerifyUtils from '../../../utils/verifty';
-import { apiUserLogin } from './service';
+import { apiUserLogin, apiGetVerifyCode, apiUserLoginByMobile } from './service';
 import { setUserInfo, UserState } from '../../../store/module/user';
 import FormWrap from '../component/FormWrap';
+import useCount from '../../../hooks/count';
 
 const COUNT_STATIC = 60;
 
 interface LoginProps extends FormComponentProps, RouteComponentProps {
   setUserInfo: (userInfo: UserState) => void;
-}
-
-interface LoginState {
-  activeTab: string;
-  count: number;
 }
 
 interface FormProp {
@@ -29,37 +25,16 @@ interface FormProp {
   code?: number;
 }
 
-class Login extends React.Component<LoginProps, LoginState> {
-  timer: NodeJS.Timeout | null = null;
+function Login(props: LoginProps) {
+  const [activeTab, setActiveTab] = useState('account');
 
-  state: LoginState = {
-    activeTab: 'account',
-    count: COUNT_STATIC,
-  };
+  const [count, beginTimer] = useCount(COUNT_STATIC);
 
-  componentWillUnmount() {
-    this.clearTimer();
-  }
+  const { getFieldDecorator } = props.form;
 
-  onTimeClick = () => {
-    const value = this.props.form.getFieldValue('mobile');
-
-    if (!VerifyUtils.verifyMobile(value)) {
-      message.error('请输入合法手机号');
-      return;
-    }
-
-    // 发起请求
-
-    this.countdown();
-  };
-
-  onChange = () => {};
-
-  onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    this.props.form.validateFields((err, values: FormProp) => {
+    props.form.validateFields((err, values: FormProp) => {
       if (!err) {
         if (values.account && values.password) {
           apiUserLogin({
@@ -67,9 +42,9 @@ class Login extends React.Component<LoginProps, LoginState> {
             password: values.password,
           })
             .then(({ data }: { data: UserState }) => {
-              this.props.setUserInfo(data);
+              props.setUserInfo(data);
 
-              this.props.history.push('/');
+              props.history.push('/');
             })
             .catch(() => {});
 
@@ -77,100 +52,71 @@ class Login extends React.Component<LoginProps, LoginState> {
         }
 
         if (values.mobile && values.code) {
-          // api
+          apiUserLoginByMobile({ mobile: values.mobile, code: values.code })
+            .then(({ data }: { data: UserState }) => {
+              props.setUserInfo(data);
+
+              props.history.push('/');
+            })
+            .catch(() => {});
         }
       }
     });
-  };
+  }, []);
 
-  setActiveTab = (activeTab: string) => {
-    this.setState({
-      activeTab,
-    });
+  const onTimeClick = useCallback(() => {
+    const value = props.form.getFieldValue('mobile');
 
-    if (activeTab === 'account') {
-      this.clearTimer();
-      this.setState({
-        count: COUNT_STATIC,
-      });
-    }
-  };
-
-  countdown() {
-    if (this.state.count === 0) {
-      this.setState({
-        count: COUNT_STATIC,
-      });
-
-      this.clearTimer();
+    if (!value || !VerifyUtils.verifyMobile(value)) {
+      message.error('请输入合法手机号');
       return;
     }
 
-    this.setState(prev => ({
-      count: prev.count - 1,
-    }));
+    apiGetVerifyCode({ mobile: value }).then(() => {
+      beginTimer();
+    });
+  }, []);
 
-    this.timer = setTimeout(() => {
-      this.countdown();
-    }, 1000);
-  }
+  return (
+    <FormWrap className="page-login">
+      <Tabs defaultActiveKey={activeTab} onChange={setActiveTab}>
+        <Tabs.TabPane tab="账号密码登录" key="account"></Tabs.TabPane>
+        <Tabs.TabPane tab="手机号登录" key="mobile"></Tabs.TabPane>
+      </Tabs>
 
-  clearTimer() {
-    if (this.timer) {
-      clearTimeout(this.timer);
+      <Form onSubmit={onSubmit}>
+        {activeTab === 'account'
+          ? renderAccount(getFieldDecorator)
+          : renderMobile(getFieldDecorator, count, onTimeClick)}
 
-      this.timer = null;
-    }
-  }
+        <Form.Item>
+          <div className="align--between">
+            <Checkbox defaultChecked>自动登录</Checkbox>
+            <Link to="/system/recovery-pwd">忘记密码</Link>
+          </div>
+        </Form.Item>
 
-  render() {
-    const { activeTab, count } = this.state;
+        <Form.Item>
+          <Button block htmlType="submit" type="primary">
+            登录
+          </Button>
+        </Form.Item>
 
-    const { getFieldDecorator } = this.props.form;
-
-    return (
-      <FormWrap className="page-login">
-        <Tabs defaultActiveKey={activeTab} onChange={this.setActiveTab}>
-          <Tabs.TabPane tab="账号密码登录" key="account"></Tabs.TabPane>
-          <Tabs.TabPane tab="手机号登录" key="mobile"></Tabs.TabPane>
-        </Tabs>
-
-        <Form onSubmit={this.onSubmit}>
-          {activeTab === 'account'
-            ? renderAccount(getFieldDecorator)
-            : renderMobile(getFieldDecorator, count, this.onTimeClick)}
-
-          <Form.Item>
-            <div className="align--between">
-              <Checkbox checked onChange={this.onChange}>
-                自动登录
-              </Checkbox>
-              <Link to="/system/recovery-pwd">忘记密码</Link>
+        <Form.Item>
+          <div className="align--between">
+            <div className="page-login__others">
+              其他登录方式
+              <Icon className="page-login__icon" type="github"></Icon>
+              <Icon className="page-login__icon" type="zhihu"></Icon>
             </div>
-          </Form.Item>
-
-          <Form.Item>
-            <Button block htmlType="submit" type="primary">
-              登录
-            </Button>
-          </Form.Item>
-
-          <Form.Item>
-            <div className="align--between">
-              <div className="page-login__others">
-                其他登录方式
-                <Icon className="page-login__icon" type="github"></Icon>
-                <Icon className="page-login__icon" type="zhihu"></Icon>
-              </div>
-              <Link to="/system/register">注册账号</Link>
-            </div>
-          </Form.Item>
-        </Form>
-      </FormWrap>
-    );
-  }
+            <Link to="/system/register">注册账号</Link>
+          </div>
+        </Form.Item>
+      </Form>
+    </FormWrap>
+  );
 }
 
 export default connect(() => ({}), {
   setUserInfo,
-})(Form.create({ name: 'login' })(withRouter(Login)));
+})(Form.create({ name: 'login' })(Login));
