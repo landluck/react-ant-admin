@@ -51,11 +51,19 @@ const routes: IRoute[] = [
         },
       },
       {
-        path: '/system/register-result',
+        path: '/system/register-result/:id',
         auth: false,
-        component: React.lazy(() => import('../views/system/register-result')),
+        component: React.lazy(() => import('../views/system/registerResult')),
         meta: {
           title: '注册结果',
+        },
+      },
+      {
+        path: '/system/recovery-pwd',
+        auth: false,
+        component: React.lazy(() => import('../views/system/recoveryPwd')),
+        meta: {
+          title: '重置密码',
         },
       },
     ],
@@ -177,6 +185,26 @@ const routes: IRoute[] = [
                 },
               },
             ],
+          },
+        ],
+      },
+
+      // 以下菜单为系统权限管理
+      {
+        path: '/auth',
+        meta: {
+          title: '权限管理',
+          icon: 'setting',
+        },
+        redirect: '/auth/menu',
+        children: [
+          {
+            path: '/auth/menu',
+            meta: {
+              title: '菜单管理',
+              icon: 'menu',
+            },
+            component: React.lazy(() => import('../views/auth/menu')),
           },
         ],
       },

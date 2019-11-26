@@ -158,7 +158,7 @@ function LayoutSettings(props: LayoutSettings) {
               <Switch
                 size="small"
                 defaultChecked={props.settings.fixedHeader}
-                onChange={value => onChange('fixHeander', value)}
+                onChange={value => onChange('fixedHeader', value)}
               />
             ),
           },

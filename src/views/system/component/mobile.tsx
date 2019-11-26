@@ -9,7 +9,7 @@ function renderMobile(
 ) {
   return (
     <>
-      <Form.Item>
+      <Form.Item hasFeedback>
         {getFieldDecorator('mobile', {
           rules: [{ required: true, message: '请输入合法手机号', len: 11 }],
         })(

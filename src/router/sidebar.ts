@@ -94,4 +94,22 @@ export const routes: IRoute[] = [
       },
     ],
   },
+  // 以下菜单为系统权限管理
+  {
+    path: '/auth',
+    meta: {
+      title: '权限管理',
+      icon: 'setting',
+    },
+    redirect: '/auth/menu',
+    children: [
+      {
+        path: '/auth/menu',
+        meta: {
+          title: '菜单管理',
+          icon: 'menu',
+        },
+      },
+    ],
+  },
 ];

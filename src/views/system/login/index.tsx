@@ -5,14 +5,13 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'react-redux';
 import renderAccount from '../component/account';
+import renderPassword from '../component/password';
 import renderMobile from '../component/mobile';
 import VerifyUtils from '../../../utils/verifty';
 import { apiUserLogin, apiGetVerifyCode, apiUserLoginByMobile } from './service';
 import { setUserInfo, UserState } from '../../../store/module/user';
 import FormWrap from '../component/FormWrap';
 import useCount from '../../../hooks/count';
-
-const COUNT_STATIC = 60;
 
 interface LoginProps extends FormComponentProps, RouteComponentProps {
   setUserInfo: (userInfo: UserState) => void;
@@ -28,7 +27,7 @@ interface FormProp {
 function Login(props: LoginProps) {
   const [activeTab, setActiveTab] = useState('account');
 
-  const [count, beginTimer] = useCount(COUNT_STATIC);
+  const [count, beginTimer] = useCount();
 
   const { getFieldDecorator } = props.form;
 
@@ -72,9 +71,11 @@ function Login(props: LoginProps) {
       return;
     }
 
-    apiGetVerifyCode({ mobile: value }).then(() => {
-      beginTimer();
-    });
+    apiGetVerifyCode({ mobile: value })
+      .then(() => {
+        beginTimer();
+      })
+      .catch(() => {});
   }, []);
 
   return (
@@ -85,9 +86,14 @@ function Login(props: LoginProps) {
       </Tabs>
 
       <Form onSubmit={onSubmit}>
-        {activeTab === 'account'
-          ? renderAccount(getFieldDecorator)
-          : renderMobile(getFieldDecorator, count, onTimeClick)}
+        {activeTab === 'account' ? (
+          <>
+            {renderAccount(getFieldDecorator)}
+            {renderPassword(getFieldDecorator)}
+          </>
+        ) : (
+          renderMobile(getFieldDecorator, count, onTimeClick)
+        )}
 
         <Form.Item>
           <div className="align--between">

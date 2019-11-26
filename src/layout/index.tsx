@@ -14,6 +14,8 @@ interface LayoutProps {
   layout: Settings['layout'];
 
   colorWeak: boolean;
+
+  fixedHeader: boolean;
 }
 
 function Layout(props: LayoutProps) {
@@ -29,9 +31,15 @@ function Layout(props: LayoutProps) {
         {props.layout === 'side' && <Sidebar />}
         <section className={classnames('layout__main')}>
           <Header />
-          <Suspense fallback={<Spin size="large" className="layout__loading" />}>
-            <MainRoutes />
-          </Suspense>
+          <div
+            className={classnames('layout__container', {
+              'layout__container--fix': props.fixedHeader,
+            })}
+          >
+            <Suspense fallback={<Spin size="large" className="layout__loading" />}>
+              <MainRoutes />
+            </Suspense>
+          </div>
         </section>
         <LayoutSettings />
       </section>
@@ -39,7 +47,8 @@ function Layout(props: LayoutProps) {
   );
 }
 
-export default connect(({ settings: { layout, colorWeak } }: IStoreState) => ({
+export default connect(({ settings: { layout, colorWeak, fixedHeader } }: IStoreState) => ({
   layout,
   colorWeak,
+  fixedHeader,
 }))(Layout);
