@@ -1,17 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { Tabs, Checkbox, Button, Icon, Form, message } from 'antd';
+import { Tabs, Checkbox, Button, Icon, Form } from 'antd';
 import './index.less';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'react-redux';
-import renderAccount from '../component/account';
-import renderPassword from '../component/password';
-import renderMobile from '../component/mobile';
-import VerifyUtils from '../../../utils/verifty';
-import { apiUserLogin, apiGetVerifyCode, apiUserLoginByMobile } from './service';
+import { apiUserLogin, apiUserLoginByMobile } from './service';
 import { setUserInfo, UserState } from '../../../store/module/user';
 import FormWrap from '../component/FormWrap';
-import useCount from '../../../hooks/count';
+import LoginItem from '../component/LoginItem';
 
 interface LoginProps extends FormComponentProps, RouteComponentProps {
   setUserInfo: (userInfo: UserState) => void;
@@ -26,10 +22,6 @@ interface FormProp {
 
 function Login(props: LoginProps) {
   const [activeTab, setActiveTab] = useState('account');
-
-  const [count, beginTimer] = useCount();
-
-  const { getFieldDecorator } = props.form;
 
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,21 +55,6 @@ function Login(props: LoginProps) {
     });
   }, []);
 
-  const onTimeClick = useCallback(() => {
-    const value = props.form.getFieldValue('mobile');
-
-    if (!value || !VerifyUtils.verifyMobile(value)) {
-      message.error('请输入合法手机号');
-      return;
-    }
-
-    apiGetVerifyCode({ mobile: value })
-      .then(() => {
-        beginTimer();
-      })
-      .catch(() => {});
-  }, []);
-
   return (
     <FormWrap className="page-login">
       <Tabs defaultActiveKey={activeTab} onChange={setActiveTab}>
@@ -88,11 +65,14 @@ function Login(props: LoginProps) {
       <Form onSubmit={onSubmit}>
         {activeTab === 'account' ? (
           <>
-            {renderAccount(getFieldDecorator)}
-            {renderPassword(getFieldDecorator)}
+            <LoginItem.Account form={props.form} />
+            <LoginItem.Password form={props.form} />
           </>
         ) : (
-          renderMobile(getFieldDecorator, count, onTimeClick)
+          <>
+            <LoginItem.Mobile form={props.form} />
+            <LoginItem.Code form={props.form} />
+          </>
         )}
 
         <Form.Item>

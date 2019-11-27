@@ -1,15 +1,10 @@
 import React, { memo, useCallback } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Form, Input, Button, message, Icon } from 'antd';
+import { Form, Button } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import FormWrap from '../component/FormWrap';
-import renderAccount from '../component/account';
-import renderMobile from '../component/mobile';
-import useCount from '../../../hooks/count';
-import VerifyUtils from '../../../utils/verifty';
-import { apiGetVerifyCode } from '../login/service';
 import { apiCreateUser } from './service';
-import { renderPasswordAndConfirm } from '../component/password';
+import LoginItem from '../component/LoginItem';
 
 interface RegisterProps extends FormComponentProps, RouteComponentProps {}
 
@@ -22,25 +17,6 @@ interface FormProp {
 }
 
 function Register(props: RegisterProps) {
-  const [count, beginTimer] = useCount();
-
-  const { getFieldDecorator } = props.form;
-
-  const onTimeClick = useCallback(() => {
-    const value = props.form.getFieldValue('mobile');
-
-    if (!value || !VerifyUtils.verifyMobile(value)) {
-      message.error('请输入合法手机号');
-      return;
-    }
-
-    apiGetVerifyCode({ mobile: value })
-      .then(() => {
-        beginTimer();
-      })
-      .catch(() => {});
-  }, []);
-
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.form.validateFields((err, values: FormProp) => {
@@ -57,18 +33,12 @@ function Register(props: RegisterProps) {
   return (
     <FormWrap>
       <Form onSubmit={onSubmit}>
-        <Form.Item hasFeedback>
-          {getFieldDecorator('name', {
-            rules: [{ required: true, message: '请输入用户名称' }],
-          })(
-            <Input size="large" prefix={<Icon type="user" />} type="text" placeholder="用户名称" />,
-          )}
-        </Form.Item>
-
-        {renderAccount(getFieldDecorator)}
-        {renderPasswordAndConfirm(getFieldDecorator, props.form.getFieldValue('password'))}
-
-        {renderMobile(getFieldDecorator, count, onTimeClick)}
+        <LoginItem.UserName form={props.form} />
+        <LoginItem.Account form={props.form} />
+        <LoginItem.Password form={props.form} />
+        <LoginItem.Confirm form={props.form}></LoginItem.Confirm>
+        <LoginItem.Mobile form={props.form} />
+        <LoginItem.Code form={props.form} />
 
         <Form.Item>
           <div className="align--between">

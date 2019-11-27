@@ -1,14 +1,10 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { RouteComponentProps, Link } from 'react-router-dom';
-import { Form, Button, message, Steps, Row, Col, Result } from 'antd';
+import { Form, Button, Steps, Row, Col, Result } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import FormWrap from '../component/FormWrap';
-import renderMobile from '../component/mobile';
-import useCount from '../../../hooks/count';
-import VerifyUtils from '../../../utils/verifty';
-import { apiGetVerifyCode } from '../login/service';
-import { renderPasswordAndConfirm } from '../component/password';
 import { apiUpdateUserPwd } from './service';
+import LoginItem from '../component/LoginItem';
 
 interface RecoveryPwdProps extends FormComponentProps, RouteComponentProps {}
 
@@ -24,25 +20,6 @@ function RecoveryPwd(props: RecoveryPwdProps) {
   const [mobile, setMobile] = useState('');
 
   const [code, setCode] = useState('');
-
-  const [count, beginTimer] = useCount();
-
-  const { getFieldDecorator } = props.form;
-
-  const onTimeClick = useCallback(() => {
-    const value = props.form.getFieldValue('mobile');
-
-    if (!value || !VerifyUtils.verifyMobile(value)) {
-      message.error('请输入合法手机号');
-      return;
-    }
-
-    apiGetVerifyCode({ mobile: value })
-      .then(() => {
-        beginTimer();
-      })
-      .catch(() => {});
-  }, []);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,11 +63,18 @@ function RecoveryPwd(props: RecoveryPwdProps) {
           {(() => {
             switch (current) {
               case 0:
-                return renderMobile(getFieldDecorator, count, onTimeClick);
+                return (
+                  <React.Fragment>
+                    <LoginItem.Mobile form={props.form}></LoginItem.Mobile>
+                    <LoginItem.Code form={props.form}></LoginItem.Code>
+                  </React.Fragment>
+                );
               case 1:
-                return renderPasswordAndConfirm(
-                  getFieldDecorator,
-                  props.form.getFieldValue('password'),
+                return (
+                  <React.Fragment>
+                    <LoginItem.Password form={props.form}></LoginItem.Password>
+                    <LoginItem.Confirm form={props.form}></LoginItem.Confirm>
+                  </React.Fragment>
                 );
               case 2:
                 return (
@@ -124,4 +108,4 @@ function RecoveryPwd(props: RecoveryPwdProps) {
   );
 }
 
-export default memo(Form.create({ name: 'register' })(RecoveryPwd));
+export default memo(Form.create({ name: 'recovery-pwd' })(RecoveryPwd));

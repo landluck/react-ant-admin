@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
-const COUNT_STATIC = 60;
-
-function useCount(): [number, () => void] {
+function useCount(defaultValue: number): [number, () => void, () => void] {
   const timer = useRef<NodeJS.Timer | null>(null);
 
-  const [count, setCount] = useState(COUNT_STATIC);
+  const [count, setCount] = useState(defaultValue);
 
   const closeTimer = () => {
     if (timer.current) {
@@ -18,7 +16,7 @@ function useCount(): [number, () => void] {
     setCount(value => {
       if (value === 0) {
         closeTimer();
-        return COUNT_STATIC;
+        return defaultValue;
       }
 
       timer.current = setTimeout(() => {
@@ -29,9 +27,7 @@ function useCount(): [number, () => void] {
     });
   };
 
-  useEffect(() => closeTimer(), []);
-
-  return [count, beiginTimer];
+  return [count, beiginTimer, closeTimer];
 }
 
 export default useCount;

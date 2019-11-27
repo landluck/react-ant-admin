@@ -12,13 +12,27 @@ export interface SearchFormItem {
 
 interface SearchFromProps extends FormComponentProps {
   formList: SearchFormItem[];
+  onSearch: (values: any) => void;
 }
 
 function SearchForm(props: SearchFromProps) {
   const { getFieldDecorator } = props.form;
 
+  const reset = () => {
+    props.form.resetFields();
+  };
+
+  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    props.form.validateFields((err, values: any) => {
+      if (!err) {
+        props.onSearch(values);
+      }
+    });
+  };
+
   return (
-    <Form layout="inline">
+    <Form layout="inline" onSubmit={onSearch}>
       {props.formList.map((item: SearchFormItem) => (
         <Form.Item label={item.label} key={item.name}>
           {getFieldDecorator(item.name, {
@@ -32,7 +46,9 @@ function SearchForm(props: SearchFromProps) {
         </Button>
       </Form.Item>
       <Form.Item>
-        <Button htmlType="reset">重置</Button>
+        <Button htmlType="reset" onClick={reset}>
+          重置
+        </Button>
       </Form.Item>
     </Form>
   );

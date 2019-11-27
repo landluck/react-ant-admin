@@ -1,6 +1,9 @@
-import React, { useMemo } from 'react';
-import { Select } from 'antd';
-import SearchForm, { SearchFormItem } from '../../components/searchFrom';
+import React, { useMemo, useCallback, useEffect } from 'react';
+import { Select, Table, Icon } from 'antd';
+import SearchForm, { SearchFormItem } from '../../components/SearchFrom';
+import BaseTable from '../../components/BaseTable';
+import { Menu, MenuSearchParams, apiGetMenuList } from './service';
+import PageWrap from '../../components/PageWrap';
 
 function MenuManage() {
   const formList = useMemo<SearchFormItem[]>(
@@ -36,10 +39,39 @@ function MenuManage() {
     [],
   );
 
+  const initPageList = async (params: MenuSearchParams = { page: 1, size: 10 }) => {
+    try {
+      const { data } = await apiGetMenuList(params);
+      console.log(data);
+    } catch (error) {
+      // dosomethings
+    }
+  };
+
+  const onSearch = useCallback((params: MenuSearchParams) => {
+    initPageList(params);
+  }, []);
+
+  useEffect(() => {
+    initPageList();
+  }, []);
+
   return (
-    <div>
-      <SearchForm formList={formList}></SearchForm>
-    </div>
+    <PageWrap>
+      <SearchForm formList={formList} onSearch={onSearch}></SearchForm>
+      <BaseTable<Menu> list={[]} page={{}}>
+        <Table.Column<Menu> title="id"></Table.Column>
+        <Table.Column<Menu> title="菜单名称"></Table.Column>
+        <Table.Column<Menu>
+          title="菜单icon"
+          render={text => <Icon type={text}></Icon>}
+        ></Table.Column>
+        <Table.Column<Menu> title="菜单排序"></Table.Column>
+        <Table.Column<Menu> title="父级id"></Table.Column>
+        <Table.Column<Menu> title="菜单等级"></Table.Column>
+        <Table.Column<Menu> title="操作"></Table.Column>
+      </BaseTable>
+    </PageWrap>
   );
 }
 
