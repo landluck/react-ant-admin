@@ -19,6 +19,8 @@ export interface Menu {
   parentId: number;
 
   level: number;
+
+  parent?: Menu;
 }
 
 export interface MenuSearchParams extends PageQueryParams {
@@ -28,10 +30,17 @@ export interface MenuSearchParams extends PageQueryParams {
   level?: number;
 }
 
-export function apiGetMenuList(params: MenuSearchParams) {
-  return request<QueryListResponseData<Menu[]>>({
+export function apiGetMenuList(params?: MenuSearchParams) {
+  return request<QueryListResponseData<Menu>>({
     method: 'GET',
     url: '/menu',
     params,
+  });
+}
+
+export function apiRemoveMenu(id: string) {
+  return request<PlaceObject>({
+    method: 'DELETE',
+    url: `/menu/${id}`,
   });
 }

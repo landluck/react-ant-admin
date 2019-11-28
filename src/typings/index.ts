@@ -8,10 +8,10 @@ export interface PageQueryParams {
 }
 
 export interface PageResponseData {
-  dataTotal: number;
-  pageTotal: number;
-  page: number;
-  size: number;
+  dataTotal?: number;
+  pageTotal?: number;
+  page?: number;
+  size?: number;
 }
 
 export interface QueryListResponseData<T> {

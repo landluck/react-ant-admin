@@ -16,6 +16,8 @@ interface LayoutProps {
   colorWeak: boolean;
 
   fixedHeader: boolean;
+
+  contentWidth: Settings['contentWidth'];
 }
 
 function Layout(props: LayoutProps) {
@@ -34,6 +36,7 @@ function Layout(props: LayoutProps) {
           <div
             className={classnames('layout__container', {
               'layout__container--fix': props.fixedHeader,
+              'layout__container--fixed': props.contentWidth === 'fixed' && props.layout === 'top',
             })}
           >
             <Suspense fallback={<Spin size="large" className="layout__loading" />}>
@@ -47,8 +50,11 @@ function Layout(props: LayoutProps) {
   );
 }
 
-export default connect(({ settings: { layout, colorWeak, fixedHeader } }: IStoreState) => ({
-  layout,
-  colorWeak,
-  fixedHeader,
-}))(Layout);
+export default connect(
+  ({ settings: { layout, colorWeak, fixedHeader, contentWidth } }: IStoreState) => ({
+    layout,
+    colorWeak,
+    fixedHeader,
+    contentWidth,
+  }),
+)(Layout);

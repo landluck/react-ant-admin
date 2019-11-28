@@ -1,15 +1,18 @@
 import React from 'react';
-import { Table, Empty } from 'antd';
+import { Table } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination';
 import { TableProps } from 'antd/lib/table';
+import { PageResponseData } from '../../typings';
 
 // 基本的表格组件，后续根据需求可继续完善
 
-interface BaseTableProps<T> {
-  list: T[];
-  page: PaginationProps;
+interface BaseTableProps<T> extends TableProps<T> {
+  data: {
+    list: T[];
+    page: PageResponseData;
+  };
   children: React.ReactNode;
-  tableProps?: TableProps<T>;
+  onChange?: (page: PaginationProps) => void;
 }
 
 const defualtPage: PaginationProps = {
@@ -19,15 +22,24 @@ const defualtPage: PaginationProps = {
 };
 
 function BaseTable<T extends { id: string }>(props: BaseTableProps<T>) {
+  const {
+    data: { list, page },
+    ...resetProps
+  } = props;
+
   return (
     <Table<T>
       bordered
-      {...props.tableProps}
+      {...resetProps}
       style={{ marginTop: '40px' }}
-      dataSource={props.list}
+      dataSource={list}
       rowKey={record => record.id}
-      pagination={{ ...defualtPage, ...props.page }}
-      locale={{ emptyText: <Empty description="暂无数据" /> }}
+      pagination={{
+        ...defualtPage,
+        current: page.page,
+        pageSize: page.size,
+        total: page.dataTotal,
+      }}
     >
       {props.children}
     </Table>

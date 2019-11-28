@@ -1,9 +1,52 @@
-import React, { useMemo, useCallback, useEffect } from 'react';
-import { Select, Table, Icon } from 'antd';
-import SearchForm, { SearchFormItem } from '../../components/SearchFrom';
+import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
+import { Select, Table, Icon, Button, Modal, message } from 'antd';
+/* eslint-disable import/no-unresolved */
+import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchFrom';
 import BaseTable from '../../components/BaseTable';
-import { Menu, MenuSearchParams, apiGetMenuList } from './service';
+import { Menu, MenuSearchParams, apiGetMenuList, apiRemoveMenu } from './service';
 import PageWrap from '../../components/PageWrap';
+import { PageResponseData } from '../../../typings';
+
+const MenuLevel = memo(({ level }: { level: number }) => (
+  <React.Fragment>
+    {(() => {
+      switch (level) {
+        case 1:
+          return '一级菜单';
+        case 2:
+          return '二级菜单';
+        case 3:
+          return '三级菜单';
+        default:
+          return `${level}级菜单`;
+      }
+    })()}
+  </React.Fragment>
+));
+
+const MenuButton = memo(
+  ({
+    index,
+    onButtonClick,
+  }: {
+    index: number;
+    onButtonClick: (type: string, index: number) => void;
+  }) => (
+    <React.Fragment>
+      <Button
+        size="small"
+        style={{ marginRight: '10px' }}
+        onClick={() => onButtonClick('edit', index)}
+        type="link"
+      >
+        编辑
+      </Button>
+      <Button size="small" type="link" onClick={() => onButtonClick('remove', index)}>
+        删除
+      </Button>
+    </React.Fragment>
+  ),
+);
 
 function MenuManage() {
   const formList = useMemo<SearchFormItem[]>(
@@ -39,10 +82,25 @@ function MenuManage() {
     [],
   );
 
-  const initPageList = async (params: MenuSearchParams = { page: 1, size: 10 }) => {
+  const actions = useMemo<SearchFormAction[]>(
+    () => [
+      {
+        name: '添加菜单',
+        type: 'primary',
+      },
+    ],
+    [],
+  );
+
+  const [menuData, setMenuData] = useState<{ list: Menu[]; page: PageResponseData }>({
+    list: [],
+    page: {},
+  });
+
+  const initPageList = async (params?: MenuSearchParams) => {
     try {
       const { data } = await apiGetMenuList(params);
-      console.log(data);
+      setMenuData(data);
     } catch (error) {
       // dosomethings
     }
@@ -56,20 +114,68 @@ function MenuManage() {
     initPageList();
   }, []);
 
+  const onButtonClick = useCallback(
+    (type: string, index: number) => {
+      if (type === 'remove') {
+        Modal.confirm({
+          title: '系统提示',
+          content: '此操作将永久删除该菜单, 是否继续?',
+          onOk() {
+            apiRemoveMenu(menuData.list[index].id).then(() => {
+              message.success('删除成功！');
+            });
+          },
+          onCancel() {},
+        });
+      }
+    },
+    [menuData.list],
+  );
+
+  const onAddMenu = useCallback(() => {
+    // do
+  }, []);
+
   return (
     <PageWrap>
-      <SearchForm formList={formList} onSearch={onSearch}></SearchForm>
-      <BaseTable<Menu> list={[]} page={{}}>
-        <Table.Column<Menu> title="id"></Table.Column>
-        <Table.Column<Menu> title="菜单名称"></Table.Column>
+      {/* 查询表单 */}
+      <SearchForm
+        formList={formList}
+        actions={actions}
+        onSearch={onSearch}
+        onClick={onAddMenu}
+      ></SearchForm>
+      {/* 添加修改表单 */}
+      {/* 数据表格 */}
+      <BaseTable<Menu> data={menuData}>
+        <Table.Column<Menu> title="id" dataIndex="id" align="center"></Table.Column>
+        <Table.Column<Menu> title="菜单名称" dataIndex="name" align="center"></Table.Column>
         <Table.Column<Menu>
           title="菜单icon"
-          render={text => <Icon type={text}></Icon>}
+          dataIndex="icon"
+          align="center"
+          render={text => <Icon style={{ fontSize: '16px' }} type={text}></Icon>}
         ></Table.Column>
-        <Table.Column<Menu> title="菜单排序"></Table.Column>
-        <Table.Column<Menu> title="父级id"></Table.Column>
-        <Table.Column<Menu> title="菜单等级"></Table.Column>
-        <Table.Column<Menu> title="操作"></Table.Column>
+        <Table.Column<Menu> dataIndex="sort" title="菜单排序" align="center"></Table.Column>
+        <Table.Column<Menu>
+          dataIndex="parent"
+          title="父级菜单"
+          render={(text, recored: Menu) => (recored.parent ? recored.parent.name : '')}
+          align="center"
+        ></Table.Column>
+        <Table.Column<Menu>
+          dataIndex="level"
+          title="菜单等级"
+          render={text => <MenuLevel level={text} />}
+          align="center"
+        ></Table.Column>
+        <Table.Column<Menu>
+          title="操作"
+          align="center"
+          render={(text, record, index) => (
+            <MenuButton index={index} onButtonClick={onButtonClick} />
+          )}
+        ></Table.Column>
       </BaseTable>
     </PageWrap>
   );
