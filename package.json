@@ -20,7 +20,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "http://192.168.4.43:3300",
+  "proxy": "http://192.168.4.34:3300",
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",

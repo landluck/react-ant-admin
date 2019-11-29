@@ -1,11 +1,11 @@
 import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
 import { Select, Table, Icon, Button, Modal, message } from 'antd';
-/* eslint-disable import/no-unresolved */
 import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchFrom';
 import BaseTable from '../../components/BaseTable';
 import { Menu, MenuSearchParams, apiGetMenuList, apiRemoveMenu } from './service';
 import PageWrap from '../../components/PageWrap';
 import { PageResponseData } from '../../../typings';
+import AddOrEditMenu from './AddOrEditMenu';
 
 const MenuLevel = memo(({ level }: { level: number }) => (
   <React.Fragment>
@@ -92,10 +92,20 @@ function MenuManage() {
     [],
   );
 
+  const [editVisible, setEditVisible] = useState<boolean>(false);
+
+  const closeEditModal = useCallback(() => {
+    setEditVisible(false);
+  }, [setEditVisible]);
+
+  const onOkEditModal = useCallback(() => {}, [setEditVisible]);
+
   const [menuData, setMenuData] = useState<{ list: Menu[]; page: PageResponseData }>({
     list: [],
     page: {},
   });
+
+  const [currentMenu, setCurrentMenu] = useState<Menu | null>(null);
 
   const initPageList = async (params?: MenuSearchParams) => {
     try {
@@ -121,12 +131,15 @@ function MenuManage() {
           title: '系统提示',
           content: '此操作将永久删除该菜单, 是否继续?',
           onOk() {
-            apiRemoveMenu(menuData.list[index].id).then(() => {
+            apiRemoveMenu(menuData.list[index].id!).then(() => {
               message.success('删除成功！');
             });
           },
           onCancel() {},
         });
+      } else {
+        setEditVisible(true);
+        setCurrentMenu(menuData.list[index]);
       }
     },
     [menuData.list],
@@ -145,7 +158,14 @@ function MenuManage() {
         onSearch={onSearch}
         onClick={onAddMenu}
       ></SearchForm>
-      {/* 添加修改表单 */}
+      {editVisible && (
+        <AddOrEditMenu
+          menu={currentMenu}
+          visible={editVisible}
+          onClose={closeEditModal}
+          onConfirm={onOkEditModal}
+        ></AddOrEditMenu>
+      )}
       {/* 数据表格 */}
       <BaseTable<Menu> data={menuData}>
         <Table.Column<Menu> title="id" dataIndex="id" align="center"></Table.Column>

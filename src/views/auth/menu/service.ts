@@ -4,7 +4,7 @@ import { QueryListResponseData, PageQueryParams } from '../../../typings';
 interface PlaceObject {}
 
 export interface Menu {
-  id: string;
+  id?: number;
 
   name: string;
 
@@ -21,6 +21,8 @@ export interface Menu {
   level: number;
 
   parent?: Menu;
+
+  children?: Menu[];
 }
 
 export interface MenuSearchParams extends PageQueryParams {
@@ -28,6 +30,7 @@ export interface MenuSearchParams extends PageQueryParams {
   id?: number;
   url?: string;
   level?: number;
+  parentId?: number;
 }
 
 export function apiGetMenuList(params?: MenuSearchParams) {
@@ -38,7 +41,14 @@ export function apiGetMenuList(params?: MenuSearchParams) {
   });
 }
 
-export function apiRemoveMenu(id: string) {
+export function apiGetMenuCascader() {
+  return request<Menu[]>({
+    method: 'GET',
+    url: '/menu/cascader',
+  });
+}
+
+export function apiRemoveMenu(id: number) {
   return request<PlaceObject>({
     method: 'DELETE',
     url: `/menu/${id}`,

@@ -21,7 +21,7 @@ const defualtPage: PaginationProps = {
   showSizeChanger: true,
 };
 
-function BaseTable<T extends { id: string }>(props: BaseTableProps<T>) {
+function BaseTable<T extends { id?: number }>(props: BaseTableProps<T>) {
   const {
     data: { list, page },
     ...resetProps
@@ -33,7 +33,7 @@ function BaseTable<T extends { id: string }>(props: BaseTableProps<T>) {
       {...resetProps}
       style={{ marginTop: '40px' }}
       dataSource={list}
-      rowKey={record => record.id}
+      rowKey={record => `${record.id}`}
       pagination={{
         ...defualtPage,
         current: page.page,
