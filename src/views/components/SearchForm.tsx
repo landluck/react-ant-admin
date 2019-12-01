@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { Form, Button, Input } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import { ButtonType } from 'antd/es/button/button';
+import './index.less';
 
 export interface SearchFormAction {
   name: string;
@@ -28,6 +29,7 @@ function SearchForm(props: SearchFormProps) {
 
   const reset = () => {
     props.form.resetFields();
+    props.onSearch({});
   };
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,7 +42,7 @@ function SearchForm(props: SearchFormProps) {
   };
 
   return (
-    <Form layout="inline" onSubmit={onSearch}>
+    <Form className="layout__search" layout="inline" onSubmit={onSearch}>
       {props.formList.map((item: SearchFormItem) => (
         <Form.Item label={item.label} key={item.name}>
           {getFieldDecorator(item.name, {

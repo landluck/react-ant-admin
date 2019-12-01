@@ -12,7 +12,7 @@ export interface Menu {
 
   icon: string;
 
-  desc: string;
+  desc?: string;
 
   sort: number;
 
@@ -38,6 +38,22 @@ export function apiGetMenuList(params?: MenuSearchParams) {
     method: 'GET',
     url: '/menu',
     params,
+  });
+}
+
+export function apiUpdateMenu(data: Menu) {
+  return request<PlaceObject>({
+    method: 'PUT',
+    url: '/menu',
+    data,
+  });
+}
+
+export function apiCreateMenu(data: Menu) {
+  return request<PlaceObject>({
+    method: 'POST',
+    url: '/menu',
+    data,
   });
 }
 

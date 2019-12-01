@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Table } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination';
 import { TableProps } from 'antd/lib/table';
@@ -12,14 +12,8 @@ interface BaseTableProps<T> extends TableProps<T> {
     page: PageResponseData;
   };
   children: React.ReactNode;
-  onChange?: (page: PaginationProps) => void;
+  onChange: (page: PaginationProps) => void;
 }
-
-const defualtPage: PaginationProps = {
-  defaultCurrent: 1,
-  defaultPageSize: 10,
-  showSizeChanger: true,
-};
 
 function BaseTable<T extends { id?: number }>(props: BaseTableProps<T>) {
   const {
@@ -27,17 +21,27 @@ function BaseTable<T extends { id?: number }>(props: BaseTableProps<T>) {
     ...resetProps
   } = props;
 
+  const [pagination, setPagination] = useState<PaginationProps>({
+    defaultCurrent: 1,
+    defaultPageSize: 10,
+    showSizeChanger: true,
+  });
+
+  const onTableChange = useCallback((pageParams: PaginationProps) => {
+    setPagination(pageParams);
+    props.onChange(pageParams);
+  }, []);
+
   return (
     <Table<T>
       bordered
       {...resetProps}
+      onChange={onTableChange}
       style={{ marginTop: '40px' }}
       dataSource={list}
       rowKey={record => `${record.id}`}
       pagination={{
-        ...defualtPage,
-        current: page.page,
-        pageSize: page.size,
+        ...pagination,
         total: page.dataTotal,
       }}
     >

@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
 import { Select, Table, Icon, Button, Modal, message } from 'antd';
+import { PaginationProps } from 'antd/lib/pagination';
 import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchForm';
 import BaseTable from '../../components/BaseTable';
 import { Menu, MenuSearchParams, apiGetMenuList, apiRemoveMenu } from './service';
@@ -94,11 +95,7 @@ function MenuManage() {
 
   const [editVisible, setEditVisible] = useState<boolean>(false);
 
-  const closeEditModal = useCallback(() => {
-    setEditVisible(false);
-  }, [setEditVisible]);
-
-  const onOkEditModal = useCallback(() => {}, [setEditVisible]);
+  const [page, setPage] = useState<{ page: number; size: number }>({ page: 1, size: 10 });
 
   const [menuData, setMenuData] = useState<{ list: Menu[]; page: PageResponseData }>({
     list: [],
@@ -109,20 +106,35 @@ function MenuManage() {
 
   const initPageList = async (params?: MenuSearchParams) => {
     try {
-      const { data } = await apiGetMenuList(params);
+      const { data } = await apiGetMenuList({
+        ...page,
+        ...params,
+      });
       setMenuData(data);
     } catch (error) {
       // dosomethings
     }
   };
 
-  const onSearch = useCallback((params: MenuSearchParams) => {
-    initPageList(params);
-  }, []);
+  const onSearch = useCallback(
+    (params: MenuSearchParams) => {
+      initPageList(params);
+    },
+    [page],
+  );
 
   useEffect(() => {
     initPageList();
-  }, []);
+  }, [page]);
+
+  const closeEditModal = useCallback(() => {
+    setEditVisible(false);
+  }, [setEditVisible]);
+
+  const onOkEditModal = useCallback(() => {
+    setEditVisible(false);
+    initPageList();
+  }, [setEditVisible]);
 
   const onButtonClick = useCallback(
     (type: string, index: number) => {
@@ -133,6 +145,7 @@ function MenuManage() {
           onOk() {
             apiRemoveMenu(menuData.list[index].id!).then(() => {
               message.success('删除成功！');
+              initPageList();
             });
           },
           onCancel() {},
@@ -146,7 +159,12 @@ function MenuManage() {
   );
 
   const onAddMenu = useCallback(() => {
-    // do
+    setCurrentMenu(null);
+    setEditVisible(true);
+  }, []);
+
+  const onTableChange = useCallback(({ current, pageSize }: PaginationProps) => {
+    setPage({ page: current as number, size: pageSize as number });
   }, []);
 
   return (
@@ -167,7 +185,7 @@ function MenuManage() {
         ></AddOrEditMenu>
       )}
       {/* 数据表格 */}
-      <BaseTable<Menu> data={menuData}>
+      <BaseTable<Menu> data={menuData} onChange={onTableChange}>
         <Table.Column<Menu> title="id" dataIndex="id" align="center"></Table.Column>
         <Table.Column<Menu> title="菜单名称" dataIndex="name" align="center"></Table.Column>
         <Table.Column<Menu>
