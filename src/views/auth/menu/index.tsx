@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
 import { Select, Table, Icon, Button, Modal, message } from 'antd';
-import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchFrom';
+import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchForm';
 import BaseTable from '../../components/BaseTable';
 import { Menu, MenuSearchParams, apiGetMenuList, apiRemoveMenu } from './service';
 import PageWrap from '../../components/PageWrap';
