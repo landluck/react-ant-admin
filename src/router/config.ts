@@ -206,6 +206,14 @@ const routes: IRoute[] = [
             },
             component: React.lazy(() => import('../views/auth/menu')),
           },
+          {
+            path: '/auth/role',
+            meta: {
+              title: '角色管理',
+              icon: 'team',
+            },
+            component: React.lazy(() => import('../views/auth/role')),
+          },
         ],
       },
 
