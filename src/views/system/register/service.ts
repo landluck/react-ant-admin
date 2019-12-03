@@ -1,6 +1,6 @@
 import { request } from '../../../api/request';
 
-interface PlaceObject {}
+interface PlainObject {}
 
 export interface CreateUserData {
   account: string;

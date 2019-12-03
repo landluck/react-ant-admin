@@ -1,6 +1,6 @@
 import { request } from '../../../api/request';
 
-interface PlaceObject {}
+interface PlainObject {}
 
 export interface UpdateUserPwdData {
   password: string;
@@ -9,7 +9,7 @@ export interface UpdateUserPwdData {
 }
 
 export function apiUpdateUserPwd(data: UpdateUserPwdData) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'PUT',
     url: '/user/pwd',
     data,

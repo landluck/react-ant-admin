@@ -94,7 +94,7 @@ function MenuManage() {
   );
 
   const [editVisible, setEditVisible] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState<boolean>(false);
   const [page, setPage] = useState<{ page: number; size: number }>({ page: 1, size: 10 });
 
   const [menuData, setMenuData] = useState<{ list: Menu[]; page: PageResponseData }>({
@@ -105,6 +105,7 @@ function MenuManage() {
   const [currentMenu, setCurrentMenu] = useState<Menu | null>(null);
 
   const initPageList = async (params?: MenuSearchParams) => {
+    setLoading(true);
     try {
       const { data } = await apiGetMenuList({
         ...page,
@@ -113,6 +114,8 @@ function MenuManage() {
       setMenuData(data);
     } catch (error) {
       // dosomethings
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -185,7 +188,7 @@ function MenuManage() {
         ></AddOrEditMenu>
       )}
       {/* 数据表格 */}
-      <BaseTable<Menu> data={menuData} onChange={onTableChange}>
+      <BaseTable<Menu> data={menuData} onChange={onTableChange} loading={loading}>
         <Table.Column<Menu> title="id" dataIndex="id" align="center"></Table.Column>
         <Table.Column<Menu> title="菜单名称" dataIndex="name" align="center"></Table.Column>
         <Table.Column<Menu>

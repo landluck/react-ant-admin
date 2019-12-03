@@ -117,6 +117,13 @@ export const routes: IRoute[] = [
           icon: 'team',
         },
       },
+      {
+        path: '/auth/user',
+        meta: {
+          title: '用户管理',
+          icon: 'user',
+        },
+      },
     ],
   },
 ];

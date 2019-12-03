@@ -1,19 +1,19 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Form, Modal, Input, Tree } from 'antd';
+import { Form, Modal, Input, Tree, message } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
-import { Role, apiGetMenuListByRoleId } from './service';
+import { Role, apiGetMenuListByRoleId, apiUpdateMenuListByRoleId } from './service';
 import { apiGetMenuCascader, Menu } from '../menu/service';
 
 function renderTree(menu: Menu) {
   if (menu.children) {
     return (
-      <Tree.TreeNode title={menu.name} key={`key-${menu.id}`}>
+      <Tree.TreeNode title={menu.name} key={`${menu.id}`}>
         {menu.children!.map((item: Menu) => renderTree(item))}
       </Tree.TreeNode>
     );
   }
 
-  return <Tree.TreeNode title={menu.name} key={`key-${menu.id}`}></Tree.TreeNode>;
+  return <Tree.TreeNode title={menu.name} key={`${menu.id}`}></Tree.TreeNode>;
 }
 
 export interface EditMenuProps extends FormComponentProps {
@@ -28,7 +28,12 @@ function EditMenu(props: EditMenuProps) {
   const { getFieldDecorator } = props.form;
 
   const [menuList, setMeunList] = useState<Menu[]>([]);
-  const [roleMenuIds, setRoleMenuIds] = useState<string[]>([]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [expandKeys, setExpandKeys] = useState<string[]>([]);
+  const [checkedKeys, setCheckKeys] = useState<{ checked: string[]; halfChecked: string[] }>({
+    checked: [],
+    halfChecked: [],
+  });
 
   const initMenuList = async () => {
     try {
@@ -41,7 +46,14 @@ function EditMenu(props: EditMenuProps) {
   const initMenuListByRoleId = async () => {
     try {
       const { data } = await apiGetMenuListByRoleId(role.id!);
-      setRoleMenuIds(data.ids.map((id: any) => `key-${id}`));
+      const keys = data.ids.map((id: any) => `${id}`);
+
+      setCheckKeys({
+        checked: keys,
+        halfChecked: [],
+      });
+      setExpandKeys(keys);
+      setSelectedKeys(keys);
     } catch (error) {
       // do
     }
@@ -53,32 +65,25 @@ function EditMenu(props: EditMenuProps) {
   }, []);
 
   const onOk = useCallback(() => {
-    // props.form.validateFields((err, values: AddOrEditRoleFormProps) => {
-    //   if (!err) {
-    //    // do
-    //   }
-    // });
-  }, []);
+    apiUpdateMenuListByRoleId(
+      role.id!,
+      checkedKeys.checked.map(id => Number(id)),
+    )
+      .then(() => {
+        message.success('修改授权成功');
+        props.onConfirm();
+      })
+      .catch(() => {});
+  }, [checkedKeys]);
 
-  const onExpand = useCallback((expandedKeys: string[]) => {
-    setRoleMenuIds(expandedKeys);
+  const onExpand = useCallback((keys: string[]) => {
+    setExpandKeys(keys);
   }, []);
-  const onCheck = useCallback(
-    (
-      checkedKeys:
-        | string[]
-        | {
-            checked: string[];
-            halfChecked: string[];
-          },
-    ) => {
-      console.log(checkedKeys);
-      // setRoleMenuIds(checkedKeys)
-    },
-    [],
-  );
-  const onSelect = useCallback((selectedKeys: string[]) => {
-    console.log(selectedKeys);
+  const onCheck = useCallback((keys: string[] | { checked: string[]; halfChecked: string[] }) => {
+    setCheckKeys(keys as { checked: string[]; halfChecked: string[] });
+  }, []);
+  const onSelect = useCallback((keys: string[]) => {
+    setSelectedKeys(keys);
   }, []);
 
   return (
@@ -108,12 +113,13 @@ function EditMenu(props: EditMenuProps) {
         <Form.Item label="菜单权限">
           <Tree
             checkable
-            checkedKeys={roleMenuIds}
-            expandedKeys={roleMenuIds}
+            checkStrictly
+            checkedKeys={checkedKeys}
+            expandedKeys={expandKeys}
             onExpand={onExpand}
             onCheck={onCheck}
             onSelect={onSelect}
-            selectedKeys={roleMenuIds}
+            selectedKeys={selectedKeys}
           >
             {menuList.map((menu: Menu) => renderTree(menu))}
           </Tree>

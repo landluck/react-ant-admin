@@ -1,7 +1,7 @@
 import { request } from '../../../api/request';
 import { QueryListResponseData, PageQueryParams } from '../../../typings';
 
-interface PlaceObject {}
+interface PlainObject {}
 
 export interface Menu {
   id?: number;
@@ -42,7 +42,7 @@ export function apiGetMenuList(params?: MenuSearchParams) {
 }
 
 export function apiUpdateMenu(data: Menu) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'PUT',
     url: '/menu',
     data,
@@ -50,7 +50,7 @@ export function apiUpdateMenu(data: Menu) {
 }
 
 export function apiCreateMenu(data: Menu) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'POST',
     url: '/menu',
     data,
@@ -65,7 +65,7 @@ export function apiGetMenuCascader() {
 }
 
 export function apiRemoveMenu(id: number) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'DELETE',
     url: `/menu/${id}`,
   });

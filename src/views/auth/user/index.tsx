@@ -1,15 +1,14 @@
 import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
-import { Table, Button, Modal, message } from 'antd';
+import { Table, Button, Modal, message, Avatar, Tag } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination';
 import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchForm';
 import BaseTable from '../../components/BaseTable';
-import { Role, RoleSearchParams, apiGetRoleList, apiRemoveRole } from './service';
+import { User, UserSearchParams, apiGetUserList, apiRemoveUser } from './service';
 import PageWrap from '../../components/PageWrap';
 import { PageResponseData } from '../../../typings';
 import AddOrEdit from './AddOrEdit';
-import EditMenu from './editMenu';
 
-const RoleButton = memo(
+const UserButton = memo(
   ({
     index,
     onButtonClick,
@@ -18,14 +17,6 @@ const RoleButton = memo(
     onButtonClick: (type: string, index: number) => void;
   }) => (
     <React.Fragment>
-      <Button
-        size="small"
-        style={{ marginRight: '10px' }}
-        onClick={() => onButtonClick('editMenu', index)}
-        type="link"
-      >
-        编辑权限
-      </Button>
       <Button
         size="small"
         style={{ marginRight: '10px' }}
@@ -41,18 +32,28 @@ const RoleButton = memo(
   ),
 );
 
-function RoleManage() {
+function UserManage() {
   const formList = useMemo<SearchFormItem[]>(
     () => [
       {
         name: 'id',
-        placeholder: '请输入角色id',
-        label: '角色id',
+        placeholder: '请输入用户id',
+        label: '用户id',
       },
       {
         name: 'name',
-        placeholder: '请输入角色名称',
-        label: '角色名称',
+        placeholder: '请输入用户名称',
+        label: '用户名称',
+      },
+      {
+        name: 'account',
+        placeholder: '请输入用户账号',
+        label: '用户账号',
+      },
+      {
+        name: 'mobile',
+        placeholder: '请输入用户手机号',
+        label: '用户手机号',
       },
     ],
     [],
@@ -61,7 +62,7 @@ function RoleManage() {
   const actions = useMemo<SearchFormAction[]>(
     () => [
       {
-        name: '添加角色',
+        name: '添加用户',
         type: 'primary',
       },
     ],
@@ -70,25 +71,25 @@ function RoleManage() {
 
   const [editVisible, setEditVisible] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [editMenuVisible, setEditMenuVisible] = useState<boolean>(false);
 
   const [page, setPage] = useState<{ page: number; size: number }>({ page: 1, size: 10 });
 
-  const [roleData, setRoleData] = useState<{ list: Role[]; page: PageResponseData }>({
+  const [userData, setUserData] = useState<{ list: User[]; page: PageResponseData }>({
     list: [],
     page: {},
   });
 
-  const [currentRole, setCurrentRole] = useState<Role | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  const initPageList = async (params?: RoleSearchParams) => {
+  const initPageList = async (params?: UserSearchParams) => {
     setLoading(true);
+
     try {
-      const { data } = await apiGetRoleList({
+      const { data } = await apiGetUserList({
         ...page,
         ...params,
       });
-      setRoleData(data);
+      setUserData(data);
     } catch (error) {
       // dosomethings
     } finally {
@@ -97,7 +98,7 @@ function RoleManage() {
   };
 
   const onSearch = useCallback(
-    (params: RoleSearchParams) => {
+    (params: UserSearchParams) => {
       initPageList(params);
     },
     [page],
@@ -116,18 +117,14 @@ function RoleManage() {
     initPageList();
   }, [setEditVisible]);
 
-  const closeEditMenuModal = useCallback(() => {
-    setEditMenuVisible(false);
-  }, [setEditVisible]);
-
   const onButtonClick = useCallback(
     (type: string, index: number) => {
       if (type === 'remove') {
         Modal.confirm({
           title: '系统提示',
-          content: '此操作将永久删除该角色, 是否继续?',
+          content: '此操作将永久删除该用户, 是否继续?',
           onOk() {
-            apiRemoveRole(roleData.list[index].id!)
+            apiRemoveUser(userData.list[index].id!)
               .then(() => {
                 message.success('删除成功！');
                 initPageList();
@@ -139,19 +136,15 @@ function RoleManage() {
 
         return;
       }
-      setCurrentRole(roleData.list[index]);
+      setCurrentUser(userData.list[index]);
 
-      if (type === 'editMenu') {
-        setEditMenuVisible(true);
-        return;
-      }
       setEditVisible(true);
     },
-    [roleData.list],
+    [userData.list],
   );
 
-  const onAddRole = useCallback(() => {
-    setCurrentRole(null);
+  const onAddUser = useCallback(() => {
+    setCurrentUser(null);
     setEditVisible(true);
   }, []);
 
@@ -166,33 +159,48 @@ function RoleManage() {
         formList={formList}
         actions={actions}
         onSearch={onSearch}
-        onClick={onAddRole}
+        onClick={onAddUser}
       ></SearchForm>
       {editVisible && (
         <AddOrEdit
-          role={currentRole}
+          user={currentUser}
           visible={editVisible}
           onClose={closeEditModal}
           onConfirm={onOkEditModal}
         ></AddOrEdit>
       )}
-      {editMenuVisible && (
-        <EditMenu
-          role={currentRole!}
-          visible={editMenuVisible}
-          onClose={closeEditMenuModal}
-          onConfirm={closeEditMenuModal}
-        ></EditMenu>
-      )}
       {/* 数据表格 */}
-      <BaseTable<Role> data={roleData} onChange={onTableChange} loading={loading}>
-        <Table.Column<Role> title="id" dataIndex="id" align="center"></Table.Column>
-        <Table.Column<Role> title="角色名称" dataIndex="name" align="center"></Table.Column>
-        <Table.Column<Role>
+      <BaseTable<User> data={userData} onChange={onTableChange} loading={loading}>
+        <Table.Column<User> title="用户id" dataIndex="id" align="center"></Table.Column>
+        <Table.Column<User> title="用户名称" dataIndex="name" align="center"></Table.Column>
+        <Table.Column<User> title="用户账号" dataIndex="account" align="center"></Table.Column>
+        <Table.Column<User> title="用户手机号" dataIndex="mobile" align="center"></Table.Column>
+        <Table.Column<User>
+          title="用户头像"
+          dataIndex="avatar"
+          align="center"
+          render={text => <Avatar src={text}></Avatar>}
+        ></Table.Column>
+
+        <Table.Column<User>
+          title="用户角色"
+          dataIndex="role"
+          align="center"
+          render={(text, record) => (record.role ? record.role.name : '无')}
+        ></Table.Column>
+        <Table.Column<User>
+          title="用户状态"
+          dataIndex="status"
+          align="center"
+          render={text => (
+            <Tag color={text === 1 ? 'green' : 'red'}>{text === 1 ? '启用' : '禁用'}</Tag>
+          )}
+        ></Table.Column>
+        <Table.Column<User>
           title="操作"
           align="center"
           render={(text, record, index) => (
-            <RoleButton index={index} onButtonClick={onButtonClick} />
+            <UserButton index={index} onButtonClick={onButtonClick} />
           )}
         ></Table.Column>
       </BaseTable>
@@ -200,4 +208,4 @@ function RoleManage() {
   );
 }
 
-export default RoleManage;
+export default UserManage;

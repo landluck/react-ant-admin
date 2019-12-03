@@ -1,7 +1,7 @@
 import { request } from '../../../api/request';
 import { UserState } from '../../../store/module/user';
 
-interface PlaceObject {}
+interface PlainObject {}
 
 export interface UserLoginData {
   account: string;
@@ -34,7 +34,7 @@ interface MobileLoginiData {
 }
 
 export function apiGetVerifyCode(data: MobileLoginiData) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'POST',
     url: '/sms',
     data,

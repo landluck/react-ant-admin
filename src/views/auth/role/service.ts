@@ -2,7 +2,7 @@ import { request } from '../../../api/request';
 import { QueryListResponseData, PageQueryParams } from '../../../typings';
 import { Menu } from '../menu/service';
 
-interface PlaceObject {}
+interface PlainObject {}
 
 export interface Role {
   id?: number;
@@ -27,7 +27,7 @@ export function apiGetRoleList(params?: RoleSearchParams) {
 }
 
 export function apiUpdateRole(data: Role) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'PUT',
     url: '/role',
     data,
@@ -35,7 +35,7 @@ export function apiUpdateRole(data: Role) {
 }
 
 export function apiCreateRole(data: Role) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'POST',
     url: '/role',
     data,
@@ -43,7 +43,7 @@ export function apiCreateRole(data: Role) {
 }
 
 export function apiRemoveRole(id: number) {
-  return request<PlaceObject>({
+  return request<PlainObject>({
     method: 'DELETE',
     url: `/role/${id}`,
   });
@@ -53,5 +53,15 @@ export function apiGetMenuListByRoleId(id: number) {
   return request<{ list: Menu[]; ids: number[] }>({
     method: 'GET',
     url: `/role/menu/${id}`,
+  });
+}
+
+export function apiUpdateMenuListByRoleId(roleId: number, menuIds: number[]) {
+  return request<PlainObject>({
+    method: 'PUT',
+    url: `/role/menu/${roleId}`,
+    data: {
+      menuIds,
+    },
   });
 }
