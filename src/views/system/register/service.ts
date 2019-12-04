@@ -17,7 +17,7 @@ export interface CreateUserResponse {
 export function apiCreateUser(data: CreateUserData) {
   return request<CreateUserResponse>({
     method: 'POST',
-    url: '/user',
+    url: '/user/register',
     data,
   });
 }

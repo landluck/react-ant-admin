@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Modal, Input, message, Switch, Select, Upload, Icon } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
+import { UploadChangeParam } from 'antd/lib/upload';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { User, apiUpdateUser, apiCreateUser } from './service';
 import { Role, apiGetRoleList } from '../role/service';
 import { IStoreState } from '../../../store/types';
@@ -36,6 +38,7 @@ function AddOrEditUser(props: AddOrEditUserProps) {
   const { getFieldDecorator } = props.form;
 
   const [roleList, setRoleList] = useState<Role[]>([]);
+  const [avatar, setAvatar] = useState<string>(() => (user && user.avatar ? user.avatar : ''));
 
   const initRoleList = async () => {
     try {
@@ -57,7 +60,13 @@ function AddOrEditUser(props: AddOrEditUserProps) {
         const info: User = {
           ...user,
           ...values,
+          avatar,
+          status: values.status ? 1 : 0,
         };
+
+        if (info.role) {
+          delete info.role;
+        }
 
         if (info.id) {
           apiUpdateUser(info)
@@ -76,7 +85,15 @@ function AddOrEditUser(props: AddOrEditUserProps) {
         }
       }
     });
+  }, [avatar]);
+
+  const onChange = useCallback(({ file }: UploadChangeParam<UploadFile<any>>) => {
+    if (file.response && file.response.code === 200) {
+      setAvatar(file.response.data[0].url);
+    }
   }, []);
+
+  const reset = props.form.getFieldValue('reset');
 
   return (
     <Modal
@@ -111,9 +128,25 @@ function AddOrEditUser(props: AddOrEditUserProps) {
             rules: [{ required: true, message: '请输入用户账号' }],
           })(<Input />)}
         </Form.Item>
+        {user && (
+          <Form.Item label="重置密码">
+            {getFieldDecorator('reset', {
+              initialValue: false,
+              valuePropName: 'checked',
+              rules: [{ required: true, message: '是否重置密码' }],
+            })(<Switch />)}
+          </Form.Item>
+        )}
+        {(!user || reset) && (
+          <Form.Item label={reset ? '重置密码' : '初始密码'}>
+            {getFieldDecorator('password', {
+              rules: [{ required: true, message: '请输入用户密码' }],
+            })(<Input.Password visibilityToggle />)}
+          </Form.Item>
+        )}
         <Form.Item label="手机号码">
           {getFieldDecorator('mobile', {
-            initialValue: user && user.account,
+            initialValue: user && user.mobile,
             rules: [{ required: true, message: '请输入用户手机号' }],
           })(<Input />)}
         </Form.Item>
@@ -146,9 +179,10 @@ function AddOrEditUser(props: AddOrEditUserProps) {
             headers={{ token: props.token }}
             showUploadList={false}
             action="/upload/image"
+            onChange={onChange}
           >
-            {user && user.avatar ? (
-              <img src={user.avatar} alt="avatar" style={{ width: '100%' }} />
+            {avatar ? (
+              <img src={avatar} alt="avatar" style={{ width: '100%' }} />
             ) : (
               <div>
                 <Icon type="plus" />
