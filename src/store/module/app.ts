@@ -3,17 +3,12 @@ import { IAction } from '../types';
 import { IRoute } from '../../router/config';
 import { routes } from '../../router/sidebar';
 import { flattenRoute } from '../../router/utils';
+import LocalStore from '../../utils/store';
 
 export interface AppState {
   sidebar: {
     opened: boolean;
-    withoutAnimation: boolean;
   };
-
-  device: string;
-
-  size: string;
-
   routes: IRoute[];
 
   flattenRoutes: IRoute[];
@@ -21,13 +16,8 @@ export interface AppState {
 
 const defaultApp: AppState = {
   sidebar: {
-    opened: true,
-    withoutAnimation: false,
+    opened: LocalStore.getValue<boolean>('Admin-SideBar-Opened') || true,
   },
-
-  device: 'desktop',
-
-  size: 'small',
   routes,
   flattenRoutes: flattenRoute(routes, true, false),
 };
