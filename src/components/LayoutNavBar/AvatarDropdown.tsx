@@ -2,13 +2,20 @@ import React, { memo, useCallback } from 'react';
 import { Avatar, Menu, Icon, message } from 'antd';
 import { connect } from 'react-redux';
 import { ClickParam } from 'antd/lib/menu';
+import { useHistory } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
 import { IStoreState } from '../../store/types';
+import { setSideBarRoutes } from '../../store/module/app';
+import { setUserInfo, UserState } from '../../store/module/user';
+import { IRoute } from '../../router/config';
+import { removeToken } from '../../utils/cookie';
 
 interface AvatarDropdownProps {
   avatar?: string;
   account: string;
   classNames: string;
+  setSideBarRoutes: (routes: IRoute[]) => void;
+  setUserInfo: (user: UserState) => void;
 }
 
 function renderManageUser(onMenuClick: (params: ClickParam) => void) {
@@ -31,22 +38,31 @@ function renderManageUser(onMenuClick: (params: ClickParam) => void) {
   );
 }
 
-function AvatarDropdown({ account, avatar, classNames }: AvatarDropdownProps) {
+function AvatarDropdown(props: AvatarDropdownProps) {
+  const history = useHistory();
+
   const onMenuClick = useCallback(({ key }: ClickParam) => {
     // console.log(key);
     message.success(key);
+    if (key === 'logout') {
+      removeToken();
+      props.setUserInfo({ token: '', account: '', avatar: '', mobile: '', id: 0, role: 0 });
+      props.setSideBarRoutes([]);
+      history.replace('/system/login');
+    }
   }, []);
 
   return (
     <NavDropdown overlay={renderManageUser(onMenuClick)} trigger={['hover']}>
-      <div className={classNames}>
-        <Avatar size="small" className="layout__navbar__avatar" src={avatar} alt="avatar" />
-        <span className="layout__navbar__account">{account}</span>
+      <div className={props.classNames}>
+        <Avatar size="small" className="layout__navbar__avatar" src={props.avatar} alt="avatar" />
+        <span className="layout__navbar__account">{props.account}</span>
       </div>
     </NavDropdown>
   );
 }
 
-export default connect(({ user: { avatar, account } }: IStoreState) => ({ avatar, account }))(
-  memo(AvatarDropdown),
-);
+export default connect(({ user: { avatar, account } }: IStoreState) => ({ avatar, account }), {
+  setSideBarRoutes,
+  setUserInfo,
+})(memo(AvatarDropdown));

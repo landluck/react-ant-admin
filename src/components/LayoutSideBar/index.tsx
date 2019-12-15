@@ -44,7 +44,7 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
       <div className="layout__side-bar__menu">
         <Menu
           defaultSelectedKeys={[pathname]}
-          defaultOpenKeys={layout === 'top' ? [] : getPagePathList(pathname)}
+          defaultOpenKeys={layout === 'side' && sidebar.opened ? getPagePathList(pathname) : []}
           mode={layout === 'side' ? 'inline' : 'horizontal'}
           theme={theme}
           {...inlineCollapsed}

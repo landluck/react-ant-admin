@@ -25,9 +25,7 @@ const LocalStore: ILocalStore = {
     const value = localStorage.getItem(key);
 
     if (!value) return defaultValue || null;
-
     const data = parse<T>(value);
-
     return data;
   },
   removeValue(key: string): ILocalStore {

@@ -6,8 +6,6 @@ import { getPageTitle, systemRouteList } from '../router/utils';
 import { IRoute } from '../router/config';
 import './UserLayout.less';
 
-import logo from '../assets/logo.svg';
-
 interface UserLayoutState {
   isError: boolean;
 }
@@ -54,14 +52,12 @@ class UserLayout extends React.PureComponent<any, UserLayoutState> {
             <div className="top">
               <Typography.Title className="header">
                 <Link to="/">
-                  <img alt="logo" className="logo" src={logo} />
-
-                  <span className="title"> Iny Ant Admin </span>
+                  <span className="title">React Ant Admin </span>
                 </Link>
               </Typography.Title>
-              <div className="desc">Iny Admin 是 Admin 这条街最靓的仔</div>
+              <div className="desc">React Ant Admin 是 Admin 这条街最靓的仔</div>
             </div>
-            <Suspense fallback={<Spin />}>
+            <Suspense fallback={<Spin className="layout__loading" />}>
               <Switch>
                 {systemRouteList.map((menu: IRoute) => (
                   <Route exact key={menu.path} path={menu.path} component={menu.component}></Route>
@@ -70,7 +66,7 @@ class UserLayout extends React.PureComponent<any, UserLayoutState> {
             </Suspense>
           </div>
           <Layout.Footer style={{ textAlign: 'center' }}>
-            Iny-Admin 是 Admin 这条街最靓的仔
+            React Ant Admin 是 Admin 这条街最靓的仔
           </Layout.Footer>
         </div>
       </>

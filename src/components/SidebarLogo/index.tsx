@@ -1,16 +1,12 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
+import AdminConfig from '../../config/index';
 import './index.less';
 
 interface LogoProps {
   opened: boolean;
 }
-
-const config = {
-  title: 'Ant design Pro',
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-};
 
 function Logo({ opened }: LogoProps) {
   return (
@@ -20,8 +16,10 @@ function Logo({ opened }: LogoProps) {
       })}
     >
       <Link to="/" className="layout__side-bar-link">
-        {config.logo && <img src={config.logo} className="layout__side-bar-logo" alt="logo"></img>}
-        {!opened && <h1 className="layout__side-bar-title">{config.title}</h1>}
+        {AdminConfig.logo && (
+          <img src={AdminConfig.logo} className="layout__side-bar-logo" alt="logo"></img>
+        )}
+        {!opened && <h1 className="layout__side-bar-title">{AdminConfig.title}</h1>}
       </Link>
     </div>
   );

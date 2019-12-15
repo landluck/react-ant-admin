@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { message, Modal } from 'antd';
 import AdminConfig from '../config';
-import { getToken } from '../utils/auth';
+import { getToken } from '../utils/cookie';
 
 interface ResponseData<T> {
   code: number;

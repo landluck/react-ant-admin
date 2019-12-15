@@ -72,14 +72,14 @@ const routes: IRoute[] = [
     path: '/',
     component: React.lazy(() => import('../layout/index')),
     meta: {
-      title: '首页',
+      title: '系统',
     },
     redirect: '/dashborad/google',
     children: [
       {
         path: '/dashborad',
         meta: {
-          title: '数据台',
+          title: '首页',
           icon: 'dashborad',
         },
         redirect: '/dashborad/google',
@@ -93,8 +93,8 @@ const routes: IRoute[] = [
             },
           },
           {
-            path: '/dashborad/alibaba',
-            component: React.lazy(() => import('../views/dashborad/alibaba')),
+            path: '/dashborad/intro',
+            component: React.lazy(() => import('../views/dashborad/intro')),
             meta: {
               title: '阿里巴巴',
               icon: 'aliyun',

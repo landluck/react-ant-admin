@@ -36,11 +36,6 @@ function UserManage() {
   const formList = useMemo<SearchFormItem[]>(
     () => [
       {
-        name: 'id',
-        placeholder: '请输入用户id',
-        label: '用户id',
-      },
-      {
         name: 'name',
         placeholder: '请输入用户名称',
         label: '用户名称',

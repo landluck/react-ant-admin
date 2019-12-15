@@ -16,6 +16,10 @@ export interface Config {
   contentWidth: 'fluid' | 'fixed';
 
   colorWeak: boolean;
+
+  title: string;
+
+  logo?: string;
 }
 
 const AdminConfig: Config = {
@@ -45,6 +49,11 @@ const AdminConfig: Config = {
 
   // 是否开启色弱模式
   colorWeak: false,
+
+  // 项目名称
+  title: 'React Ant Admin',
+
+  // logo
 };
 
 export default AdminConfig;

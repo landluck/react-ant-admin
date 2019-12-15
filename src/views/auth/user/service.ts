@@ -65,19 +65,9 @@ export function apiRemoveUser(id: number) {
   });
 }
 
-export function apiGetMenuListByUserId(id: number) {
+export function apiGetMenuList() {
   return request<{ list: Menu[]; ids: number[] }>({
     method: 'GET',
-    url: `/user/menu/${id}`,
-  });
-}
-
-export function apiUpdateMenuListByUserId(userId: number, menuIds: number[]) {
-  return request<PlainObject>({
-    method: 'PUT',
-    url: `/user/menu/${userId}`,
-    data: {
-      menuIds,
-    },
+    url: '/user/menu',
   });
 }
