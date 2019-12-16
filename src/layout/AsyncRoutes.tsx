@@ -36,9 +36,11 @@ function formatMenuToRoute(menus: Menu[]): IRoute[] {
 
 function AsyncRoutes(props: AsyncRoutesProps) {
   if (!props.init) {
-    apiGetMenuList().then(({ data }) => {
-      props.setSideBarRoutes(formatMenuToRoute(data.list));
-    });
+    apiGetMenuList()
+      .then(({ data }) => {
+        props.setSideBarRoutes(formatMenuToRoute(data.list));
+      })
+      .catch(() => {});
 
     return <Spin className="layout__loading" />;
   }

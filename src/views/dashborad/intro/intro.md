@@ -1,8 +1,6 @@
-<h1 align="center">React Ant Admin</h1>
+# React Ant Admin
 
-<div align="center">开箱即用的中台前端/设计解决方案</div>
-
-- 预览：http://www.landluck.com.cn/web/react-ant-admin
+`React Ant Admin` 是参考 `Ant Design Pro` 的 `UI`，抛开 `Ant Design Pro` 的实现，完整的从零开发一个 `React Admin System`
 
 #### 介绍
 

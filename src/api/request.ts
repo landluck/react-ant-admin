@@ -2,6 +2,8 @@ import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
 import { message, Modal } from 'antd';
 import AdminConfig from '../config';
 import { getToken } from '../utils/cookie';
+import store from '../store/index';
+import { logout } from '../store/module/user';
 
 interface ResponseData<T> {
   code: number;
@@ -48,8 +50,8 @@ axios.interceptors.response.use(
         content: response.data.msg,
         okText: '重新登录',
         onOk() {
-          // 删除登录信息，重新登录
-          // store.dispatch('')
+          store.dispatch(logout());
+          window.location.href = `${window.location.origin}/system/login`;
         },
         onCancel() {},
       });

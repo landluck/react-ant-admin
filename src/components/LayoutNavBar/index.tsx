@@ -30,7 +30,7 @@ function LayoutNavBar({ sidebar, ActionUpdateSideBar, layout, theme }: LayoutNav
   }, [sidebar, ActionUpdateSideBar]);
 
   const onHelpItemClick = useCallback(() => {
-    // window.location.href = "/";
+    window.open('https://github.com/landluck/react-ant-admin');
   }, []);
 
   return (
@@ -48,7 +48,7 @@ function LayoutNavBar({ sidebar, ActionUpdateSideBar, layout, theme }: LayoutNav
         <NavBarItem
           className={classNames('layout__navbar__menu-item', `layout__navbar__menu-item--${theme}`)}
           onClick={onHelpItemClick}
-          icon="question-circle"
+          icon="github"
           count={0}
         ></NavBarItem>
         <NoticeIcon />

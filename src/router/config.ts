@@ -74,7 +74,7 @@ const routes: IRoute[] = [
     meta: {
       title: '系统',
     },
-    redirect: '/dashborad/google',
+    redirect: '/dashborad/intro',
     children: [
       {
         path: '/dashborad',
@@ -82,109 +82,15 @@ const routes: IRoute[] = [
           title: '首页',
           icon: 'dashborad',
         },
-        redirect: '/dashborad/google',
+        redirect: '/dashborad/intro',
         children: [
-          {
-            path: '/dashborad/google',
-            component: React.lazy(() => import('../views/dashborad/google')),
-            meta: {
-              title: '谷歌',
-              icon: 'google',
-            },
-          },
           {
             path: '/dashborad/intro',
             component: React.lazy(() => import('../views/dashborad/intro')),
             meta: {
-              title: '阿里巴巴',
-              icon: 'aliyun',
+              title: '系统介绍',
+              icon: 'read',
             },
-          },
-          {
-            path: '/dashborad/dd',
-            component: React.lazy(() => import('../views/dashborad/dd')),
-            meta: {
-              title: '字节跳动',
-              icon: 'aliyun',
-            },
-          },
-        ],
-      },
-      {
-        path: '/list',
-        meta: {
-          title: '列表测试',
-          icon: 'table',
-        },
-        redirect: '/list/list1',
-        children: [
-          {
-            path: '/list/list1',
-            component: React.lazy(() => import('../views/list/list1')),
-            meta: {
-              title: '谷歌',
-              icon: 'google',
-            },
-          },
-          {
-            path: '/list/list2',
-            component: React.lazy(() => import('../views/list/list2')),
-            meta: {
-              title: '阿里巴巴',
-              icon: 'aliyun',
-            },
-          },
-        ],
-      },
-      {
-        path: '/goods',
-        meta: {
-          title: '商品管理',
-          icon: 'table',
-        },
-        redirect: '/goods/list1',
-        children: [
-          {
-            path: '/goods/list1',
-            component: React.lazy(() => import('../views/goods/list1')),
-            meta: {
-              title: '谷歌',
-              icon: 'google',
-            },
-          },
-          {
-            path: '/goods/list2',
-            component: React.lazy(() => import('../views/goods/list2')),
-            meta: {
-              title: '阿里巴巴',
-              icon: 'aliyun',
-            },
-          },
-          {
-            path: '/goods/list3',
-            meta: {
-              title: '阿里巴巴',
-              icon: 'aliyun',
-            },
-            redirect: '/goods/list3/list',
-            children: [
-              {
-                path: '/goods/list3/list',
-                component: React.lazy(() => import('../views/goods/list3/list1')),
-                meta: {
-                  title: '阿里巴巴',
-                  icon: 'aliyun',
-                },
-              },
-              {
-                path: '/goods/list3/list2',
-                component: React.lazy(() => import('../views/goods/list3/list2')),
-                meta: {
-                  title: '阿里巴巴',
-                  icon: 'aliyun',
-                },
-              },
-            ],
           },
         ],
       },
