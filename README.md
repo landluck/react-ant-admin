@@ -11,7 +11,7 @@
 - :triangular_ruler: **常见设计模式**：提炼自中后台应用的典型页面和场景
 - :rocket: **最新技术栈**：使用 React/antd/ts/react-hooks 等前端前沿技术开发
 - :gear: **最佳实践**：良好的工程实践助您持续产出高质量代码
-- :network: **真实数据**：配套的完善线上 API
+- :globe_with_meridians: **真实数据**：配套的完善线上 API
 ## 模板
 
 ```
