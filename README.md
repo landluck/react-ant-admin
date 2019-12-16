@@ -10,11 +10,8 @@
 - :gem: **优雅美观**：基于 Ant Design 体系精心设计
 - :triangular_ruler: **常见设计模式**：提炼自中后台应用的典型页面和场景
 - :rocket: **最新技术栈**：使用 React/antd/ts/react-hooks 等前端前沿技术开发
-- :iphone: **响应式**：针对不同屏幕大小设计
-- :art: **主题**：可配置的主题满足多样化的品牌诉求
 - :gear: **最佳实践**：良好的工程实践助您持续产出高质量代码
-- :1234: **真实数据**：配套的完善 api
-
+- :network: **真实数据**：配套的完善线上 API
 ## 模板
 
 ```
@@ -56,7 +53,6 @@
 
 $ git clone https://github.com/landluck/react-ant-admin.git
 $ cd react-ant-admin
-$ npm install
 $ npm install
 $ npm start
 
