@@ -1,39 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">React Ant Admin</h1>
 
-## Available Scripts
+<div align="center">开箱即用的中台前端/设计解决方案。</div>
 
-In the project directory, you can run:
+- 预览：http://www.landluck.com.cn/web/react-ant-admin
 
-### `npm start`
+## 特性
 
-Runs the app in the development mode.<br /> Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- :bulb: **TypeScript**: 应用程序级 JavaScript 的语言
+- :gem: **优雅美观**：基于 Ant Design 体系精心设计
+- :triangular_ruler: **常见设计模式**：提炼自中后台应用的典型页面和场景
+- :rocket: **最新技术栈**：使用 React/antd/ts/react-hooks 等前端前沿技术开发
+- :iphone: **响应式**：针对不同屏幕大小设计
+- :art: **主题**：可配置的主题满足多样化的品牌诉求
+- :gear: **最佳实践**：良好的工程实践助您持续产出高质量代码
+- :1234: **真实数据**：配套的完善 api
 
-The page will reload if you make edits.<br /> You will also see any lint errors in the console.
+## 模板
 
-### `npm test`
+```
+- Dashboard
+  - 分析页
+  - 监控页
+  - 工作台
+- 表单页
+  - 基础表单页
+  - 分步表单页
+  - 高级表单页
+- 列表页
+  - 查询表格
+  - 标准列表
+  - 卡片列表
+  - 搜索列表（项目/应用/文章）
+- 详情页
+  - 基础详情页
+  - 高级详情页
+- 用户
+  - 用户中心页
+  - 用户设置页
+- 结果
+  - 成功页
+  - 失败页
+- 异常
+  - 403 无权限
+  - 404 找不到
+  - 500 服务器出错
+- 帐户
+  - 登录
+  - 注册
+  - 注册成功
+```
 
-Launches the test runner in the interactive watch mode.<br /> See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 使用
 
-### `npm run build`
+```bash
 
-Builds the app for production to the `build` folder.<br /> It correctly bundles React in production mode and optimizes the build for the best performance.
+$ git clone https://github.com/landluck/react-ant-admin.git
+$ cd react-ant-admin
+$ npm install
+$ npm install
+$ npm start
 
-The build is minified and the filenames include the hashes.<br /> Your app is ready to be deployed!
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 支持环境
 
-### `npm run eject`
+现代浏览器及 IE11。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
+| --- | --- | --- | --- | --- |
+| IE11, Edge | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
