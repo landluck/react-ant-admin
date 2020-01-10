@@ -36,7 +36,7 @@ function Register(props: RegisterProps) {
         <LoginItem.UserName form={props.form} />
         <LoginItem.Account form={props.form} />
         <LoginItem.Password form={props.form} />
-        <LoginItem.Confirm form={props.form}></LoginItem.Confirm>
+        <LoginItem.Confirm form={props.form} />
         <LoginItem.Mobile form={props.form} />
         <LoginItem.Code form={props.form} />
 

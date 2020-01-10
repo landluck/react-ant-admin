@@ -69,7 +69,7 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
     rules: [{ required: true, message: '请输入合法密码', min: 5 }],
   },
   Confirm: {
-    name: 'password',
+    name: 'repassword',
     inputProps: {
       size: 'large',
       id: 'confirm',

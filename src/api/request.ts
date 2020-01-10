@@ -19,6 +19,10 @@ axios.defaults.headers = {
   'Content-Type': 'application/json;charset=utf-8',
 };
 
+// 指定请求地址
+
+axios.defaults.baseURL = AdminConfig.API_URL;
+
 // 添加请求拦截器
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {

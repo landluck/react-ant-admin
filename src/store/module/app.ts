@@ -58,7 +58,7 @@ const appReducer: Reducer<AppState, IAction<any>> = (state = defaultApp, action:
         ...state,
         routes: payload,
         flattenRoutes: flattenRoute(payload, true, false),
-        init: payload.length > 0,
+        init: true,
       };
 
     default:
