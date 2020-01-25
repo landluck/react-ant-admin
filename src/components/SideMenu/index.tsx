@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 import { IRoute, IRouteMeta } from '../../router/config';
 import './index.less';
+import config from '../../config';
 
 function renderTitle(meta: IRouteMeta) {
   /* eslint-disable no-confusing-arrow */
@@ -16,7 +17,7 @@ function renderTitle(meta: IRouteMeta) {
 
 function renderMenuRoute(menu: IRoute) {
   return (
-    <Menu.Item key={menu.path}>
+    <Menu.Item key={config.BASENAME + menu.path}>
       <Link to={menu.path}>{renderTitle(menu.meta)}</Link>
     </Menu.Item>
   );
@@ -24,7 +25,7 @@ function renderMenuRoute(menu: IRoute) {
 
 function renderSubMenu(menu: IRoute) {
   return (
-    <Menu.SubMenu title={renderTitle(menu.meta)} key={menu.path}>
+    <Menu.SubMenu title={renderTitle(menu.meta)} key={config.BASENAME + menu.path}>
       {menu.children!.map((item: IRoute) =>
         item.children ? renderSubMenu(item) : renderMenuRoute(item),
       )}

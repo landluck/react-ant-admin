@@ -30,6 +30,7 @@ const defaultApp: AppState = {
 
 const SET_SIDE_BAR_OPENED = 'SET_SIDE_BAR_OPENED';
 const SET_SIDE_BAR_ROUTES = 'SET_SIDE_BAR_ROUTES';
+const RMOVE_SIDE_BAR_ROUTES = 'RMOVE_SIDE_BAR_ROUTES';
 
 export const updateSideBar = (sidebar: AppState['sidebar']) => ({
   type: SET_SIDE_BAR_OPENED,
@@ -39,6 +40,11 @@ export const updateSideBar = (sidebar: AppState['sidebar']) => ({
 export const setSideBarRoutes = (routes: IRoute[]) => ({
   type: SET_SIDE_BAR_ROUTES,
   payload: routes,
+});
+
+export const clearSideBarRoutes = () => ({
+  type: RMOVE_SIDE_BAR_ROUTES,
+  payload: null,
 });
 
 const appReducer: Reducer<AppState, IAction<any>> = (state = defaultApp, action: IAction<any>) => {
@@ -59,6 +65,13 @@ const appReducer: Reducer<AppState, IAction<any>> = (state = defaultApp, action:
         routes: payload,
         flattenRoutes: flattenRoute(payload, true, false),
         init: true,
+      };
+    case RMOVE_SIDE_BAR_ROUTES:
+      return {
+        ...state,
+        routes: [],
+        flattenRoutes: [],
+        init: false,
       };
 
     default:

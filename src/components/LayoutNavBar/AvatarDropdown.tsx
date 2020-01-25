@@ -5,16 +5,15 @@ import { ClickParam } from 'antd/lib/menu';
 import { useHistory } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
 import { IStoreState } from '../../store/types';
-import { setSideBarRoutes } from '../../store/module/app';
+import { clearSideBarRoutes } from '../../store/module/app';
 import { setUserInfo, UserState } from '../../store/module/user';
-import { IRoute } from '../../router/config';
 import { removeToken } from '../../utils/cookie';
 
 interface AvatarDropdownProps {
   avatar?: string;
   account: string;
   classNames: string;
-  setSideBarRoutes: (routes: IRoute[]) => void;
+  clearSideBarRoutes: () => void;
   setUserInfo: (user: UserState) => void;
 }
 
@@ -47,7 +46,7 @@ function AvatarDropdown(props: AvatarDropdownProps) {
     if (key === 'logout') {
       removeToken();
       props.setUserInfo({ token: '', account: '', avatar: '', mobile: '', id: 0, role: 0 });
-      props.setSideBarRoutes([]);
+      props.clearSideBarRoutes();
       history.replace('/system/login');
     }
   }, []);
@@ -63,6 +62,6 @@ function AvatarDropdown(props: AvatarDropdownProps) {
 }
 
 export default connect(({ user: { avatar, account } }: IStoreState) => ({ avatar, account }), {
-  setSideBarRoutes,
+  clearSideBarRoutes,
   setUserInfo,
 })(memo(AvatarDropdown));
