@@ -57,7 +57,9 @@ axios.interceptors.response.use(
         onOk() {
           store.dispatch(clearSideBarRoutes());
           store.dispatch(logout());
-          window.location.href = `${window.location.origin}/react-ant-admin/system/login`;
+          window.location.href = `${
+            window.location.origin
+          }/react-ant-admin/system/login?redirectURL=${encodeURIComponent(window.location.href)}`;
         },
         onCancel() {},
       });

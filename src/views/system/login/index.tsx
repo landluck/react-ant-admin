@@ -23,6 +23,16 @@ interface FormProp {
 function Login(props: LoginProps) {
   const [activeTab, setActiveTab] = useState('account');
 
+  const next = () => {
+    const params = new URLSearchParams(window.location.search);
+    const redirectURL = params.get('redirectURL');
+    if (redirectURL) {
+      window.location.href = redirectURL;
+      return;
+    }
+    props.history.push('/');
+  };
+
   const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.form.validateFields((err, values: FormProp) => {
@@ -34,8 +44,7 @@ function Login(props: LoginProps) {
           })
             .then(({ data }: { data: UserState }) => {
               props.setUserInfo(data);
-
-              props.history.push('/');
+              next();
             })
             .catch(() => {});
 
@@ -47,7 +56,7 @@ function Login(props: LoginProps) {
             .then(({ data }: { data: UserState }) => {
               props.setUserInfo(data);
 
-              props.history.push('/');
+              next();
             })
             .catch(() => {});
         }

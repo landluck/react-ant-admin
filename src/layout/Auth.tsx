@@ -4,6 +4,7 @@ import store from '../store/index';
 import { businessRouteList } from '../router/utils';
 import { getToken } from '../utils/cookie';
 import { IRoute } from '../router/config';
+import config from '../config/index';
 
 interface AuthProps extends RouteComponentProps {
   route: IRoute;
@@ -42,8 +43,11 @@ function Auth(props: AuthProps) {
   if (!getToken()) {
     return (
       <Redirect
-        to={`/system/login?redirect=${encodeURIComponent(
-          props.location.pathname + props.location.search,
+        to={`/system/login?redirectURL=${encodeURIComponent(
+          window.location.origin +
+            config.BASENAME +
+            props.location.pathname +
+            props.location.search,
         )}`}
       />
     );

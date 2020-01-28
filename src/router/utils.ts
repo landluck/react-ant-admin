@@ -1,4 +1,5 @@
 import routes, { IRoute } from './config';
+import config from '../config';
 
 /**
  *
@@ -62,8 +63,10 @@ export const businessRouteList = getBusinessRouteList();
 
 export const systemRouteList = getSystemRouteList();
 
-function findRoutesByPaths(pathList: string[], routeList: IRoute[]): IRoute[] {
-  return routeList.filter((child: IRoute) => pathList.indexOf(child.path) !== -1);
+function findRoutesByPaths(pathList: string[], routeList: IRoute[], basename?: string): IRoute[] {
+  return routeList.filter(
+    (child: IRoute) => pathList.indexOf((basename || '') + child.path) !== -1,
+  );
 }
 
 export function getPageTitle(routeList: IRoute[]): string {
@@ -83,5 +86,5 @@ export function getPagePathList(pathname?: string): string[] {
  * 只有业务路由会有面包屑
  */
 export function getBreadcrumbs(): IRoute[] {
-  return findRoutesByPaths(getPagePathList(), businessRouteList);
+  return findRoutesByPaths(getPagePathList(), businessRouteList, config.BASENAME);
 }

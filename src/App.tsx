@@ -13,7 +13,11 @@ function App() {
       <Router basename={config.BASENAME}>
         <Switch>
           {layoutRouteList.map((route: IRoute) => (
-            <Route key={route.path} path={route.path} component={route.component}></Route>
+            <Route
+              key={config.BASENAME + route.path}
+              path={route.path}
+              component={route.component}
+            ></Route>
           ))}
         </Switch>
       </Router>

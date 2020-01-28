@@ -85,7 +85,7 @@ const defaultUser: NoticeState = {
   },
   pending: {
     count: 2,
-    title: '消息',
+    title: '进行中',
     list: [
       {
         title: '版本发布通知',

@@ -39,7 +39,8 @@
     &-enter {
       position: absolute;
       top: 0;
-      left: 40px;
+      left: 0;
+      transform: translate3d(40px, 0, 0);
       opacity: 0;
     }
 
@@ -47,6 +48,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      transform: translate3d(0, 0, 0);
       opacity: 1;
       transition: all 300ms;
     }
@@ -55,13 +57,15 @@
       position: absolute;
       top: 0;
       left: 0;
+      transform: translate3d(0, 0, 0);
       opacity: 1;
     }
 
     &-exit-active {
       position: absolute;
       top: 0;
-      left: -40px;
+      left: 0;
+      transform: translate3d(-40px, 0, 0);
       opacity: 0;
       transition: all 300ms;
     }

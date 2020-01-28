@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Menu } from 'antd';
@@ -14,6 +14,7 @@ import { getPagePathList } from '../../router/utils';
 interface LayoutSideBarProps extends Settings {
   sidebar: AppState['sidebar'];
   routes: AppState['routes'];
+  init: boolean;
 }
 
 function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
@@ -25,7 +26,7 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
     inlineCollapsed.inlineCollapsed = !sidebar.opened;
   }
 
-  const pathname = useMemo(() => window.location.pathname, [window.location.pathname]);
+  const { pathname } = window.location;
 
   return (
     <aside
@@ -56,8 +57,9 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
   );
 }
 
-export default connect(({ settings, app: { sidebar, routes } }: IStoreState) => ({
+export default connect(({ settings, app: { sidebar, routes, init } }: IStoreState) => ({
   ...settings,
   sidebar,
   routes,
+  init,
 }))(LayoutSideBar);
