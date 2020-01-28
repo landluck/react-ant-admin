@@ -22,7 +22,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "https://www.landluck.com.cn/react-ant-admin-api",
+  "proxy": "http://127.0.0.1:3300",
   "homepage": "https://www.landluck.com.cn/react-ant-admin",
   "scripts": {
     "start": "node scripts/start.js",
