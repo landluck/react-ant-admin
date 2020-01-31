@@ -35,12 +35,12 @@ function LayoutSideBar({ theme, layout, sidebar, routes }: LayoutSideBarProps) {
         `layout__side-bar--${theme}`,
         `layout__side-bar--${layout}`,
         {
-          'layout__side-bar--close': !sidebar.opened,
+          'layout__side-bar--close': !sidebar.opened && layout === 'side',
         },
       )}
     >
       <div className={`layout__side-bar__logo--${layout}`}>
-        <Logo opened={!sidebar.opened} />
+        <Logo opened={!sidebar.opened} layout={layout} />
       </div>
       <div className="layout__side-bar__menu">
         <Menu

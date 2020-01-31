@@ -16,7 +16,7 @@ const reducers: Reducer<IStoreState, IAction<any>> = combineReducers<IStoreState
 
 const middleware: Middleware[] = [reduxThunk];
 
-if (process.env.REACT_APP_RUN_MODE !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   middleware.push(reduxLogger);
 }
 

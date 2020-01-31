@@ -25,7 +25,8 @@ function LayoutHeader(props: LayoutHeaderProps) {
         `layout__header--${props.theme}`,
         {
           'layout__header--fix': props.fixedHeader,
-          'layout__header--close': !props.sidebar.opened,
+          // close 情况只有在 layout 为 side 的时候存在
+          'layout__header--close': !props.sidebar.opened && props.layout === 'side',
         },
       )}
     >
@@ -36,8 +37,7 @@ function LayoutHeader(props: LayoutHeaderProps) {
       >
         {props.layout === 'top' && (
           <div className="layout__header--top-side-bar">
-            {' '}
-            <LayoutSideBar />{' '}
+            <LayoutSideBar />
           </div>
         )}
         <LayoutNavBar />
