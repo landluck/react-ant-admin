@@ -1,15 +1,13 @@
 import React, { memo, useCallback } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Form, Button } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Button, Form } from 'antd';
 import FormWrap from '../component/FormWrap';
 import { apiCreateUser } from './service';
 import LoginItem from '../component/LoginItem';
 
-interface RegisterProps extends FormComponentProps, RouteComponentProps {}
+interface RegisterProps extends RouteComponentProps {}
 
 interface FormProp {
-  name: string;
   account: string;
   password: string;
   mobile: string;
@@ -17,31 +15,30 @@ interface FormProp {
 }
 
 function Register(props: RegisterProps) {
-  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.form.validateFields((err, values: FormProp) => {
-      if (!err) {
-        apiCreateUser(values)
-          .then(({ data }) => {
-            props.history.push(`/system/register-result/${data.id}`);
-          })
-          .catch(() => {});
-      }
+  const [form] = Form.useForm();
+
+  const onSubmit = useCallback(() => {
+    form.validateFields().then(res => {
+      const values = res as FormProp;
+      apiCreateUser(values)
+        .then(({ data }) => {
+          props.history.push(`/system/register-result/${data.id}`);
+        })
+        .catch(() => {});
     });
   }, []);
 
   return (
     <FormWrap>
-      <Form onSubmit={onSubmit}>
-        <LoginItem.UserName form={props.form} />
-        <LoginItem.Account form={props.form} />
-        <LoginItem.Password form={props.form} />
-        <LoginItem.Confirm form={props.form} />
-        <LoginItem.Mobile form={props.form} />
-        <LoginItem.Code form={props.form} />
+      <Form onFinish={onSubmit} form={form}>
+        <LoginItem.Account form={form} />
+        <LoginItem.Password form={form} />
+        <LoginItem.Confirm form={form} />
+        <LoginItem.Mobile form={form} />
+        <LoginItem.Code form={form} />
 
         <Form.Item>
-          <div className="align--between">
+          <div className="align--between vertical-middle">
             <Button htmlType="submit" type="primary" style={{ width: '150px' }}>
               注册
             </Button>
@@ -53,4 +50,4 @@ function Register(props: RegisterProps) {
   );
 }
 
-export default memo(Form.create({ name: 'register' })(Register));
+export default memo(Register);

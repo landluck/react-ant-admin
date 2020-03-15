@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ant-design/aliyun-theme": "0.0.4",
-    "antd": "^3.25.1",
+    "@ant-design/icons": "^4.0.2",
+    "antd": "^4.0.1",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "github-markdown-css": "^3.0.1",
@@ -22,7 +22,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
-  "proxy": "http://127.0.0.1:3300",
+  "proxy": "https://www.landluck.com.cn/react-ant-admin-api",
   "homepage": "https://www.landluck.com.cn/react-ant-admin",
   "scripts": {
     "start": "node scripts/start.js",

@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Form, Modal, Input, Cascader, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useState, useEffect, useCallback, memo } from 'react';
+import { Modal, Input, Cascader, message, Form } from 'antd';
 import { Menu, apiGetMenuCascader, apiUpdateMenu, apiCreateMenu } from './service';
 
-export interface AddOrEditMenuProps extends FormComponentProps {
+export interface AddOrEditMenuProps {
   visible: boolean;
   menu: Menu | null;
   onClose: () => void;
@@ -22,36 +21,38 @@ interface AddOrEditMenuFormProps {
 
 function AddOrEditMenu(props: AddOrEditMenuProps) {
   const { menu, visible } = props;
-  const { getFieldDecorator } = props.form;
+  const [form] = Form.useForm();
+
+  if (menu && menu.parent) {
+    menu.parentIds = [menu.parent.id!];
+  }
 
   const onOk = useCallback(() => {
-    props.form.validateFields((err, values: AddOrEditMenuFormProps) => {
-      if (!err) {
-        const len = values.parentIds.length;
+    form.validateFields().then(res => {
+      const values = res as AddOrEditMenuFormProps;
 
-        const info: Menu = {
-          ...menu,
-          ...values,
-          sort: values.sort * 1,
-          level: len + 1,
-          parentId: len > 0 ? values.parentIds[len - 1] : 0,
-        };
-
-        if (info.id) {
-          apiUpdateMenu(info)
-            .then(() => {
-              message.success('修改成功');
-              props.onConfirm();
-            })
-            .catch(() => {});
-        } else {
-          apiCreateMenu(info)
-            .then(() => {
-              message.success('创建成功');
-              props.onConfirm();
-            })
-            .catch(() => {});
-        }
+      const len = values.parentIds.length;
+      const info: Menu = {
+        ...menu,
+        ...values,
+        sort: values.sort * 1,
+        level: len + 1,
+        parentId: len > 0 ? values.parentIds[len - 1] : 0,
+      };
+      if (info.id) {
+        apiUpdateMenu(info)
+          .then(() => {
+            message.success('修改成功');
+            props.onConfirm();
+          })
+          .catch(() => {});
+      } else {
+        apiCreateMenu(info)
+          .then(() => {
+            message.success('创建成功');
+            props.onConfirm();
+          })
+          .catch(() => {});
       }
     });
   }, []);
@@ -81,6 +82,9 @@ function AddOrEditMenu(props: AddOrEditMenuProps) {
       onOk={onOk}
     >
       <Form
+        name="menu"
+        form={form}
+        initialValues={menu || {}}
         labelCol={{
           sm: { span: 5 },
         }}
@@ -89,51 +93,51 @@ function AddOrEditMenu(props: AddOrEditMenuProps) {
         }}
       >
         {menu && menu.id ? (
-          <Form.Item label="菜单Id">
-            {getFieldDecorator('id', { initialValue: menu.id })(<Input disabled />)}
+          <Form.Item label="菜单Id" name="id">
+            <Input disabled />
           </Form.Item>
         ) : null}
-        <Form.Item label="菜单名称">
-          {getFieldDecorator('name', {
-            initialValue: menu && menu.name,
-            rules: [{ required: true, message: '请输入菜单名称' }],
-          })(<Input />)}
+        <Form.Item
+          label="菜单名称"
+          name="name"
+          rules={[{ required: true, message: '请输入菜单名称' }]}
+        >
+          <Input />
         </Form.Item>
-        <Form.Item label="菜单URL">
-          {getFieldDecorator('url', {
-            initialValue: menu && menu.url,
-            rules: [{ required: true, message: '请输入菜单url' }],
-          })(<Input />)}
+        <Form.Item
+          name="url"
+          label="菜单URL"
+          rules={[{ required: true, message: '请输入菜单url' }]}
+        >
+          <Input />
         </Form.Item>
-        <Form.Item label="菜单图标">
-          {getFieldDecorator('icon', {
-            initialValue: menu && menu.icon,
-            rules: [{ required: true, message: '请输入菜单图标' }],
-          })(<Input />)}
+        <Form.Item
+          label="菜单图标"
+          name="icon"
+          rules={[{ required: true, message: '请输入菜单图标' }]}
+        >
+          <Input />
         </Form.Item>
-        <Form.Item label="菜单排序">
-          {getFieldDecorator('sort', {
-            initialValue: menu && menu.sort,
-            rules: [{ required: true, message: '请输入菜单排序' }],
-          })(<Input type="number" />)}
+        <Form.Item
+          label="菜单排序"
+          name="sort"
+          rules={[{ required: true, message: '请输入菜单排序' }]}
+        >
+          <Input type="number" />
         </Form.Item>
-        <Form.Item label="菜单描述">
-          {getFieldDecorator('desc', { initialValue: menu && menu.desc })(<Input />)}
+        <Form.Item
+          label="菜单描述"
+          name="desc"
+          rules={[{ required: true, message: '请输入菜单描述' }]}
+        >
+          <Input />
         </Form.Item>
-        <Form.Item label="父级菜单">
-          {getFieldDecorator('parentIds', {
-            initialValue: menu && menu.parent ? [menu.parent.id] : [],
-          })(
-            <Cascader
-              options={menuList}
-              fieldNames={{ label: 'name', value: 'id' }}
-              changeOnSelect
-            />,
-          )}
+        <Form.Item label="父级菜单" name="parentIds">
+          <Cascader options={menuList} fieldNames={{ label: 'name', value: 'id' }} changeOnSelect />
         </Form.Item>
       </Form>
     </Modal>
   );
 }
 
-export default Form.create<AddOrEditMenuProps>()(AddOrEditMenu);
+export default memo(AddOrEditMenu);

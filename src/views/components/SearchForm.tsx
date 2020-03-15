@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
-import { Form, Button, Input } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Button, Input, Form } from 'antd';
 import { ButtonType } from 'antd/es/button/button';
 import './index.less';
 
@@ -14,40 +13,41 @@ export interface SearchFormItem {
   label: string;
   placeholder?: string;
   rules?: object[];
-  render?: React.ReactNode;
+  render?: React.ReactElement;
 }
 
-interface SearchFormProps extends FormComponentProps {
+interface SearchFormProps {
   formList: SearchFormItem[];
   onSearch: (values: any) => void;
   actions: SearchFormAction[];
   onClick: (index: number) => void;
+  showLabel?: boolean;
 }
 
 function SearchForm(props: SearchFormProps) {
-  const { getFieldDecorator } = props.form;
+  const [form] = Form.useForm();
 
   const reset = () => {
-    props.form.resetFields();
+    form.resetFields();
     props.onSearch({});
   };
 
-  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.form.validateFields((err, values: any) => {
-      if (!err) {
-        props.onSearch(values);
-      }
+  const onSearch = () => {
+    form.validateFields().then(res => {
+      props.onSearch(res);
     });
   };
 
   return (
-    <Form className="layout__search" layout="inline" onSubmit={onSearch}>
+    <Form className="layout__search" layout="inline" onFinish={onSearch}>
       {props.formList.map((item: SearchFormItem) => (
-        <Form.Item label={item.label} key={item.name}>
-          {getFieldDecorator(item.name, {
-            rules: item.rules,
-          })(item.render ? item.render : <Input placeholder={item.placeholder} />)}
+        <Form.Item
+          label={props.showLabel !== false && item.label ? item.label : ''}
+          key={item.name}
+          name="item.name"
+          rules={item.rules}
+        >
+          {item.render ? item.render : <Input placeholder={item.placeholder} />}
         </Form.Item>
       ))}
 
@@ -71,6 +71,4 @@ function SearchForm(props: SearchFormProps) {
   );
 }
 
-export default memo(
-  Form.create<SearchFormProps>({ name: 'SearchForm' })(SearchForm),
-);
+export default memo(SearchForm);

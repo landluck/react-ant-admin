@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from 'react';
-import { Avatar, Menu, Icon, message } from 'antd';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Menu, message } from 'antd';
 import { connect } from 'react-redux';
 import { ClickParam } from 'antd/lib/menu';
 import { useHistory } from 'react-router-dom';
@@ -21,16 +22,16 @@ function renderManageUser(onMenuClick: (params: ClickParam) => void) {
   return (
     <Menu selectedKeys={[]} onClick={onMenuClick}>
       <Menu.Item key="center">
-        <Icon type="user" />
+        <UserOutlined />
         个人中心
       </Menu.Item>
       <Menu.Item key="settings">
-        <Icon type="setting" />
+        <SettingOutlined />
         个人设置
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="logout">
-        <Icon type="logout" />
+        <LogoutOutlined />
         退出登录
       </Menu.Item>
     </Menu>

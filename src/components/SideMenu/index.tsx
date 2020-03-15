@@ -1,15 +1,32 @@
 import React from 'react';
-import { Menu, Icon } from 'antd';
+import { Menu } from 'antd';
 import { Link } from 'react-router-dom';
+import {
+  MenuUnfoldOutlined,
+  MenuOutlined,
+  UserOutlined,
+  TeamOutlined,
+  DashboardOutlined,
+  ReadOutlined,
+} from '@ant-design/icons';
 import { IRoute, IRouteMeta } from '../../router/config';
 import './index.less';
 import config from '../../config';
+
+const iconMap: { [prop: string]: any } = {
+  MenuUnfoldOutlined: <MenuUnfoldOutlined />,
+  MenuOutlined: <MenuOutlined />,
+  UserOutlined: <UserOutlined />,
+  TeamOutlined: <TeamOutlined />,
+  DashboardOutlined: <DashboardOutlined />,
+  ReadOutlined: <ReadOutlined />,
+};
 
 function renderTitle(meta: IRouteMeta) {
   /* eslint-disable no-confusing-arrow */
   return (
     <span className="menu-item-inner">
-      {meta.icon && <Icon type={meta.icon} className="menu-icon" />}
+      {meta.icon && iconMap[meta.icon]}
       <span className="menu-title"> {meta.title} </span>
     </span>
   );

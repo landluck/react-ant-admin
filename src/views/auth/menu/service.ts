@@ -23,6 +23,8 @@ export interface Menu {
   parent?: Menu;
 
   children?: Menu[];
+
+  parentIds?: number[];
 }
 
 export interface MenuSearchParams extends PageQueryParams {

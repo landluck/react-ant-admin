@@ -1,6 +1,5 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { Form, Modal, Input, Tree, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useCallback, useState, useEffect, memo, ReactText } from 'react';
+import { Modal, Input, Tree, message, Form } from 'antd';
 import { Role, apiGetMenuListByRoleId, apiUpdateMenuListByRoleId } from './service';
 import { apiGetMenuCascader, Menu } from '../menu/service';
 
@@ -16,7 +15,7 @@ function renderTree(menu: Menu) {
   return <Tree.TreeNode title={menu.name} key={`${menu.id}`}></Tree.TreeNode>;
 }
 
-export interface EditMenuProps extends FormComponentProps {
+export interface EditMenuProps {
   visible: boolean;
   role: Role;
   onClose: () => void;
@@ -25,7 +24,7 @@ export interface EditMenuProps extends FormComponentProps {
 
 function EditMenu(props: EditMenuProps) {
   const { role, visible } = props;
-  const { getFieldDecorator } = props.form;
+  const [form] = Form.useForm();
 
   const [menuList, setMeunList] = useState<Menu[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -76,14 +75,19 @@ function EditMenu(props: EditMenuProps) {
       .catch(() => {});
   }, [checkedKeys]);
 
-  const onExpand = useCallback((keys: string[]) => {
-    setExpandKeys(keys);
+  const onExpand = useCallback((keys: ReactText[]) => {
+    setExpandKeys(keys as string[]);
   }, []);
-  const onCheck = useCallback((keys: string[] | { checked: string[]; halfChecked: string[] }) => {
-    setCheckKeys(keys as { checked: string[]; halfChecked: string[] });
-  }, []);
-  const onSelect = useCallback((keys: string[]) => {
-    setSelectedKeys(keys);
+
+  const onCheck = useCallback(
+    (keys: ReactText[] | { checked: ReactText[]; halfChecked: ReactText[] }) => {
+      setCheckKeys(keys as { checked: string[]; halfChecked: string[] });
+    },
+    [],
+  );
+
+  const onSelect = useCallback((keys: ReactText[]) => {
+    setSelectedKeys(keys as string[]);
   }, []);
 
   return (
@@ -95,6 +99,8 @@ function EditMenu(props: EditMenuProps) {
       onOk={onOk}
     >
       <Form
+        form={form}
+        initialValues={role || {}}
         labelCol={{
           sm: { span: 5 },
         }}
@@ -102,13 +108,11 @@ function EditMenu(props: EditMenuProps) {
           sm: { span: 16 },
         }}
       >
-        <Form.Item label="角色Id">
-          {getFieldDecorator('id', { initialValue: role.id })(<Input disabled />)}
+        <Form.Item label="角色Id" name="id">
+          <Input disabled />
         </Form.Item>
-        <Form.Item label="角色名称">
-          {getFieldDecorator('name', {
-            initialValue: role && role.name,
-          })(<Input disabled />)}
+        <Form.Item label="角色名称" name="name">
+          <Input disabled />
         </Form.Item>
         <Form.Item label="菜单权限">
           <Tree
@@ -129,4 +133,4 @@ function EditMenu(props: EditMenuProps) {
   );
 }
 
-export default Form.create<EditMenuProps>()(EditMenu);
+export default memo(EditMenu);

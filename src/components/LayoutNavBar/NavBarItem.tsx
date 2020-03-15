@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import { Icon, Badge } from 'antd';
+import { Badge } from 'antd';
+import { GithubOutlined, BellOutlined } from '@ant-design/icons';
 
 interface NavBarItemProps {
   onClick: () => void;
@@ -9,11 +10,25 @@ interface NavBarItemProps {
   overflowCount?: number;
 }
 
+function SwtichIcon({ icon }: { icon: string }) {
+  if (icon === 'github') {
+    return <GithubOutlined />;
+  }
+
+  if (icon === 'bell') {
+    return <BellOutlined />;
+  }
+
+  return null;
+}
+
 function NavBarItem({ className, onClick, icon, ...badge }: NavBarItemProps) {
   return (
     <div className={className} onClick={onClick}>
       <Badge {...badge} style={{ boxShadow: 'none' }}>
-        <Icon style={{ padding: '5px', fontSize: '16px' }} type={icon} />
+        <div style={{ padding: '5px', fontSize: '16px' }}>
+          <SwtichIcon icon={icon}></SwtichIcon>
+        </div>
       </Badge>
     </div>
   );

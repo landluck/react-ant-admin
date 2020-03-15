@@ -1,5 +1,5 @@
 import React, { useMemo, useCallback, useEffect, useState, memo } from 'react';
-import { Select, Table, Icon, Button, Modal, message } from 'antd';
+import { Select, Table, Button, Modal, message } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination';
 import SearchForm, { SearchFormItem, SearchFormAction } from '../../components/SearchForm';
 import BaseTable from '../../components/BaseTable';
@@ -178,6 +178,7 @@ function MenuManage() {
         actions={actions}
         onSearch={onSearch}
         onClick={onAddMenu}
+        showLabel={false}
       ></SearchForm>
       {editVisible && (
         <AddOrEditMenu
@@ -195,7 +196,7 @@ function MenuManage() {
           title="菜单icon"
           dataIndex="icon"
           align="center"
-          render={text => <Icon style={{ fontSize: '16px' }} type={text}></Icon>}
+          // render={text => <LegacyIcon style={{ fontSize: '16px' }} type={text}></LegacyIcon>}
         ></Table.Column>
         <Table.Column<Menu> dataIndex="sort" title="菜单排序" align="center"></Table.Column>
         <Table.Column<Menu>

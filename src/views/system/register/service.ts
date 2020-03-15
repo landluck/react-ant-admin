@@ -7,7 +7,6 @@ export interface CreateUserData {
   password: string;
   mobile: string;
   code: string;
-  name: string;
 }
 
 export interface CreateUserResponse {

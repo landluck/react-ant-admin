@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
-import { Form, Modal, Input, message } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import React, { useCallback, memo } from 'react';
+import { Form, Modal, message, Input } from 'antd';
 import { Role, apiUpdateRole, apiCreateRole } from './service';
 
-export interface AddOrEditRoleProps extends FormComponentProps {
+export interface AddOrEditRoleProps {
   visible: boolean;
   role: Role | null;
   onClose: () => void;
@@ -22,31 +21,30 @@ interface AddOrEditRoleFormProps {
 
 function AddOrEditRole(props: AddOrEditRoleProps) {
   const { role, visible } = props;
-  const { getFieldDecorator } = props.form;
+  const [form] = Form.useForm();
 
   const onOk = useCallback(() => {
-    props.form.validateFields((err, values: AddOrEditRoleFormProps) => {
-      if (!err) {
-        const info: Role = {
-          ...role,
-          ...values,
-        };
+    form.validateFields().then(res => {
+      const values = res as AddOrEditRoleFormProps;
+      const info: Role = {
+        ...role,
+        ...values,
+      };
 
-        if (info.id) {
-          apiUpdateRole(info)
-            .then(() => {
-              message.success('修改成功');
-              props.onConfirm();
-            })
-            .catch(() => {});
-        } else {
-          apiCreateRole(info)
-            .then(() => {
-              message.success('创建成功');
-              props.onConfirm();
-            })
-            .catch(() => {});
-        }
+      if (info.id) {
+        apiUpdateRole(info)
+          .then(() => {
+            message.success('修改成功');
+            props.onConfirm();
+          })
+          .catch(() => {});
+      } else {
+        apiCreateRole(info)
+          .then(() => {
+            message.success('创建成功');
+            props.onConfirm();
+          })
+          .catch(() => {});
       }
     });
   }, []);
@@ -60,6 +58,8 @@ function AddOrEditRole(props: AddOrEditRoleProps) {
       onOk={onOk}
     >
       <Form
+        form={form}
+        initialValues={role || {}}
         labelCol={{
           sm: { span: 5 },
         }}
@@ -68,19 +68,20 @@ function AddOrEditRole(props: AddOrEditRoleProps) {
         }}
       >
         {role && role.id ? (
-          <Form.Item label="角色Id">
-            {getFieldDecorator('id', { initialValue: role.id })(<Input disabled />)}
+          <Form.Item label="角色Id" name="id">
+            <Input disabled />
           </Form.Item>
         ) : null}
-        <Form.Item label="角色名称">
-          {getFieldDecorator('name', {
-            initialValue: role && role.name,
-            rules: [{ required: true, message: '请输入角色名称' }],
-          })(<Input />)}
+        <Form.Item
+          label="角色名称"
+          name="name"
+          rules={[{ required: true, message: '请输入角色名称' }]}
+        >
+          <Input />
         </Form.Item>
       </Form>
     </Modal>
   );
 }
 
-export default Form.create<AddOrEditRoleProps>()(AddOrEditRole);
+export default memo(AddOrEditRole);

@@ -1,5 +1,6 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Drawer, Icon, Tooltip, Divider, List, Select, Switch } from 'antd';
+import { CheckOutlined, CloseOutlined, SettingOutlined } from '@ant-design/icons';
+import { Drawer, Tooltip, Divider, List, Select, Switch } from 'antd';
 import './index.less';
 import { connect } from 'react-redux';
 import { IStoreState } from '../../store/types';
@@ -42,7 +43,7 @@ function SettingsCheckBox({ list, onChange, value }: SettingsCheckBoxProps) {
                 display: value === item.key ? 'block' : 'none',
               }}
             >
-              <Icon type="check" />
+              <CheckOutlined />
             </div>
           </div>
         </Tooltip>
@@ -81,14 +82,15 @@ function LayoutSettings(props: LayoutSettings) {
       width={300}
       onClose={onVisibleClick}
       handler={
-        <div className="layout__settings" onClick={onVisibleClick}>
-          <Icon
-            type={visible ? 'close' : 'setting'}
-            style={{
-              color: '#fff',
-              fontSize: 20,
-            }}
-          ></Icon>
+        <div
+          className="layout__settings"
+          style={{
+            color: '#fff',
+            fontSize: 20,
+          }}
+          onClick={onVisibleClick}
+        >
+          {visible ? <CloseOutlined></CloseOutlined> : <SettingOutlined />}
         </div>
       }
     >

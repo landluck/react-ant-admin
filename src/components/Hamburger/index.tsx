@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Icon } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import './index.less';
 
 interface HamburgerProps {
@@ -10,7 +10,7 @@ interface HamburgerProps {
 function Hamburger({ isActive, onTrigger }: HamburgerProps) {
   return (
     <div className="layout__nav-bar__hamburger" onClick={onTrigger}>
-      <Icon type={isActive ? 'menu-fold' : 'menu-unfold'} />
+      {isActive ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
     </div>
   );
 }

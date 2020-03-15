@@ -25,7 +25,6 @@ const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpack
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const eslint = require('eslint');
 const postcssNormalize = require('postcss-normalize');
-const aliyunTheme = require('@ant-design/aliyun-theme').default;
 
 const appPackageJson = require(paths.appPackageJson);
 
@@ -501,7 +500,6 @@ module.exports = function(webpackEnv) {
                 {
                   loader: 'less-loader',
                   options: {
-                    modifyVars: aliyunTheme,
                     sourceMap: false,
                     javascriptEnabled: true,
                   },
@@ -527,7 +525,6 @@ module.exports = function(webpackEnv) {
                 {
                   loader: 'less-loader',
                   options: {
-                    modifyVars: aliyunTheme,
                     sourceMap: false,
                     javascriptEnabled: true,
                   },

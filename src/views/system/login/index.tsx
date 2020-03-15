@@ -1,15 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { Tabs, Checkbox, Button, Icon, Form } from 'antd';
+import { GithubOutlined, ZhihuOutlined } from '@ant-design/icons';
+import { Tabs, Checkbox, Button, Form } from 'antd';
 import './index.less';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'react-redux';
 import { apiUserLogin, apiUserLoginByMobile } from './service';
 import { setUserInfo, UserState } from '../../../store/module/user';
 import FormWrap from '../component/FormWrap';
 import LoginItem from '../component/LoginItem';
 
-interface LoginProps extends FormComponentProps, RouteComponentProps {
+interface LoginProps extends RouteComponentProps {
   setUserInfo: (userInfo: UserState) => void;
 }
 
@@ -22,6 +22,7 @@ interface FormProp {
 
 function Login(props: LoginProps) {
   const [activeTab, setActiveTab] = useState('account');
+  const [form] = Form.useForm();
 
   const next = () => {
     const params = new URLSearchParams(window.location.search);
@@ -33,33 +34,31 @@ function Login(props: LoginProps) {
     props.history.push('/');
   };
 
-  const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.form.validateFields((err, values: FormProp) => {
-      if (!err) {
-        if (values.account && values.password) {
-          apiUserLogin({
-            account: values.account,
-            password: values.password,
+  const onSubmit = useCallback(() => {
+    form.validateFields().then(res => {
+      const values = res as FormProp;
+      if (values.account && values.password) {
+        apiUserLogin({
+          account: values.account,
+          password: values.password,
+        })
+          .then(({ data }: { data: UserState }) => {
+            props.setUserInfo(data);
+            next();
           })
-            .then(({ data }: { data: UserState }) => {
-              props.setUserInfo(data);
-              next();
-            })
-            .catch(() => {});
+          .catch(() => {});
 
-          return;
-        }
+        return;
+      }
 
-        if (values.mobile && values.code) {
-          apiUserLoginByMobile({ mobile: values.mobile, code: values.code })
-            .then(({ data }: { data: UserState }) => {
-              props.setUserInfo(data);
+      if (values.mobile && values.code) {
+        apiUserLoginByMobile({ mobile: values.mobile, code: values.code })
+          .then(({ data }: { data: UserState }) => {
+            props.setUserInfo(data);
 
-              next();
-            })
-            .catch(() => {});
-        }
+            next();
+          })
+          .catch(() => {});
       }
     });
   }, []);
@@ -71,16 +70,16 @@ function Login(props: LoginProps) {
         <Tabs.TabPane tab="手机号登录" key="mobile"></Tabs.TabPane>
       </Tabs>
 
-      <Form onSubmit={onSubmit}>
+      <Form onFinish={onSubmit} form={form}>
         {activeTab === 'account' ? (
           <>
-            <LoginItem.Account form={props.form} />
-            <LoginItem.Password form={props.form} />
+            <LoginItem.Account form={form} />
+            <LoginItem.Password form={form} />
           </>
         ) : (
           <>
-            <LoginItem.Mobile form={props.form} />
-            <LoginItem.Code form={props.form} />
+            <LoginItem.Mobile form={form} />
+            <LoginItem.Code form={form} />
           </>
         )}
 
@@ -101,8 +100,8 @@ function Login(props: LoginProps) {
           <div className="align--between">
             <div className="page-login__others">
               其他登录方式
-              <Icon className="page-login__icon" type="github"></Icon>
-              <Icon className="page-login__icon" type="zhihu"></Icon>
+              <GithubOutlined className="page-login__icon"></GithubOutlined>
+              <ZhihuOutlined className="page-login__icon"></ZhihuOutlined>
             </div>
             <Link to="/system/register">注册账号</Link>
           </div>
@@ -114,4 +113,4 @@ function Login(props: LoginProps) {
 
 export default connect(() => ({}), {
   setUserInfo,
-})(Form.create({ name: 'login' })(Login));
+})(Login);

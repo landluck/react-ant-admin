@@ -1,12 +1,11 @@
 import React, { memo, useCallback } from 'react';
-import { Icon } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { InputProps } from 'antd/lib/input';
-import { FormItemProps, FormComponentProps } from 'antd/lib/form';
+import { FormItemProps, FormInstance } from 'antd/lib/form';
 import FormInputItem from './FormItem';
 import { apiGetVerifyCode } from '../login/service';
 
 export interface LoginItemType {
-  UserName: React.FC<LoginItemProps>;
   Account: React.FC<LoginItemProps>;
   Password: React.FC<LoginItemProps>;
   Confirm: React.FC<LoginItemProps>;
@@ -21,27 +20,16 @@ interface LoginItemConfig {
 }
 
 interface LoginItemProps {
-  form: FormComponentProps['form'];
   countStatic?: number;
   onGetMobileCode?: (cb: () => void) => void;
+  form: FormInstance;
 }
 
 const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
-  UserName: {
-    name: 'name',
-    inputProps: {
-      size: 'large',
-      prefix: <Icon type="user" />,
-      placeholder: '用户昵称',
-      type: 'text',
-    },
-    rules: [{ required: true, message: '请输入用户名称', min: 6, max: 18 }],
-  },
   Account: {
     name: 'account',
     inputProps: {
-      size: 'large',
-      prefix: <Icon type="user" />,
+      prefix: <UserOutlined />,
       placeholder: '6-18位账号',
       type: 'text',
     },
@@ -50,8 +38,7 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
   Mobile: {
     name: 'mobile',
     inputProps: {
-      size: 'large',
-      prefix: <Icon type="user" />,
+      prefix: <UserOutlined />,
       placeholder: '11位合法手机号',
       type: 'mobile',
     },
@@ -60,8 +47,7 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
   Password: {
     name: 'password',
     inputProps: {
-      size: 'large',
-      prefix: <Icon type="lock" />,
+      prefix: <LockOutlined />,
       placeholder: '大于6位的密码',
       type: 'password',
       visibilityToggle: true,
@@ -71,9 +57,8 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
   Confirm: {
     name: 'repassword',
     inputProps: {
-      size: 'large',
       id: 'confirm',
-      prefix: <Icon type="lock" />,
+      prefix: <LockOutlined />,
       placeholder: '确认密码',
       type: 'password',
       visibilityToggle: true,
@@ -84,9 +69,8 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
   Code: {
     name: 'code',
     inputProps: {
-      size: 'large',
       placeholder: '大于6位的密码',
-      prefix: <Icon type="lock" />,
+      prefix: <LockOutlined />,
       type: 'code',
     },
     rules: [{ required: true, message: '请输入验证码', len: 6 }],
@@ -95,13 +79,11 @@ const config: { [key in keyof LoginItemType]: LoginItemConfig } = {
 
 const formProps: FormItemProps = {
   hasFeedback: true,
+  children: null,
 };
 
 function Account(props: LoginItemProps) {
   return <FormInputItem formProps={formProps} {...config.Account} {...props} />;
-}
-function UserName(props: LoginItemProps) {
-  return <FormInputItem formProps={formProps} {...config.UserName} {...props} />;
 }
 
 function Password(props: LoginItemProps) {
@@ -137,27 +119,29 @@ function Mobile(props: LoginItemProps) {
 function Code(props: LoginItemProps) {
   // 在测试环境下，接口会直接跑错，显示验证码,所以需要在catch的情况下 也回调
   const onGetMobileCode = useCallback((cb: () => void) => {
-    props.form.validateFields(['mobile'], (err, values) => {
-      if (!err) {
-        apiGetVerifyCode({ mobile: values.mobile })
-          .then(() => {
-            cb();
-          })
-          .catch(() => {
-            cb();
-          });
-      }
+    props.form.validateFields(['mobile']).then(res => {
+      apiGetVerifyCode({ mobile: res.mobile })
+        .then(() => {
+          cb();
+        })
+        .catch(() => {
+          cb();
+        });
     });
   }, []);
 
   return (
-    <FormInputItem formProps={{}} {...config.Code} {...props} onGetMobileCode={onGetMobileCode} />
+    <FormInputItem
+      formProps={{ children: null }}
+      {...config.Code}
+      {...props}
+      onGetMobileCode={onGetMobileCode}
+    />
   );
 }
 
 const LoginItem: LoginItemType = {
   Account: memo(Account),
-  UserName: memo(UserName),
   Password: memo(Password),
   Confirm: memo(Confirm),
   Mobile: memo(Mobile),
