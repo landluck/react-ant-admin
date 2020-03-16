@@ -36,11 +36,6 @@ function UserManage() {
   const formList = useMemo<SearchFormItem[]>(
     () => [
       {
-        name: 'name',
-        placeholder: '请输入用户名称',
-        label: '用户名称',
-      },
-      {
         name: 'account',
         placeholder: '请输入用户账号',
         label: '用户账号',
@@ -167,7 +162,6 @@ function UserManage() {
       {/* 数据表格 */}
       <BaseTable<User> data={userData} onChange={onTableChange} loading={loading}>
         <Table.Column<User> title="用户id" dataIndex="id" align="center"></Table.Column>
-        <Table.Column<User> title="用户名称" dataIndex="name" align="center"></Table.Column>
         <Table.Column<User> title="用户账号" dataIndex="account" align="center"></Table.Column>
         <Table.Column<User> title="用户手机号" dataIndex="mobile" align="center"></Table.Column>
         <Table.Column<User>

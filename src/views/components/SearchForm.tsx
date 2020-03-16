@@ -39,7 +39,7 @@ function SearchForm(props: SearchFormProps) {
   };
 
   return (
-    <Form className="layout__search" layout="inline" onFinish={onSearch}>
+    <Form className="layout__search" form={form} layout="inline" onFinish={onSearch}>
       {props.formList.map((item: SearchFormItem) => (
         <Form.Item
           label={props.showLabel !== false && item.label ? item.label : ''}

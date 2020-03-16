@@ -18,7 +18,6 @@ export interface AddOrEditUserProps {
 
 interface AddOrEditUserFormProps {
   id?: number;
-  name: string;
 
   account: string;
 
@@ -92,7 +91,7 @@ function AddOrEditUser(props: AddOrEditUserProps) {
     }
   }, []);
 
-  const reset = form.getFieldValue('reset');
+  // const reset = form.getFieldValue('reset');
 
   return (
     <Modal
@@ -118,24 +117,16 @@ function AddOrEditUser(props: AddOrEditUserProps) {
           </Form.Item>
         ) : null}
         <Form.Item
-          label="用户名称"
-          name="name"
-          rules={[{ required: true, message: '请输入用户名称' }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           label="用户账号"
           name="account"
           rules={[{ required: true, message: '请输入用户账号' }]}
         >
           <Input />
         </Form.Item>
-        {user && (
+        {/* {user && (
           <Form.Item
             label="重置密码"
             name="reset"
-            rules={[{ required: true, message: '是否重置密码' }]}
           >
             <Switch />
           </Form.Item>
@@ -148,7 +139,7 @@ function AddOrEditUser(props: AddOrEditUserProps) {
           >
             <Input.Password visibilityToggle />
           </Form.Item>
-        )}
+        )} */}
         <Form.Item
           label="手机号码"
           name="mobile"
@@ -173,6 +164,7 @@ function AddOrEditUser(props: AddOrEditUserProps) {
           label="用户状态"
           name="status"
           rules={[{ required: true, message: '请选择用户角色' }]}
+          valuePropName="checked"
         >
           <Switch />
         </Form.Item>

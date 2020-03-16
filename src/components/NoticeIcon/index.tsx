@@ -79,16 +79,19 @@ function NoticeIcon(props: NoticeIconProps) {
       trigger={['click']}
       placement="topLeft"
     >
-      <NavBarItem
+      <div
         className={classnames(
           'layout__navbar__menu-item',
           `layout__navbar__menu-item--${props.theme}`,
         )}
-        onClick={onNoticeIconClick}
-        icon="bell"
-        count={noticeTotal}
-        overflowCount={99}
-      ></NavBarItem>
+      >
+        <NavBarItem
+          onClick={onNoticeIconClick}
+          icon="bell"
+          count={noticeTotal}
+          overflowCount={99}
+        ></NavBarItem>
+      </div>
     </NavDropdown>
   );
 }

@@ -4,7 +4,7 @@ import { GithubOutlined, BellOutlined } from '@ant-design/icons';
 
 interface NavBarItemProps {
   onClick: () => void;
-  className: string;
+  className?: string;
   icon: string;
   count: number;
   overflowCount?: number;
