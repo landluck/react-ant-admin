@@ -26,10 +26,13 @@ function AddOrEditMenu(props: AddOrEditMenuProps) {
   if (menu && menu.parent) {
     menu.parentIds = [menu.parent.id!];
   }
-
   const onOk = useCallback(() => {
     form.validateFields().then(res => {
       const values = res as AddOrEditMenuFormProps;
+
+      if (!values.parentIds) {
+        values.parentIds = [];
+      }
 
       const len = values.parentIds.length;
       const info: Menu = {

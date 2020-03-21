@@ -1,18 +1,30 @@
-import React, { useCallback, useState, useEffect, memo, ReactText } from 'react';
+import React, { useCallback, useState, useEffect, memo, ReactText, useMemo } from 'react';
 import { Modal, Input, Tree, message, Form } from 'antd';
 import { Role, apiGetMenuListByRoleId, apiUpdateMenuListByRoleId } from './service';
 import { apiGetMenuCascader, Menu } from '../menu/service';
 
-function renderTree(menu: Menu) {
-  if (menu.children) {
-    return (
-      <Tree.TreeNode title={menu.name} key={`${menu.id}`}>
-        {menu.children!.map((item: Menu) => renderTree(item))}
-      </Tree.TreeNode>
-    );
-  }
+interface DataNode {
+  title?: React.ReactNode;
+  key: string | number;
+  children?: DataNode[];
+}
 
-  return <Tree.TreeNode title={menu.name} key={`${menu.id}`}></Tree.TreeNode>;
+function renderTree(menuList: Menu[]): DataNode[] {
+  const list: DataNode[] = [];
+
+  menuList.forEach(menu => {
+    if (menu.children) {
+      list.push({
+        title: menu.name,
+        key: menu.id!.toString(),
+        children: renderTree(menu.children),
+      });
+    } else {
+      list.push({ title: menu.name, key: menu.id!.toString() });
+    }
+  });
+
+  return list;
 }
 
 export interface EditMenuProps {
@@ -90,6 +102,8 @@ function EditMenu(props: EditMenuProps) {
     setSelectedKeys(keys as string[]);
   }, []);
 
+  const treeData = useMemo(() => renderTree(menuList), [menuList]);
+
   return (
     <Modal
       maskClosable={false}
@@ -124,9 +138,8 @@ function EditMenu(props: EditMenuProps) {
             onCheck={onCheck}
             onSelect={onSelect}
             selectedKeys={selectedKeys}
-          >
-            {menuList.map((menu: Menu) => renderTree(menu))}
-          </Tree>
+            treeData={treeData}
+          />
         </Form.Item>
       </Form>
     </Modal>
