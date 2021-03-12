@@ -11,7 +11,7 @@
     "js-cookie": "^2.2.1",
     "react": "^16.11.0",
     "react-app-polyfill": "^1.0.4",
-    "react-dev-utils": "^9.1.0",
+    "react-dev-utils": "^11.0.4",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
     "react-markdown": "^4.2.2",
