@@ -2,7 +2,7 @@
 
 <div align="center">开箱即用的中台前端/设计解决方案</div>
 
-- 预览：https://www.landluck.com.cn/web/react-ant-admin
+- 预览：https://www.landluck.cn/web/react-ant-admin
 
 #### 介绍
 
